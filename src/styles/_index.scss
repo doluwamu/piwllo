@@ -1,0 +1,45 @@
+@import "./toggle-button";
+@import "./bg-image.scss";
+@import "./home";
+
+html,
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #040436;
+  min-height: 100%;
+}
+
+:root {
+  --dark-bg: rgb(100, 9, 100);
+  --light-bg: #ffe;
+  --dark-bg-text: #ffe;
+  --light-bg-text: #000;
+  --shadow: gray;
+}
+
+.canvas {
+  min-height: 100vh;
+  max-width: 1500px;
+  margin: 0 auto;
+
+  &.canvas-light {
+    background-color: var(--light-bg);
+    color: var(--light-bg-text);
+
+    a {
+      color: var(--light-bg-text);
+    }
+  }
+
+  &.canvas-dark {
+    background-color: var(--dark-bg);
+    color: var(--dark-bg-text);
+
+    a {
+      color: var(--dark-bg-text);
+    }
+  }
+}

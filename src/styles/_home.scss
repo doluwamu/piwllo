@@ -1,0 +1,18 @@
+.home {
+  .section {
+    padding: 20px 0;
+    .section1-container {
+      max-width: 1200px;
+      display: flex;
+
+      .avatar {
+        width: 30%;
+        background-color: green;
+      }
+
+      .subject {
+        width: 70%;
+      }
+    }
+  }
+}
