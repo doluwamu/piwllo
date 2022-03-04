@@ -11,7 +11,7 @@
   }
 
   &.dark {
-    background-color: #282c34;
+    background-color: var(--dark-bg);
     box-shadow: 0 0 3px 0.1px #ffe;
 
     .toggle {
@@ -21,11 +21,11 @@
 
   &.light {
     background-color: #ffe;
-    box-shadow: 0 0 3px 0.1px #282c34;
+    box-shadow: 0 0 3px 0.1px var(--dark-bg);
 
     .toggle {
       margin-left: 14.8px;
-      background-color: #282c34;
+      background-color: var(--dark-bg);
     }
   }
 }

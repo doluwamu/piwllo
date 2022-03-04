@@ -1,17 +1,13 @@
 import React from "react";
 
-const Section1 = ({ darkTheme }) => {
+const Section2 = ({ darkTheme }) => {
   return (
     <div className={`sections ${darkTheme ? "dark" : "light"}`}>
       <div className="sections-container">
-        <div className="avatar">
-          <img src="/images/avatar.jpg" alt="avatar" />
-        </div>
-
         <div>
           <div className="subject">
             <div>
-              <h2>What is Piwllo?</h2>
+              <h2>Why Piwllo?</h2>
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore
                 ex repellendus maiores illum, provident nesciunt facilis rem qui
@@ -21,9 +17,13 @@ const Section1 = ({ darkTheme }) => {
             </div>
           </div>
         </div>
+
+        <div className="avatar">
+          <img src="/images/avatar.jpg" alt="avatar" />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Section1;
+export default Section2;

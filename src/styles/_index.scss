@@ -1,6 +1,7 @@
 @import "./toggle-button";
 @import "./bg-image.scss";
 @import "./home";
+@import "./footer";
 
 html,
 body {
@@ -13,7 +14,7 @@ body {
 }
 
 :root {
-  --dark-bg: rgb(100, 9, 100);
+  --dark-bg: rgb(68, 3, 68);
   --light-bg: #ffe;
   --dark-bg-text: #ffe;
   --light-bg-text: #000;
