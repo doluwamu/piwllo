@@ -2,11 +2,11 @@ import React from "react";
 
 const Section2 = ({ darkTheme }) => {
   return (
-    <div className={`sections ${darkTheme ? "dark" : "light"}`}>
-      <div className="sections-container">
+    <div className={`section2 ${darkTheme ? "dark" : "light"}`}>
+      <div className="section-container">
         <div>
           <div className="subject">
-            <div>
+            <div className="sub-contents">
               <h2>Why Piwllo?</h2>
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore

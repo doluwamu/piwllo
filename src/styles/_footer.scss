@@ -5,4 +5,16 @@
   p {
     text-align: center;
   }
+
+  &.dark {
+    p {
+      color: var(--dark-bg-text);
+    }
+  }
+
+  &.light {
+    p {
+      color: gray;
+    }
+  }
 }
