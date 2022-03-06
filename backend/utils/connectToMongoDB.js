@@ -1,11 +1,12 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 import logger from "./logger.js";
+import { configSettings } from "../config.js";
 
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL = configSettings.MONGO_URL;
 
-export const connectToMongoDB = async () => {
+const connectToMongoDB = async () => {
   try {
-    await mongoose.connect(
+    mongoose.connect(
       MONGO_URL,
       {
         autoIndex: false,
@@ -19,3 +20,5 @@ export const connectToMongoDB = async () => {
     //process.exit(1);
   }
 };
+
+export default connectToMongoDB;

@@ -25,4 +25,4 @@ winston.addColors({
 });
 logger.on("error", (err) => console.error(err.message));
 
-module.exports = logger;
+export default logger;

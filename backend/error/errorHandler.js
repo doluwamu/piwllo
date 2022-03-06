@@ -1,20 +1,24 @@
-const environment = process.env.NODE_ENV;
-const logger = require('../utils/logger');
+import logger from "../utils/logger.js";
+import { configSettings } from "../config.js";
 
-module.exports = (err, req, res, next) => {
+const environment = configSettings.environment;
+
+const errorHandler = (err, req, res, next) => {
   const data = {
-    status: 'error',
+    status: "error",
     message: err.message,
   };
-  if (environment === 'development') {
+  if (environment === "development") {
     data.error = err.stack;
   }
   if (!err.statusCode) {
     err.statusCode = 500;
   }
-  if (environment !== 'development' && err.statusCode === 500) {
-    data.message = 'Something went very wrong';
+  if (environment !== "development" && err.statusCode === 500) {
+    data.message = "Something went very wrong";
   }
   logger.error(err.message);
   res.status(err.statusCode).json(data);
 };
+
+export default errorHandler;

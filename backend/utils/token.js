@@ -1,22 +1,21 @@
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
-import Token from "../models/Token";
 
-exports.createAccessToken = (id) => {
-  const accessToken = jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
-  });
-
-  return accessToken;
+export const generateAccessToken = (_id) => {
+  return jwt.sign(
+    {
+      _id,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRES }
+  );
 };
 
-exports.createRefreshToken = async (id) => {
-  //create a random string as refresh token.
-  const refreshToken = crypto.randomBytes(32).toString("hex");
-  const token = await Token.create({
-    refreshToken,
-    user: id,
-  });
-
-  return token;
+export const generateRefreshToken = (_id) => {
+  return jwt.sign(
+    {
+      _id,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRES }
+  );
 };
