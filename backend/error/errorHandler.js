@@ -1,7 +1,7 @@
 import logger from "../utils/logger.js";
 import { configSettings } from "../config.js";
 
-const environment = configSettings.environment;
+const environment = configSettings.NODE_ENV;
 
 const errorHandler = (err, req, res, next) => {
   const data = {

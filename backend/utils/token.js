@@ -1,21 +1,14 @@
 import jwt from "jsonwebtoken";
+import { configSettings } from "../config.js";
 
-export const generateAccessToken = (_id) => {
+const { JWT_SECRET, JWT_EXPIRES } = configSettings;
+
+export const generateToken = (id) => {
   return jwt.sign(
     {
-      _id,
+      id,
     },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES }
-  );
-};
-
-export const generateRefreshToken = (_id) => {
-  return jwt.sign(
-    {
-      _id,
-    },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRES }
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES }
   );
 };
