@@ -2,10 +2,13 @@
 @import "./bg-image.scss";
 @import "./home";
 @import "./footer";
+@import "./task-manager.scss";
+@import "./aside-bar.scss";
 
 html,
 body {
   margin: 0;
+  padding: 0;
   font-family: Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

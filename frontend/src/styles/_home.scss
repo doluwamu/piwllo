@@ -1,16 +1,4 @@
 .home {
-  .theme-btn-section {
-    max-width: 1500px;
-    padding: 15px;
-    // background-color: gold;
-
-    .theme-btn-container {
-      max-width: 60px;
-      margin-left: 90%;
-      // background-color: green;
-    }
-  }
-
   .sections {
     padding: 60px 0;
     .sections-container {
@@ -236,5 +224,17 @@
       display: flex !important;
       flex-direction: column-reverse;
     }
+  }
+}
+
+.theme-btn-section {
+  max-width: 1500px;
+  padding: 15px;
+  // background-color: gold;
+
+  .theme-btn-container {
+    max-width: 60px;
+    margin-left: 90%;
+    // background-color: green;
   }
 }

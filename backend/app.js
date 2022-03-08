@@ -8,6 +8,7 @@ import { configSettings } from "./config.js";
 
 //getting all routes
 import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 const app = express();
 const { NODE_ENV } = configSettings;
@@ -46,6 +47,7 @@ app.get("/", (req, res) => {
 
 //setting up all routers
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/tasks", taskRoutes);
 
 //for invalid route
 app.use((req, res, next) => {

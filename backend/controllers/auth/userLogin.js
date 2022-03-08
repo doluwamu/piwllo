@@ -2,6 +2,9 @@ import AppError from "../../error/appError.js";
 import User from "../../models/userModel.js";
 import { generateToken } from "../../utils/token.js";
 
+// Request type: POST
+// To: /api/v1/auth/signin
+// Desc: to login a user
 const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
