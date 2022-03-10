@@ -22,3 +22,5 @@ const deleteTask = async (req, res, next) => {
     return next(error);
   }
 };
+
+export default deleteTask;

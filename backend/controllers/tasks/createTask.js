@@ -14,6 +14,12 @@ const createTask = async (req, res, next) => {
       return next(new AppError("rank is required!", 400));
     }
 
+    const taskExists = await Task.findOne({ task });
+
+    if (taskExists) {
+      return next(new AppError("This task already exists", 400));
+    }
+
     const taskToCreate = new Task({
       owner: user._id,
       task,
