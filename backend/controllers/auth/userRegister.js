@@ -28,7 +28,7 @@ const signUp = async (req, res, next) => {
       );
     }
 
-    const foundUser = await User.findOne({ email }).lean();
+    const foundUser = await User.findOne({ email });
 
     if (foundUser) {
       return next(new AppError("User with this email already exists", 401));
@@ -45,6 +45,7 @@ const signUp = async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -53,3 +54,5 @@ const signUp = async (req, res, next) => {
 };
 
 export default signUp;
+
+// /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

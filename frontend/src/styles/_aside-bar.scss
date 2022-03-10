@@ -121,7 +121,7 @@
       width: 100vw;
       height: 100vh;
       padding: 0;
-      overflow-y: scroll;
+      overflow-y: auto;
       transition: 0.5s;
 
       .cancel-aside-icon {
@@ -185,5 +185,12 @@
         margin-left: 7.5px;
       }
     }
+  }
+
+  .close {
+    display: none !important;
+  }
+  .open {
+    display: block !important;
   }
 }

@@ -9,6 +9,7 @@ import { configSettings } from "./config.js";
 //getting all routes
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 const app = express();
 const { NODE_ENV } = configSettings;
@@ -29,25 +30,10 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.post("/api", async (req, res, next) => {
-//   try {
-//     const { task, rank } = req.body;
-
-//     const taskToCreate = new Task({
-//       task,
-//       rank,
-//     });
-
-//     await taskToCreate.save();
-//     return res.json(taskToCreate);
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
-
 //setting up all routers
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/tasks", taskRoutes);
+app.use("/api/v1/teams", teamRoutes);
 
 //for invalid route
 app.use((req, res, next) => {

@@ -7,14 +7,14 @@ const AsideBar = () => {
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
-    aside.classList.remove("none");
-    aside.classList.add("block");
+    aside.classList.remove("close");
+    aside.classList.add("open");
   };
 
   const closeAside = () => {
     const aside = document.getElementById("aside-itms");
-    aside.classList.remove("block");
-    aside.classList.add("none");
+    aside.classList.remove("open");
+    aside.classList.add("close");
   };
 
   return (

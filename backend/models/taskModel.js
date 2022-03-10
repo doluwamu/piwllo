@@ -16,7 +16,7 @@ const taskSchema = new Schema(
       required: [true, "Please rank this task"],
     },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: USER,
       required: true,
     },
