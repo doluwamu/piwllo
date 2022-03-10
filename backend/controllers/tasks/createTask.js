@@ -22,7 +22,7 @@ const createTask = async (req, res, next) => {
 
     taskToCreate.save();
 
-    return res.json(taskToCreate);
+    return res.status(201).json(taskToCreate);
   } catch (error) {
     return next(error);
   }

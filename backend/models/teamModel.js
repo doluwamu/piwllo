@@ -12,11 +12,7 @@ const teamSchema = new Schema(
       type: String,
       required: [true, "Please provide a name for your team"],
     },
-    lead: {
-      type: Schema.Types.ObjectId,
-      ref: USER,
-      required: true,
-    },
+    creator: memberSchema,
     members: [memberSchema],
   },
   {

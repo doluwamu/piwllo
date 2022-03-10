@@ -8,6 +8,7 @@ import { configSettings } from "./config.js";
 
 //getting all routes
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 
@@ -25,20 +26,20 @@ if (NODE_ENV === "development") {
 
 app.get("/", (req, res) => {
   res.status(200).json({
-    message:
-      "Hello there, This is your SECOND assignment in the GDSC NodeJs intermediate study group",
+    message: "Hello there",
   });
 });
 
 //setting up all routers
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/teams", teamRoutes);
 
 //for invalid route
 app.use((req, res, next) => {
   return next(
-    new AppError("Specified route does no exist on this server", 404)
+    new AppError("Specified route does not exist on this server", 404)
   );
 });
 

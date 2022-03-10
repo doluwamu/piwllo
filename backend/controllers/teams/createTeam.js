@@ -39,24 +39,24 @@ const createTeam = async (req, res, next) => {
       return next(new AppError("Team with this name already exists", 400));
     }
 
-    const leadmember = {
+    const creator = {
       name: user.name,
       email: user.email,
       isTeamAdmin: true,
       user: user._id,
     };
 
-    PUsers.push(leadmember);
+    PUsers.push(creator);
 
     const team = new Team({
       teamname,
-      lead: user._id,
+      creator,
       members: PUsers,
     });
 
     await team.save();
 
-    return res.json(team);
+    return res.status(201).json(team);
   } catch (error) {
     return next(error);
   }
