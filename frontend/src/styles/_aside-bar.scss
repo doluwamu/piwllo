@@ -1,6 +1,6 @@
 .side-bar {
   color: var(--dark-bg-text);
-  box-shadow: 0 0 4px 0.2px gray;
+  // box-shadow: 0 0 4px 0.2px gray;
 
   &.dark {
     background-color: rgb(190, 37, 190);
@@ -34,7 +34,8 @@
   .side-bar {
     width: 250px;
     padding: 0 5px;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: auto;
 
     //   &::-webkit-scrollbar {
     //     display: none;
