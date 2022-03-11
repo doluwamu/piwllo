@@ -9,31 +9,18 @@ const Schema = mongoose.Schema;
 
 export const memberSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Member must have a name"],
-    },
-    email: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: USER,
       required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      validate: [validator.isEmail, "Please provide a valid email"],
     },
     isTeamAdmin: {
       type: Boolean,
       required: true,
       default: false,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: USER,
-      required: true,
-    },
   },
   {
     timestamps: true,
   }
 );
-

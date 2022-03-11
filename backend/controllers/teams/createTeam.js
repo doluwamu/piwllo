@@ -24,10 +24,8 @@ const createTeam = async (req, res, next) => {
       }
 
       const groupMembers = {
-        name: PUser.name,
-        email: member,
-        isTeamAdmin: false,
         user: PUser._id,
+        isTeamAdmin: false,
       };
 
       PUsers.push(groupMembers);
@@ -40,10 +38,8 @@ const createTeam = async (req, res, next) => {
     }
 
     const creator = {
-      name: user.name,
-      email: user.email,
-      isTeamAdmin: true,
       user: user._id,
+      isTeamAdmin: true,
     };
 
     PUsers.push(creator);
