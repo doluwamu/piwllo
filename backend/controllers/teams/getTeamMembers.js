@@ -2,6 +2,9 @@ import Team from "../../models/teamModel.js";
 import User from "../../models/userModel.js";
 import AppError from "../../error/appError.js";
 
+// Request type: GET
+// To: /api/v1/teams/:teamId/members
+// Desc: to get the members of a particular team
 const getTeamMembers = async (req, res, next) => {
   try {
     const { teamId } = req.params;

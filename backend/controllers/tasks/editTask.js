@@ -2,6 +2,9 @@ import Task from "../../models/taskModel.js";
 import User from "../../models/userModel.js";
 import AppError from "../../error/appError.js";
 
+// Request type: PUT
+// To: /api/v1/tasks/task/:taskId
+// Desc: to update a task
 const editTask = async (req, res, next) => {
   try {
     const { taskId } = req.params;

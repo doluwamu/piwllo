@@ -1,6 +1,9 @@
 import AppError from "../../error/appError.js";
 import Task from "../../models/taskModel.js";
 
+// Request type: POST
+// To: /api/v1/tasks
+// Desc: to add a new task
 const createTask = async (req, res, next) => {
   try {
     const { task, rank } = req.body;

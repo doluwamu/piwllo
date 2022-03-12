@@ -2,6 +2,9 @@ import AppError from "../../error/appError.js";
 import User from "../../models/userModel.js";
 import validator from "validator";
 
+// Request type: GET
+// To: /api/v1/users/user/profile
+// Desc: to get info about the authenticated user
 export const getUserProfile = async (req, res, next) => {
   try {
     const user = req.user;
@@ -18,6 +21,9 @@ export const getUserProfile = async (req, res, next) => {
   }
 };
 
+// Request type: PUT
+// To: /api/v1/users/user/profile/edit
+// Desc: to update a user's profile
 export const updateProfile = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;

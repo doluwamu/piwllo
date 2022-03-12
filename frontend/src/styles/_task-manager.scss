@@ -226,7 +226,7 @@
           // background-color: green;
           padding: 3px;
           max-width: 650px;
-          margin: 0 auto;
+          margin: 0 auto 10px;
           overflow: auto;
 
           table {
@@ -238,5 +238,38 @@
   }
 }
 
-// @media screen and (m-width: 466px){
-// }
+@media screen and (max-width: 666px) {
+  .task-manager-section {
+    .task-section {
+      .task-actions-section {
+        .add-task {
+          display: block !important;
+          max-width: 400px;
+          overflow: hidden;
+          margin-bottom: 20px;
+          // background: green;
+
+          input,
+          select,
+          button {
+            margin: 5px 5px;
+            margin-right: 100px !important;
+          }
+
+          input {
+            width: 93%;
+          }
+
+          select {
+            width: 96%;
+          }
+
+          button {
+            width: 50%;
+            margin-left: 25%;
+          }
+        }
+      }
+    }
+  }
+}

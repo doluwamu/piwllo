@@ -54,6 +54,18 @@ const AsideBar = () => {
             </div>
           </div>
 
+          <div className="section user">
+            <li>User</li>
+            <div className="actions">
+              <li>
+                <Link to={"/user/profile"}>Your profile</Link>{" "}
+              </li>
+              <li>
+                <Link to="/user/profile/edit">Edit profile</Link>{" "}
+              </li>
+            </div>
+          </div>
+
           <li className="reviews">
             <Link to="/review">Review</Link>
           </li>

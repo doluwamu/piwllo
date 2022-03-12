@@ -7,7 +7,7 @@ import { generateToken } from "../../utils/token.js";
 // Desc: to register a user
 const signUp = async (req, res, next) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
+    const { image, name, email, password, confirmPassword } = req.body;
 
     if (!name) {
       return next(new AppError("name is required!", 400));
@@ -35,6 +35,7 @@ const signUp = async (req, res, next) => {
     }
 
     const user = new User({
+      image,
       name,
       email,
       password,
@@ -43,6 +44,7 @@ const signUp = async (req, res, next) => {
     await user.save();
     return res.status(201).json({
       _id: user._id,
+      image: user.image,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
@@ -54,5 +56,3 @@ const signUp = async (req, res, next) => {
 };
 
 export default signUp;
-
-// /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

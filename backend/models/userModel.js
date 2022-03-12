@@ -4,6 +4,11 @@ import validator from "validator";
 
 const userSchema = new mongoose.Schema(
   {
+    image: {
+      type: String,
+      required: true,
+      default: "/images/avatar.jpg",
+    },
     name: {
       type: String,
       required: true,
