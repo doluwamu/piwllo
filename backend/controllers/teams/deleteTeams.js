@@ -7,11 +7,11 @@ import AppError from "../../error/appError.js";
 const deleteTeams = async (req, res, next) => {
   try {
     const deleted = await Team.deleteMany({});
-    if (deleted) {
-      return res.json({ message: "Teams successfully deleted" });
-    } else {
+    if (!deleted) {
       return next(new AppError("Unable to delete teams", 404));
     }
+
+    return res.json({ message: "Teams successfully deleted" });
   } catch (error) {
     return next(error);
   }

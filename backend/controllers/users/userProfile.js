@@ -29,25 +29,25 @@ export const updateProfile = async (req, res, next) => {
     const { name, email, password } = req.body;
     const user = await User.findById(req.user._id).select("+password");
 
-    if (user) {
-      if (!validator.isEmail(email)) {
-        return next(new AppError("Please provide a valid email", 400));
-      }
-
-      user.name = name || user.name;
-      user.email = email || user.email;
-      user.password = password || user.password;
-
-      await user.save();
-
-      return res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-      });
-    } else {
+    if (!user) {
       return next(new AppError("User doesn't exist", 400));
     }
+
+    if (!validator.isEmail(email)) {
+      return next(new AppError("Please provide a valid email", 400));
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.password = password || user.password;
+
+    await user.save();
+
+    return res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     return next(error);
   }

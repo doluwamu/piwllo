@@ -7,11 +7,11 @@ import User from "../../models/userModel.js";
 const deleteAllUsers = async (req, res, next) => {
   try {
     const deleted = await User.deleteMany({});
-    if (deleted) {
-      return res.json({ message: "All users successfully deleted" });
-    } else {
+    if (!deleted) {
       return next(new AppError("Unable to delete users!", 404));
     }
+
+    return res.json({ message: "All users successfully deleted" });
   } catch (error) {
     return next(error);
   }
