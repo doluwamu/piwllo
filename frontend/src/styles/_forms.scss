@@ -1,0 +1,171 @@
+.form-container {
+  border-radius: 5px;
+
+  h2 {
+    text-align: center;
+  }
+
+  .form-elements {
+    max-width: 400px;
+    margin: 0 auto;
+
+    .form-element {
+      margin: 15px 0;
+      //   background-color: green;
+
+      input,
+      button {
+        border-radius: 5px;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        padding: 7px 1%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        &::placeholder {
+          font-size: 12px;
+        }
+      }
+
+      button {
+        margin: 5px 0;
+        padding: 7px 1%;
+        border: none;
+        font-weight: bold;
+        transition: 0.4s;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .form-links {
+    p {
+      text-align: center;
+    }
+  }
+
+  &.dark {
+    box-shadow: 0 0 3px 0.2px var(--light-bg);
+    .form-elements {
+      .form-element {
+        .input-element {
+          input {
+            background-color: var(--dark-bg);
+            box-shadow: 0 0 3px 0.1px var(--light-bg);
+
+            &::placeholder,
+            &:focus {
+              color: var(--dark-bg-text);
+            }
+          }
+        }
+        button {
+          background-color: var(--dark-bg);
+          color: var(--dark-bg-text);
+          border: 1px solid #ffe;
+
+          &:hover {
+            // border: 2px solid var(--dark-bg);
+            background-color: rgba(255, 255, 238, 0.2);
+            // background-color: rgba(68, 3, 68, 0.6);
+            // color: var(--dark-bg);
+          }
+        }
+      }
+    }
+
+    .form-links {
+      p {
+        a {
+          color: lightblue;
+        }
+      }
+    }
+  }
+
+  &.light {
+    box-shadow: 0 0 3px 0.2px var(--dark-bg);
+    .form-elements {
+      .form-element {
+        .input-element {
+          input {
+            // background-color: var(--dark-bg);
+            box-shadow: 0 0 3px 0.1px var(--dark-bg);
+
+            &::placeholder,
+            &:focus {
+              color: var(--dark-bg);
+            }
+          }
+        }
+        button {
+          background-color: var(--light-bg);
+          //   color: var(--dark-bg-text);
+          border: 1px solid var(--dark-bg);
+          color: var(--dark-bg);
+
+          &:hover {
+            // border: 2px solid var(--dark-bg);
+            // background-color: rgba(255, 255, 238, 0.2);
+            background-color: rgba(68, 3, 68, 0.6);
+            color: #ffe;
+          }
+        }
+      }
+    }
+
+    .form-links {
+      p {
+        a {
+          color: blue;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 546px) {
+  .form-container {
+    max-width: 500px;
+    margin: 40px auto 15px;
+    padding: 5px 10px;
+
+    .form-elements {
+      .form-element {
+        input,
+        button {
+          width: 90%;
+        }
+
+        input {
+          margin: 8px 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 545px) {
+  .form-container {
+    margin: 40px 10% 15px;
+    padding: 5px 15px;
+
+    .form-elements {
+      //   background-color: green;
+
+      .form-element {
+        input,
+        button {
+          width: 98%;
+        }
+
+        // input {
+        //   margin-right: 10px;
+        // }
+      }
+    }
+  }
+}

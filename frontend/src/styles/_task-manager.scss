@@ -25,7 +25,7 @@
 
         button {
           background-color: yellow;
-          transition: 0.4s;
+          transition: 0.2s;
           font-size: 14px;
           font-weight: bold;
           border: none;
@@ -44,7 +44,9 @@
           padding: 0;
           background-color: #000;
           border: none;
+          border-radius: 4px;
           border-collapse: collapse;
+          overflow: hidden;
 
           thead {
             tr {
