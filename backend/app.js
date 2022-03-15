@@ -39,9 +39,6 @@ app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/teams", teamRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 
-const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-
 //for invalid route
 app.use((req, res, next) => {
   return next(
