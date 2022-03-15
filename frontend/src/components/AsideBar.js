@@ -31,6 +31,9 @@ const AsideBar = () => {
             </li>
             <div className="actions">
               <li>
+                <Link to={"/task-manager"}>All</Link>{" "}
+              </li>
+              <li>
                 <Link to={"/tasks/important"}>Important</Link>{" "}
               </li>
               <li>

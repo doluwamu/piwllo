@@ -5,6 +5,7 @@ import SignupScreen from "./screens/SignupScreen";
 import SigninScreen from "./screens/SigninScreen";
 import TaskManagerScreen from "./screens/TaskManagerScreen";
 import ProfileViewScreen from "./screens/ProfileViewScreen";
+import ProfileEditScreen from "./screens/ProfileEditScreen";
 
 const AllRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AllRoutes = () => {
         <Route path="/signin" element={<SigninScreen />} />
         <Route path="/task-manager" element={<TaskManagerScreen />} />
         <Route path="/user/profile" element={<ProfileViewScreen />} />
+        <Route path="/user/profile/edit" element={<ProfileEditScreen />} />
       </Routes>
     </Router>
   );
