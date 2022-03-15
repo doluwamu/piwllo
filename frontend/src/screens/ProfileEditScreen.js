@@ -37,18 +37,19 @@ const ProfileEditScreen = () => {
           <h2>Edit profile</h2>
 
           <div className="avatar">
-          <label for="upload">
-            <img src="/images/avatar.jpg" alt="avatar" />
-          </label>
+            {/* <label for="upload"> */}
+            {/* <label>
+              <img src="/images/avatar.jpg" alt="avatar" />
+            </label> */}
 
-          <input
-            id="upload"
-            style={{ display: "none", visibility: "none" }}
-            type="file"
-            name=""
-            value=""
-          />
-        </div>
+            <input
+              id="upload"
+              //   style={{ display: "none", visibility: "none" }}
+              type="file"
+              name=""
+              value=""
+            />
+          </div>
 
           <div className="form-elements">
             <div className="form-element">

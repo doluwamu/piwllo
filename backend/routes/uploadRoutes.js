@@ -1,42 +1,41 @@
-import path from "path";
 import express from "express";
-import multer from "multer";
+import { protect } from "../middlewares/auth.js";
+import { bufferToBase64 } from "../services/dataUri.js";
+import { cloudUpload } from "../services/cloudinary.js";
+import CloudinaryImage from "../models/cloudinary-image.js";
+import upload from "../services/multer.js";
+import AppError from "../error/appError.js";
 
 const router = express.Router();
+const singleUpload = upload.single("image");
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename(req, file, cb) {
-    cb(
-      null,
-      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
-    );
-  },
-});
+const singleUploadCtrl = (req, res, next) => {
+  singleUpload(req, res, (error) => {
+    if (error) {
+      return next(new AppError(error.message, 500));
+    }
+    next();
+  });
+};
 
-function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = filetypes.test(file.mimetype);
+router.post("", protect, singleUploadCtrl, async (req, res, next) => {
+  try {
+    if (!req.file) {
+      throw new Error("Image is not presented!");
+    }
 
-  if (extname && mimetype) {
-    return cb(null, true);
-  } else {
-    cb("Images only!");
+    const file64 = bufferToBase64(req.file);
+    const result = await cloudUpload(file64.content);
+    const cImage = new CloudinaryImage({
+      url: result.secure_url,
+      cloudinaryId: result.public_id,
+    });
+
+    const savedImage = await cImage.save();
+    return res.json({ _id: savedImage.id, url: savedImage.url });
+  } catch (error) {
+    return next(new AppError(error.message, 500));
   }
-}
-
-const upload = multer({
-  storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-});
-
-router.post("/", upload.single("image"), (req, res) => {
-  return res.send(`/${req.file.path}`);
 });
 
 export default router;
