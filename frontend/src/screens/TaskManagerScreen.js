@@ -14,12 +14,16 @@ const TaskManagerScreen = () => {
   };
 
   return (
-    <div className="task-manager-section">
+    <div className="task-manager-section main">
       {/* Aside bar */}
       <AsideBar />
 
       {/* task actions */}
-      <div className={`task-section ${darkTheme ? "dark" : "light"}`}>
+      <div
+        className={`task-section general-section ${
+          darkTheme ? "dark" : "light"
+        }`}
+      >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
           <div className="theme-btn-container">

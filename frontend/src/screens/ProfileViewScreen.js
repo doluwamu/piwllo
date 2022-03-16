@@ -8,12 +8,16 @@ const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
 
   return (
-    <div className="profile-view-section">
+    <div className="profile-view-section main">
       {/* Aside bar */}
       <AsideBar />
 
       {/* Profile section */}
-      <div className={`profile-section ${darkTheme ? "dark" : "light"}`}>
+      <div
+        className={`profile-section general-section ${
+          darkTheme ? "dark" : "light"
+        }`}
+      >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
           <div className="theme-btn-container">

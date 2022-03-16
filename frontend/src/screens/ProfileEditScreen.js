@@ -9,6 +9,7 @@ const ProfileEditScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [image, setImage] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
 
@@ -17,11 +18,15 @@ const ProfileEditScreen = () => {
   };
 
   return (
-    <div className="profile-edit-section">
+    <div className="profile-edit-section main">
       {/* Aside bar */}
       <AsideBar />
 
-      <div className={`edit-section ${darkTheme ? "dark" : "light"}`}>
+      <div
+        className={`edit-section general-section ${
+          darkTheme ? "dark" : "light"
+        }`}
+      >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
           <div className="theme-btn-container">
@@ -37,17 +42,17 @@ const ProfileEditScreen = () => {
           <h2>Edit profile</h2>
 
           <div className="avatar">
-            {/* <label for="upload"> */}
-            {/* <label>
-              <img src="/images/avatar.jpg" alt="avatar" />
-            </label> */}
+            <label for="upload">
+              <img title={image} src={"/images/avatar.jpg"} alt="avatar" />
+            </label>
 
             <input
               id="upload"
-              //   style={{ display: "none", visibility: "none" }}
+              style={{ display: "none", visibility: "none" }}
               type="file"
-              name=""
-              value=""
+              name="image"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
             />
           </div>
 
