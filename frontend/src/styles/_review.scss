@@ -1,0 +1,123 @@
+.add-review-section {
+  .review-section {
+    .review {
+      //   background-color: green;
+
+      textarea,
+      button {
+        border-radius: 5px;
+        margin: 5px 0;
+        padding: 5px;
+        border: none;
+      }
+
+      //   textarea {
+      // width: 500px !important;
+      // height: 100px !important;
+      // margin-left: 17%;
+      //   }
+
+      .review-btn-section {
+        .btn-review {
+          cursor: pointer;
+          font-weight: bold;
+        }
+      }
+    }
+
+    &.dark {
+      .review {
+        textarea {
+          background-color: var(--dark-bg);
+          box-shadow: 0 0 3px 0.1px var(--light-bg);
+
+          &::placeholder,
+          &:focus {
+            color: var(--dark-bg-text);
+          }
+        }
+
+        .review-btn-section {
+          .btn-review {
+            border: 1px solid var(--light-bg);
+            background-color: var(--dark-bg);
+            color: var(--dark-bg-text);
+            transition: 0.4s;
+
+            &:hover {
+              background-color: rgba(255, 255, 238, 0.2);
+            }
+          }
+        }
+      }
+    }
+
+    &.light {
+      .review {
+        textarea {
+          box-shadow: 0 0 3px 0.1px var(--dark-bg);
+        }
+
+        .review-btn-section {
+          .btn-review {
+            background-color: var(--light-bg);
+            border: 1px solid var(--dark-bg);
+            color: var(--dark-bg);
+            transition: 0.4s;
+
+            &:hover {
+              background-color: rgba(68, 3, 68, 0.6);
+              color: #ffe;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 837px) {
+  .add-review-section {
+    .review-section {
+      .review {
+        max-width: 800px;
+        margin: 70px auto 15px;
+
+        textarea {
+          width: 500px !important;
+          height: 100px !important;
+          margin-left: 17%;
+        }
+
+        .review-btn-section {
+          .btn-review {
+            width: 300px;
+            margin-left: 30%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 836px) {
+  .add-review-section {
+    .review-section {
+      .review {
+        margin: 70px 0 15px;
+        textarea {
+          width: 80% !important;
+          height: 80px;
+          margin-left: 8%;
+        }
+
+        .review-btn-section {
+          .btn-review {
+            width: 50%;
+            margin-left: 22%;
+          }
+        }
+      }
+    }
+  }
+}

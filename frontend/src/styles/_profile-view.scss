@@ -141,8 +141,8 @@
           margin-left: 5%;
 
           img {
-            width: 150px;
-            height: 150px;
+            width: 50%;
+            height: 50%;
           }
         }
 
@@ -151,6 +151,12 @@
           margin-top: 10px;
           //   background-color: brown;
           max-width: 200px;
+
+          .info {
+            h3 {
+              font-size: 18px;
+            }
+          }
         }
       }
     }
