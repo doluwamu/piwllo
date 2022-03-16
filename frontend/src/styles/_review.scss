@@ -30,6 +30,7 @@
         textarea {
           background-color: var(--dark-bg);
           box-shadow: 0 0 3px 0.1px var(--light-bg);
+          color: var(--dark-bg-text);
 
           &::placeholder,
           &:focus {
@@ -81,7 +82,7 @@
     .review-section {
       .review {
         max-width: 800px;
-        margin: 70px auto 15px;
+        margin: 150px auto 15px;
 
         textarea {
           width: 500px !important;
