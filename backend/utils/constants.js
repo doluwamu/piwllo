@@ -3,4 +3,5 @@ export const constants = {
   TASK: "Task",
   TEAM: "Team",
   CLOUDINARYIMAGE: "CloudinaryImage",
+  REVIEW: "Review",
 };

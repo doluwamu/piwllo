@@ -13,6 +13,7 @@ import userRoutes from "./routes/userRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 const app = express();
 const { NODE_ENV } = configSettings;
@@ -38,6 +39,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/tasks", taskRoutes);
 app.use("/api/v1/teams", teamRoutes);
 app.use("/api/v1/upload", uploadRoutes);
+app.use("/api/v1/reviews", reviewRoutes);
 
 //for invalid route
 app.use((req, res, next) => {
