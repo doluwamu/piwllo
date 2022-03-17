@@ -1,6 +1,9 @@
 import Review from "../../models/reviewModel.js";
 import AppError from "../../error/appError.js";
 
+// Request type: POST
+// To: /api/v1/reviews
+// Desc: to add a review
 const addReview = async (req, res, next) => {
   try {
     const { user } = req;

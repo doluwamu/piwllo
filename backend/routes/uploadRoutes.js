@@ -9,7 +9,7 @@ import { v2 } from "cloudinary";
 
 const router = express.Router();
 const singleUpload = upload.single("image");
-const cloudinaryV2 = v2
+const cloudinaryV2 = v2;
 
 const singleUploadCtrl = (req, res, next) => {
   singleUpload(req, res, (error) => {
@@ -20,6 +20,9 @@ const singleUploadCtrl = (req, res, next) => {
   });
 };
 
+// Request type: POST
+// To: /api/v1/upload
+// Desc: to upload a file to cloudinary and store the url and id in the DB
 router.post("", protect, singleUploadCtrl, async (req, res, next) => {
   try {
     if (!req.file) {
