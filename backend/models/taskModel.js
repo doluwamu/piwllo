@@ -3,7 +3,7 @@ import { constants } from "../utils/constants.js";
 
 const { TASK, USER } = constants;
 
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
 const taskSchema = new Schema(
   {
@@ -26,5 +26,5 @@ const taskSchema = new Schema(
   }
 );
 
-const Task = mongoose.model(TASK, taskSchema);
+const Task = model(TASK, taskSchema);
 export default Task;

@@ -26,7 +26,18 @@ export const getUserProfile = async (req, res, next) => {
 // Desc: to update a user's profile
 export const updateProfile = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
+
+    if (password && !confirmPassword) {
+      return next(new AppError("Please provide a confirmation password", 400));
+    }
+
+    if (password !== confirmPassword) {
+      return next(
+        new AppError("password and confirmation password don't match", 400)
+      );
+    }
+
     const user = await User.findById(req.user._id).select("+password");
 
     if (!user) {

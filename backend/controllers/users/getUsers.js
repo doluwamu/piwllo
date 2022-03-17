@@ -5,7 +5,7 @@ import User from "../../models/userModel.js";
 // Desc: to get all users from DB(Admins Only)
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).populate('image');
     return res.json(users);
   } catch (error) {
     return next(error);

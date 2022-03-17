@@ -1,13 +1,18 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import validator from "validator";
+import { constants } from "../utils/constants.js";
 
-const userSchema = new mongoose.Schema(
+const { USER, CLOUDINARYIMAGE } = constants;
+
+const { Schema, model } = mongoose;
+
+const userSchema = new Schema(
   {
     image: {
-      type: String,
-      required: true,
-      default: "/images/avatar.jpg",
+      type: Schema.Types.ObjectId,
+      ref: CLOUDINARYIMAGE,
+      default: "62336aa1a9c02c01d7e607e0",
     },
     name: {
       type: String,
@@ -56,6 +61,6 @@ userSchema.pre("save", function (next) {
   });
 });
 
-const User = mongoose.model("User", userSchema);
+const User = model(USER, userSchema);
 
 export default User;

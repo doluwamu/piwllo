@@ -2,9 +2,10 @@ import express from "express";
 import { protect } from "../middlewares/auth.js";
 import { bufferToBase64 } from "../services/dataUri.js";
 import { cloudUpload } from "../services/cloudinary.js";
-import CloudinaryImage from "../models/cloudinary-image.js";
+import CloudinaryImage from "../models/cloudinaryImageModel.js";
 import upload from "../services/multer.js";
 import AppError from "../error/appError.js";
+import { v2 } from "cloudinary";
 
 const router = express.Router();
 const singleUpload = upload.single("image");
@@ -26,13 +27,23 @@ router.post("", protect, singleUploadCtrl, async (req, res, next) => {
 
     const file64 = bufferToBase64(req.file);
     const result = await cloudUpload(file64.content);
+    const uploadedFileEdit = v2.url(result.secure_url, {
+      width: 400,
+      height: 400,
+      crop: "thumb",
+      gravity: "face",
+    });
     const cImage = new CloudinaryImage({
-      url: result.secure_url,
+      url: uploadedFileEdit,
       cloudinaryId: result.public_id,
     });
 
     const savedImage = await cImage.save();
-    return res.json({ _id: savedImage.id, url: savedImage.url });
+    return res.json({
+      _id: savedImage.id,
+      url: savedImage.url,
+      uploadedFileEdit,
+    });
   } catch (error) {
     return next(new AppError(error.message, 500));
   }

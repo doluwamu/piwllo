@@ -4,7 +4,7 @@ import { memberSchema } from "./teamMemberModel.js";
 
 const { USER, TEAM } = constants;
 
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
 const teamSchema = new Schema(
   {
@@ -20,6 +20,6 @@ const teamSchema = new Schema(
   }
 );
 
-const Team = mongoose.model(TEAM, teamSchema);
+const Team = model(TEAM, teamSchema);
 
 export default Team;

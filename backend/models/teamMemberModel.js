@@ -5,7 +5,7 @@ import { constants } from "../utils/constants.js";
 
 const { USER, TEAM } = constants;
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 export const memberSchema = new Schema(
   {
