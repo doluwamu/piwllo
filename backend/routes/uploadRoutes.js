@@ -9,6 +9,7 @@ import { v2 } from "cloudinary";
 
 const router = express.Router();
 const singleUpload = upload.single("image");
+const cloudinaryV2 = v2
 
 const singleUploadCtrl = (req, res, next) => {
   singleUpload(req, res, (error) => {
@@ -27,7 +28,7 @@ router.post("", protect, singleUploadCtrl, async (req, res, next) => {
 
     const file64 = bufferToBase64(req.file);
     const result = await cloudUpload(file64.content);
-    const uploadedFileEdit = v2.url(result.secure_url, {
+    const uploadedFileEdit = cloudinaryV2.url(result.secure_url, {
       width: 400,
       height: 400,
       crop: "thumb",

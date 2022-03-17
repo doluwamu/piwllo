@@ -9,11 +9,9 @@ export const getUserProfile = async (req, res, next) => {
   try {
     const user = req.user;
 
-    const profile = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    };
+    const profile = await User.findById(user._id)
+      .populate("image", "-createdAt -updatedAt")
+      .select("-isAdmin -createdAt -updatedAt");
 
     return res.json(profile);
   } catch (error) {
@@ -26,7 +24,7 @@ export const getUserProfile = async (req, res, next) => {
 // Desc: to update a user's profile
 export const updateProfile = async (req, res, next) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword, image } = req.body;
 
     if (password && !confirmPassword) {
       return next(new AppError("Please provide a confirmation password", 400));
@@ -51,14 +49,14 @@ export const updateProfile = async (req, res, next) => {
     user.name = name || user.name;
     user.email = email || user.email;
     user.password = password || user.password;
+    user.image = image || user.image;
 
     await user.save();
+    const updatedUser = await User.findById(user._id)
+      .populate("image", "-createdAt -updatedAt")
+      .select("-isAdmin -createdAt -updatedAt");
 
-    return res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    });
+    return res.json(updatedUser);
   } catch (error) {
     return next(error);
   }
