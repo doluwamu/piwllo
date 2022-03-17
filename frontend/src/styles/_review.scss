@@ -2,6 +2,13 @@
   .review-section {
     .review {
       //   background-color: green;
+      h2 {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        font-family: cursive;
+      }
 
       textarea,
       button {
@@ -82,7 +89,7 @@
     .review-section {
       .review {
         max-width: 800px;
-        margin: 150px auto 15px;
+        margin: 100px auto 15px;
 
         textarea {
           width: 500px !important;

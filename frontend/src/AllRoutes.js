@@ -7,6 +7,7 @@ import TaskManagerScreen from "./screens/TaskManagerScreen";
 import ProfileViewScreen from "./screens/ProfileViewScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import AddRewiewScreen from "./screens/AddRewiewScreen";
+import CreateTeamScreen from "./screens/CreateTeamScreen";
 
 const AllRoutes = () => {
   return (
@@ -15,9 +16,10 @@ const AllRoutes = () => {
         <Route path="/" index={true} element={<HomeScreen />} />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
-        <Route path="/task-manager" element={<TaskManagerScreen />} />
         <Route path="/user/profile" element={<ProfileViewScreen />} />
         <Route path="/user/profile/edit" element={<ProfileEditScreen />} />
+        <Route path="/task-manager" element={<TaskManagerScreen />} />
+        <Route path="/teams/create" element={<CreateTeamScreen />} />
         <Route path="/review" element={<AddRewiewScreen />} />
       </Routes>
     </Router>

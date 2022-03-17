@@ -49,10 +49,10 @@ const AsideBar = () => {
             <li>Teams</li>
             <div className="actions">
               <li>
-                <Link to={"/team-create"}>Create team</Link>{" "}
+                <Link to={"/teams/create"}>Create team</Link>{" "}
               </li>
               <li>
-                <Link to="/your-teams">Your teams</Link>{" "}
+                <Link to="/teams/user">Your teams</Link>{" "}
               </li>
             </div>
           </div>

@@ -6,14 +6,14 @@ import {
   getAllUserTasks,
   getTaskByPriority,
 } from "../controllers/tasks/getUserTasks.js";
-import { protect } from "../middlewares/auth.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.post("", protect, createTask);
-router.get("/auser", protect, getAllUserTasks);
-router.get("/:priority", protect, getTaskByPriority);
-router.put("/task/:taskId", protect, editTask);
-router.delete("/task/:taskId", protect, deleteTask);
+router.post("", isAuthenticated, createTask);
+router.get("/auser", isAuthenticated, getAllUserTasks);
+router.get("/:priority", isAuthenticated, getTaskByPriority);
+router.put("/task/:taskId", isAuthenticated, editTask);
+router.delete("/task/:taskId", isAuthenticated, deleteTask);
 
 export default router;

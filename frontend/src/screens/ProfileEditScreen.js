@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-import { Link } from "react-router-dom";
 
 const ProfileEditScreen = () => {
   const [name, setName] = useState("");
@@ -35,10 +34,6 @@ const ProfileEditScreen = () => {
         </div>
 
         <form className={`form-container ${darkTheme ? "dark" : "light"}`}>
-          <Link to="/task-manager">
-            <i className="fa-solid fa-home"></i>
-          </Link>
-
           <h2>Edit profile</h2>
 
           <div className="avatar">

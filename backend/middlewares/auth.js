@@ -3,7 +3,7 @@ import AppError from "../error/appError.js";
 import User from "../models/userModel.js";
 import { configSettings } from "../config.js";
 
-export const protect = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&

@@ -30,6 +30,7 @@ const AddRewiewScreen = () => {
 
         {/* Review */}
         <div className="review">
+          <h2>What do you think? We'd love to hear from you</h2>
           <textarea
             placeholder="Drop a review message"
             value={review}

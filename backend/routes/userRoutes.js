@@ -6,14 +6,14 @@ import {
   getUserProfile,
   updateProfile,
 } from "../controllers/users/userProfile.js";
-import { isAdmin, protect } from "../middlewares/auth.js";
+import { isAdmin, isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.get("/user/profile", protect, getUserProfile);
-router.put("/user/profile/edit", protect, updateProfile);
-router.delete("/user/delete", protect, deleteUser);
-router.delete("", protect, isAdmin, deleteAllUsers);
-router.get("", protect, isAdmin, getUsers);
+router.get("/user/profile", isAuthenticated, getUserProfile);
+router.put("/user/profile/edit", isAuthenticated, updateProfile);
+router.delete("/user/delete", isAuthenticated, deleteUser);
+router.delete("", isAuthenticated, isAdmin, deleteAllUsers);
+router.get("", isAuthenticated, isAdmin, getUsers);
 
 export default router;
