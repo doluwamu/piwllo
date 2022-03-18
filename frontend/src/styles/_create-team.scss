@@ -1,21 +1,12 @@
-.create-team-section {
-  padding-bottom: 20px;
-
-  .create-team-form-section {
-    .form-container {
-      .form-elements {
-        .form-element {
-          .added-infos {
-          }
-        }
-      }
-    }
-  }
-}
+// .create-team-section {
+//   padding-bottom: 20px;
+// }
 
 @media screen and (min-width: 546px) {
   .create-team-section {
     .create-team-form-section {
+      padding-bottom: 10px;
+
       .form-container {
         .form-elements {
           .form-element {
@@ -50,6 +41,8 @@
 
 @media screen and (max-width: 545px) {
   .create-team-section {
+    padding-bottom: 10px;
+
     .create-team-form-section {
       .form-container {
         .form-elements {

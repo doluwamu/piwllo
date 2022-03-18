@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import validator from "validator";
 
 const CreateTeamScreen = () => {
   const [teamName, setTeamName] = useState("");
@@ -17,7 +18,7 @@ const CreateTeamScreen = () => {
   };
 
   const handleAddMember = () => {
-    if (!member) {
+    if (!member || !validator.isEmail(member)) {
       return;
     }
     setMembers([...members, member]);
@@ -79,7 +80,7 @@ const CreateTeamScreen = () => {
 
                 {members &&
                   members.map((m, key) => {
-                    console.log(key)
+                    console.log(key);
                     return (
                       <div className="added-infos" key={key}>
                         <p>{m}</p>
