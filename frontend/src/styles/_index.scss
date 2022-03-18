@@ -9,6 +9,7 @@
 @import "./profile-edit";
 @import "./general";
 @import "./review";
+@import "./create-team";
 
 html,
 body {
@@ -26,12 +27,16 @@ body {
   }
 
   ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 25px rgb(233, 111, 111);
     -webkit-box-shadow: inset 0 0 25px rgb(233, 111, 111);
+    border-radius: 15px;
     -webkit-border-radius: 15px;
   }
 
   ::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 30px rgb(190, 183, 183);
     -webkit-box-shadow: inset 0 0 30px rgb(190, 183, 183);
+    border-radius: 15px;
     -webkit-border-radius: 15px;
   }
 }
@@ -43,8 +48,8 @@ textarea {
 
 :root {
   --dark-bg: rgb(68, 3, 68);
-  --light-bg: #ffe;
   --dark-bg-text: #ffe;
+  --light-bg: #ffe;
   --light-bg-text: rgb(68, 3, 68);
   --shadow: gray;
 }
@@ -58,6 +63,10 @@ textarea {
     background-color: var(--light-bg);
     color: var(--light-bg-text);
 
+    input {
+      color: var(--light-bg-text);
+    }
+
     a {
       color: var(--light-bg-text);
     }
@@ -66,6 +75,10 @@ textarea {
   &.canvas-dark {
     background-color: var(--dark-bg);
     color: var(--dark-bg-text);
+
+    input {
+      color: var(--dark-bg-text);
+    }
 
     a {
       color: var(--dark-bg-text);
