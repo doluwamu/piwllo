@@ -9,8 +9,6 @@ const CreateTeamScreen = () => {
   const [member, setMember] = useState("");
   const [members, setMembers] = useState([]);
 
-  console.log(members);
-
   const { darkTheme } = useContext(ThemeContext);
 
   const handleCreateTeam = (e) => {
@@ -23,6 +21,12 @@ const CreateTeamScreen = () => {
     }
     setMembers([...members, member]);
     setMember("");
+  };
+
+  const handleRemoveMember = (key) => {
+    let memb = [...members];
+    memb.splice(key, 1);
+    setMembers(memb);
   };
 
   return (
@@ -80,11 +84,10 @@ const CreateTeamScreen = () => {
 
                 {members &&
                   members.map((m, key) => {
-                    console.log(key);
                     return (
                       <div className="added-infos" key={key}>
                         <p>{m}</p>
-                        <div>x</div>
+                        <div onClick={() => handleRemoveMember(key)}>x</div>
                       </div>
                     );
                   })}
