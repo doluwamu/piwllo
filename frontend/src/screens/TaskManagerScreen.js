@@ -5,7 +5,7 @@ import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 
 const TaskManagerScreen = () => {
-  const [task, setTask] = useState();
+  const [task, setTask] = useState('');
 
   const { darkTheme } = useContext(ThemeContext);
 

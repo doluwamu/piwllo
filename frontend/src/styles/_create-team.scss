@@ -1,0 +1,86 @@
+.create-team-section {
+  padding-bottom: 20px;
+
+  .create-team-form-section {
+    .form-container {
+      .form-elements {
+        .form-element {
+          .added-infos {
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 546px) {
+  .create-team-section {
+    .create-team-form-section {
+      .form-container {
+        .form-elements {
+          .form-element {
+            .added-infos {
+              display: flex;
+              // flex-direction: column;
+              flex-wrap: wrap;
+              padding: 0;
+              margin: 5px 0;
+              // height: 50px;
+              // background-color: green;
+
+              p {
+                width: 80%;
+                //   background-color: brown;
+              }
+              div {
+                width: 10%;
+                height: 18px;
+                margin-top: 16px;
+                text-align: center;
+                cursor: pointer;
+                //   background-color: yellow;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 545px) {
+  .create-team-section {
+    .create-team-form-section {
+      .form-container {
+        .form-elements {
+          .form-element {
+            .added-infos {
+              p {
+                text-align: center;
+              }
+              div {
+                margin-right: 16px;
+                margin-bottom: 5px;
+                text-align: center;
+                cursor: pointer;
+                //   background-color: yellow;
+              }
+            }
+          }
+        }
+      }
+
+      &.dark {
+        .added-infos {
+          border-bottom: 1px solid var(--dark-bg-text);
+        }
+      }
+
+      &.light {
+        .added-infos {
+          border-bottom: 1px solid var(--light-bg-text);
+        }
+      }
+    }
+  }
+}

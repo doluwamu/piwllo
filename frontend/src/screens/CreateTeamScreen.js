@@ -30,7 +30,7 @@ const CreateTeamScreen = () => {
       <AsideBar />
 
       <div
-        className={`team-create-form-section general-section ${
+        className={`create-team-form-section general-section ${
           darkTheme ? "dark" : "light"
         }`}
       >
@@ -63,9 +63,9 @@ const CreateTeamScreen = () => {
               <label>Add member(s):</label>
               <div className="input-element add-member">
                 <input
-                  type="text"
+                  type="email"
                   name="members"
-                  placeholder="Write here"
+                  placeholder="Enter email"
                   value={member}
                   onChange={(e) => setMember(e.target.value)}
                 />
@@ -76,6 +76,17 @@ const CreateTeamScreen = () => {
                 >
                   Add member
                 </button>
+
+                {members &&
+                  members.map((m, key) => {
+                    console.log(key)
+                    return (
+                      <div className="added-infos" key={key}>
+                        <p>{m}</p>
+                        <div>x</div>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
 
