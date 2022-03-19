@@ -45,7 +45,7 @@
       .sections-container {
         .subject {
           h2 {
-            color: rgb(2, 117, 133);
+            color: var(--light-bg-text);
           }
           p {
             a {
@@ -114,7 +114,7 @@
         .subject {
           div {
             h2 {
-              color: rgb(2, 117, 133) !important;
+              color: var(--light-bg-text);
             }
             p {
               a {

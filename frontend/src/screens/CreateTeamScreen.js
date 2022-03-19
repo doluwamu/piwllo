@@ -83,14 +83,18 @@ const CreateTeamScreen = () => {
                 </button>
 
                 {members &&
-                  members.map((m, key) => {
-                    return (
-                      <div className="added-infos" key={key}>
-                        <p>{m}</p>
-                        <div onClick={() => handleRemoveMember(key)}>x</div>
-                      </div>
-                    );
-                  })}
+                  members.map((m, key) => (
+                    <div className="added-infos" key={key}>
+                      <p>{m}</p>
+                      <div onClick={() => handleRemoveMember(key)}>x</div>
+                    </div>
+                  ))}
+
+                {(!members || members.length < 1) && (
+                  <div>
+                    <p style={{ textAlign: "center" }}>No member(s) added</p>
+                  </div>
+                )}
               </div>
             </div>
 
