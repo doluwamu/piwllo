@@ -4,13 +4,16 @@ import App from "./App";
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "./context/ThemeContext";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <ThemeProvider>
       <App />
     </ThemeProvider>
-  </React.StrictMode>,
+  </Provider>,
+
   document.getElementById("root")
 );
 
@@ -18,3 +21,6 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// <Provider store={store}>
+// </Provider>,

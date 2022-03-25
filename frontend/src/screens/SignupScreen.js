@@ -1,7 +1,10 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../redux/actions/authActions";
+import { USER_REGISTERATION_RESET } from "../redux/constants/authConstants";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -9,11 +12,25 @@ const SignupScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const dispatch = useDispatch();
+
+  const userRegisteration = useSelector((state) => state.userRegistration);
+  const { loading, success, error } = userRegisteration;
+
   const { darkTheme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    dispatch({
+      type: USER_REGISTERATION_RESET,
+    });
+  }, [dispatch]);
 
   const handleSignUp = (e) => {
     e.preventDefault();
+    dispatch(registerUser(name, email, password, confirmPassword));
   };
+
+  // console.log(props);
 
   return (
     <>
@@ -29,21 +46,25 @@ const SignupScreen = () => {
           <i className="fa-solid fa-home"></i>
         </Link>
 
-        <h2>Sign up</h2>
+        {error && <p>{error}</p>}
 
-        {/* <div className="avatar">
-          <label for="upload">
-            <img src="/images/avatar.jpg" alt="avatar" />
-          </label>
-
-          <input
-            id="upload"
-            style={{ display: "none", visibility: "none" }}
-            type="file"
-            name=""
-            value=""
+        {success && (
+          <Navigate
+            to="/signin"
+            state={{
+              message:
+                "Your registration was successful. Login to your account",
+            }}
           />
-        </div> */}
+          // <div>
+          //   <small>
+          // Registration successful, <Link to={"/signin"}>sign in</Link> to
+          //     your account
+          //   </small>
+          // </div>
+        )}
+
+        <h2>Sign up</h2>
 
         <div className="form-elements">
           <div className="form-element">
@@ -100,7 +121,7 @@ const SignupScreen = () => {
 
           <div className="form-element">
             <button type="submit" onClick={handleSignUp}>
-              Sign up
+              {loading ? "loading..." : "Sign up"}
             </button>
           </div>
         </div>

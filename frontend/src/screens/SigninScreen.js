@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -8,6 +8,9 @@ const SigninScreen = () => {
   const [password, setPassword] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
+  const location = useLocation();
+
+  const { message } = location.state;
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -26,6 +29,7 @@ const SigninScreen = () => {
         <Link to="/">
           <i className="fa-solid fa-home"></i>
         </Link>
+        {message && <p>{message}</p>}
 
         <h2>Sign in</h2>
 
