@@ -15,8 +15,8 @@ const SignupScreen = () => {
 
   const dispatch = useDispatch();
 
-  const userRegisteration = useSelector((state) => state.userRegistration);
-  const { loading, success, error } = userRegisteration;
+  const userRegistration = useSelector((state) => state.userRegistration);
+  const { loading, success, error } = userRegistration;
 
   const { darkTheme } = useContext(ThemeContext);
 
@@ -30,8 +30,6 @@ const SignupScreen = () => {
     e.preventDefault();
     dispatch(registerUser(name, email, password, confirmPassword));
   };
-
-  // console.log(props);
 
   return (
     <>
@@ -63,12 +61,6 @@ const SignupScreen = () => {
               message: "Your registration was successful. You can login",
             }}
           />
-          // <div>
-          //   <small>
-          // Registration successful, <Link to={"/signin"}>sign in</Link> to
-          //     your account
-          //   </small>
-          // </div>
         )}
 
         <h2>Sign up</h2>

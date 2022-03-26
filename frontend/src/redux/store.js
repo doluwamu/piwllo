@@ -4,14 +4,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { userLogin, userRegistration } from "./reducers/authReducers";
 
 const reducers = combineReducers({
-  userRegistration,
   userLogin,
+  userRegistration,
 });
 
 const initialState = {
   userLogin: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
-    : null,
+    : {},
 };
 
 const middleware = [thunk];

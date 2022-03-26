@@ -5,12 +5,12 @@
     text-align: center;
   }
 
-  .avatar{
+  .avatar {
     // background-color: green;
     max-width: 200px;
     margin: 0 auto 10px;
-    label{
-      img{
+    label {
+      img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
@@ -27,21 +27,28 @@
       margin: 15px 0;
       //   background-color: green;
 
+      .input-element {
+        margin-bottom: 10px;
+
+        input {
+          border: none;
+          outline: none;
+          padding: 7px 1%;
+          margin-top: 10px;
+
+          &::placeholder {
+            font-size: 12px;
+          }
+        }
+
+        p {
+          margin-top: 0;
+        }
+      }
+
       input,
       button {
         border-radius: 5px;
-      }
-
-      input {
-        border: none;
-        outline: none;
-        padding: 7px 1%;
-        margin-top: 10px;
-        margin-bottom: 10px;
-
-        &::placeholder {
-          font-size: 12px;
-        }
       }
 
       button {

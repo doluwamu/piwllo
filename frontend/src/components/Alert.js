@@ -19,6 +19,7 @@ const Alert = ({ bgColor, color, iconName, message }) => {
           fontSize: "14px",
           padding: "5px 0",
           lineHeight: "20px",
+          color: "white",
         }}
       >
         <i
