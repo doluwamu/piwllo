@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Alert from "../components/Alert";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -10,7 +11,7 @@ const SigninScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const location = useLocation();
 
-  const { message } = location.state;
+  const { message } = location.state || "";
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -29,7 +30,7 @@ const SigninScreen = () => {
         <Link to="/">
           <i className="fa-solid fa-home"></i>
         </Link>
-        {message && <p>{message}</p>}
+        {message && <Alert message={message} iconName="fa-solid fa-check" />}
 
         <h2>Sign in</h2>
 

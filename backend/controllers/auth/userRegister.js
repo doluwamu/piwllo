@@ -10,22 +10,20 @@ const signUp = async (req, res, next) => {
     const { image, name, email, password, confirmPassword } = req.body;
 
     if (!name) {
-      return next(new AppError("name is required!", 400));
+      return next(new AppError("Username is required!", 400));
     }
     if (!email) {
-      return next(new AppError("email is required!", 400));
+      return next(new AppError("Email is required!", 400));
     }
     if (!password) {
-      return next(new AppError("password is required!", 400));
+      return next(new AppError("Cassword is required!", 400));
     }
     if (!confirmPassword) {
-      return next(new AppError("confirmation password is required!", 400));
+      return next(new AppError("Confirmation password is required!", 400));
     }
 
     if (password !== confirmPassword) {
-      return next(
-        new AppError("password and confirmation password don't match", 400)
-      );
+      return next(new AppError("Passwords don't match", 400));
     }
 
     const foundUser = await User.findOne({ email });
@@ -42,14 +40,7 @@ const signUp = async (req, res, next) => {
     });
 
     await user.save();
-    return res.status(201).json({
-      _id: user._id,
-      image: user.image,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
-    });
+    return res.status(201).json({ message: "Registration successful :)" });
   } catch (error) {
     return next(error);
   }

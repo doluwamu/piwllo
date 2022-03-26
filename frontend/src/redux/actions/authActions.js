@@ -37,7 +37,6 @@ export const registerUser =
         type: USER_REGISTERATION_RESET,
       });
     } catch (error) {
-      debugger;
       dispatch({
         type: USER_REGISTERATION_FAIL,
         payload: error.response.data.message,

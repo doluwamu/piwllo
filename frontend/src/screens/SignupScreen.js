@@ -5,6 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../redux/actions/authActions";
 import { USER_REGISTERATION_RESET } from "../redux/constants/authConstants";
+import Alert from "../components/Alert";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -46,14 +47,20 @@ const SignupScreen = () => {
           <i className="fa-solid fa-home"></i>
         </Link>
 
-        {error && <p>{error}</p>}
+        {error && (
+          <Alert
+            bgColor={"red"}
+            color={"red"}
+            iconName={"fa-solid fa-xmark"}
+            message={error}
+          />
+        )}
 
         {success && (
           <Navigate
             to="/signin"
             state={{
-              message:
-                "Your registration was successful. Login to your account",
+              message: "Your registration was successful. You can login",
             }}
           />
           // <div>
