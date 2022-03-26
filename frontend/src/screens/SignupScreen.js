@@ -80,6 +80,7 @@ const SignupScreen = () => {
 
     if (password !== confirmPassword) {
       setPasswordsMismatchError(true);
+      return;
     }
 
     dispatch(registerUser(name, email, password, confirmPassword));
