@@ -5,6 +5,8 @@ import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/authActions";
+import FormValidationErrors from "../errors/FormValidationErrors";
+import validator from "validator";
 
 const SigninScreen = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +14,7 @@ const SigninScreen = () => {
 
   const [emailRequiredError, setEmailRequiredError] = useState(false);
   const [passwordRequiredError, setPasswordRequiredError] = useState(false);
+  const [emailValidationError, setEmailValidationError] = useState(false);
 
   const { darkTheme } = useContext(ThemeContext);
 
@@ -28,6 +31,11 @@ const SigninScreen = () => {
 
     if (!email) {
       setEmailRequiredError(true);
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      setEmailValidationError(true);
       return;
     }
 
@@ -83,14 +91,14 @@ const SigninScreen = () => {
                   }
                 }}
               />
-              <p
-                style={{
-                  display: emailRequiredError ? "block" : "none",
-                  color: "red",
-                }}
-              >
-                *This field is required
-              </p>
+              <FormValidationErrors
+                error={emailRequiredError}
+                message={"This field is required"}
+              />
+              <FormValidationErrors
+                error={emailValidationError}
+                message={"Please enter a valid email"}
+              />
             </div>
           </div>
 
@@ -109,14 +117,10 @@ const SigninScreen = () => {
                   }
                 }}
               />
-              <p
-                style={{
-                  display: passwordRequiredError ? "block" : "none",
-                  color: "red",
-                }}
-              >
-                *This field is required
-              </p>
+              <FormValidationErrors
+                error={passwordRequiredError}
+                message={"This field is required"}
+              />
             </div>
           </div>
 

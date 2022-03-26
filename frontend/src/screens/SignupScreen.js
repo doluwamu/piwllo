@@ -6,12 +6,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../redux/actions/authActions";
 import { USER_REGISTERATION_RESET } from "../redux/constants/authConstants";
 import Alert from "../components/Alert";
+import validator from "validator";
+import FormValidationErrors from "../errors/FormValidationErrors";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // Form validation error states
+  const [usernameRequiredError, setUsernameRequiredError] = useState(false);
+  const [emailRequiredError, setEmailRequiredError] = useState(false);
+  const [emailValidationError, setEmailValidationError] = useState(false);
+  const [passwordRequiredError, setPasswordRequiredError] = useState(false);
+  const [passwordMinLengthError, setPasswordMinLengthError] = useState(false);
+  const [confirmpasswordRequiredError, setConfirmPasswordRequiredError] =
+    useState(false);
+  const [confirmPasswordMinLengthError, setConfirmPasswordMinLengthError] =
+    useState(false);
+  const [passwordsMismatchError, setPasswordsMismatchError] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -28,8 +42,50 @@ const SignupScreen = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    if (!name) {
+      setUsernameRequiredError(true);
+      return;
+    }
+
+    if (!email) {
+      setEmailRequiredError(true);
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      setEmailValidationError(true);
+      return;
+    }
+
+    if (!password) {
+      setPasswordRequiredError(true);
+      return;
+    }
+
+    if (password.length < 8) {
+      setPasswordMinLengthError(true);
+      return;
+    }
+
+    if (!confirmPassword) {
+      setConfirmPasswordRequiredError(true);
+      return;
+    }
+
+    if (confirmPassword.length < 8) {
+      setConfirmPasswordMinLengthError(true);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setPasswordsMismatchError(true);
+    }
+
     dispatch(registerUser(name, email, password, confirmPassword));
   };
+
+  const requiredMsg = "This field is required";
 
   return (
     <>
@@ -74,7 +130,16 @@ const SignupScreen = () => {
                 name="name"
                 placeholder="Write here"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (name && usernameRequiredError) {
+                    setUsernameRequiredError(false);
+                  }
+                }}
+              />
+              <FormValidationErrors
+                error={usernameRequiredError}
+                message={requiredMsg}
               />
             </div>
           </div>
@@ -87,7 +152,20 @@ const SignupScreen = () => {
                 name="email"
                 placeholder="Write here"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (email && emailRequiredError) {
+                    setEmailRequiredError(false);
+                  }
+                }}
+              />
+              <FormValidationErrors
+                error={emailRequiredError}
+                message={requiredMsg}
+              />
+              <FormValidationErrors
+                error={emailValidationError}
+                message={"Please enter a valid email!"}
               />
             </div>
           </div>
@@ -100,7 +178,24 @@ const SignupScreen = () => {
                 name="password"
                 placeholder="Write here"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (password && passwordRequiredError) {
+                    setPasswordRequiredError(false);
+                  }
+                }}
+              />
+              <FormValidationErrors
+                error={passwordRequiredError}
+                message={requiredMsg}
+              />
+              <FormValidationErrors
+                error={passwordMinLengthError}
+                message={"Password must be at least 8 characters long"}
+              />
+              <FormValidationErrors
+                error={passwordsMismatchError}
+                message={"Passwords do not match"}
               />
             </div>
           </div>
@@ -113,7 +208,22 @@ const SignupScreen = () => {
                 name="confirmPassword"
                 placeholder="Write here"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (confirmPassword && confirmpasswordRequiredError) {
+                    setConfirmPasswordRequiredError(false);
+                  }
+                }}
+              />
+              <FormValidationErrors
+                error={confirmpasswordRequiredError}
+                message={requiredMsg}
+              />
+              <FormValidationErrors
+                error={confirmPasswordMinLengthError}
+                message={
+                  "Confirmation password must be at least 8 characters long"
+                }
               />
             </div>
           </div>
@@ -131,6 +241,7 @@ const SignupScreen = () => {
           </p>
         </div>
       </form>
+      <br />
     </>
   );
 };
