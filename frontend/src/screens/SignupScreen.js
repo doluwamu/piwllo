@@ -21,7 +21,7 @@ const SignupScreen = () => {
   const [emailValidationError, setEmailValidationError] = useState(false);
   const [passwordRequiredError, setPasswordRequiredError] = useState(false);
   const [passwordMinLengthError, setPasswordMinLengthError] = useState(false);
-  const [confirmpasswordRequiredError, setConfirmPasswordRequiredError] =
+  const [confirmPasswordRequiredError, setConfirmPasswordRequiredError] =
     useState(false);
   const [confirmPasswordMinLengthError, setConfirmPasswordMinLengthError] =
     useState(false);
@@ -43,6 +43,7 @@ const SignupScreen = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
 
+    // Form submission validation starts
     if (!name) {
       setUsernameRequiredError(true);
       return;
@@ -50,11 +51,17 @@ const SignupScreen = () => {
 
     if (!email) {
       setEmailRequiredError(true);
+
+      if (emailValidationError) {
+        setEmailValidationError(false);
+      }
       return;
     }
 
     if (!validator.isEmail(email)) {
       setEmailValidationError(true);
+
+      if (emailRequiredError) setEmailRequiredError(false);
       return;
     }
 
@@ -65,6 +72,8 @@ const SignupScreen = () => {
 
     if (password.length < 8) {
       setPasswordMinLengthError(true);
+
+      if (passwordRequiredError) setPasswordRequiredError(false);
       return;
     }
 
@@ -75,13 +84,18 @@ const SignupScreen = () => {
 
     if (confirmPassword.length < 8) {
       setConfirmPasswordMinLengthError(true);
+      if (confirmPasswordRequiredError) setConfirmPasswordRequiredError(false);
       return;
     }
 
     if (password !== confirmPassword) {
       setPasswordsMismatchError(true);
+
+      if (passwordRequiredError) setPasswordRequiredError(false);
+      if (passwordMinLengthError) setPasswordMinLengthError(false);
       return;
     }
+    // Form submission validation ends
 
     dispatch(registerUser(name, email, password, confirmPassword));
   };
@@ -102,6 +116,8 @@ const SignupScreen = () => {
           <i className="fa-solid fa-home"></i>
         </Link>
 
+        <h2>Sign up</h2>
+
         {error && (
           <Alert
             bgColor={"red"}
@@ -119,8 +135,6 @@ const SignupScreen = () => {
             }}
           />
         )}
-
-        <h2>Sign up</h2>
 
         <div className="form-elements">
           <div className="form-element">
@@ -211,13 +225,18 @@ const SignupScreen = () => {
                 value={confirmPassword}
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
-                  if (confirmPassword && confirmpasswordRequiredError) {
+                  if (confirmPassword && confirmPasswordRequiredError) {
                     setConfirmPasswordRequiredError(false);
                   }
+                  if (
+                    confirmPassword.length >= 8 &&
+                    confirmPasswordMinLengthError
+                  )
+                    setConfirmPasswordMinLengthError(false);
                 }}
               />
               <FormValidationErrors
-                error={confirmpasswordRequiredError}
+                error={confirmPasswordRequiredError}
                 message={requiredMsg}
               />
               <FormValidationErrors

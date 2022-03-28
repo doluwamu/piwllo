@@ -31,6 +31,17 @@ const SigninScreen = () => {
 
     if (!email) {
       setEmailRequiredError(true);
+
+      if (emailValidationError) {
+        setEmailValidationError(false);
+      }
+      return;
+    }
+
+    if (!validator.isEmail(email)) {
+      setEmailValidationError(true);
+
+      if (emailRequiredError) setEmailRequiredError(false);
       return;
     }
 
@@ -60,6 +71,9 @@ const SigninScreen = () => {
         <Link to="/">
           <i className="fa-solid fa-home"></i>
         </Link>
+
+        <h2>Sign in</h2>
+
         {message && <Alert message={message} iconName="fa-solid fa-check" />}
 
         {error && (
@@ -72,8 +86,6 @@ const SigninScreen = () => {
         )}
 
         {success && <Navigate to="/task-manager" />}
-
-        <h2>Sign in</h2>
 
         <div className="form-elements">
           <div className="form-element">
