@@ -32,13 +32,18 @@ const SignupScreen = () => {
   const userRegistration = useSelector((state) => state.userRegistration);
   const { loading, success, error } = userRegistration;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
   const { darkTheme } = useContext(ThemeContext);
 
   useEffect(() => {
+    if (userDetails) return <Navigate to="/task-manager" />;
+
     dispatch({
       type: USER_REGISTERATION_RESET,
     });
-  }, [dispatch]);
+  }, [dispatch, userDetails]);
 
   const handleSignUp = (e) => {
     e.preventDefault();

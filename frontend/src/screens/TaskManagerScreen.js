@@ -1,13 +1,25 @@
-import React, { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 
 const TaskManagerScreen = () => {
-  const [task, setTask] = useState('');
+  const [task, setTask] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userDetails) {
+      navigate("/signin");
+    }
+  }, [userDetails, navigate]);
 
   const handleAddTask = (e) => {
     e.preventDefault();

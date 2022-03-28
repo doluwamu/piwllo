@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import ThemeToggleButton from "../components/ThemeToggleButton";
@@ -19,12 +19,16 @@ const SigninScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, success, error } = userLogin;
+  const { loading, success, error, userDetails } = userLogin;
 
   const location = useLocation();
   const { message } = location.state || "";
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userDetails) return <Navigate to="/task-manager" />;
+  }, [userDetails]);
 
   const handleSignIn = (e) => {
     e.preventDefault();
