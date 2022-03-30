@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -19,16 +19,26 @@ const SigninScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, success, error, userDetails } = userLogin;
+  const { loading, error, userDetails } = userLogin;
 
   const location = useLocation();
   const { message } = location.state || "";
 
+  const redirect = location.search
+    ? location.search.split("=")[1]
+    : "/task-manager";
+
+  // console.log(location);
+  // console.log(userDetails);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (userDetails) return <Navigate to="/task-manager" />;
-  }, [userDetails]);
+    if (userDetails) {
+      navigate(redirect);
+    }
+  }, [userDetails, navigate, redirect]);
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -89,7 +99,7 @@ const SigninScreen = () => {
           />
         )}
 
-        {success && <Navigate to="/task-manager" />}
+        {/* {success && <Navigate to="/task-manager" />} */}
 
         <div className="form-elements">
           <div className="form-element">
@@ -149,7 +159,11 @@ const SigninScreen = () => {
 
         <div className="form-links">
           <p>
-            or <Link to={"/signup"}>sign up</Link>?
+            or{" "}
+            <Link to={redirect ? `/signup?redirect=${redirect}` : "/signup"}>
+              sign up
+            </Link>
+            ?
           </p>
           <p>
             <Link to={"/forgot-password"}>Forgot password?</Link>

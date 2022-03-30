@@ -9,11 +9,10 @@ const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userDetails) {

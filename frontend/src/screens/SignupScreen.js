@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,6 +28,8 @@ const SignupScreen = () => {
   const [passwordsMismatchError, setPasswordsMismatchError] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const userRegistration = useSelector((state) => state.userRegistration);
   const { loading, success, error } = userRegistration;
@@ -37,13 +39,19 @@ const SignupScreen = () => {
 
   const { darkTheme } = useContext(ThemeContext);
 
+  const redirect = location.search
+    ? location.search.split("=")[1]
+    : "/task-manager";
+
   useEffect(() => {
-    if (userDetails) return <Navigate to="/task-manager" />;
+    if (userDetails) {
+      navigate(redirect);
+    }
 
     dispatch({
       type: USER_REGISTERATION_RESET,
     });
-  }, [dispatch, userDetails]);
+  }, [dispatch, userDetails, navigate, redirect]);
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -262,7 +270,11 @@ const SignupScreen = () => {
 
         <div className="form-links">
           <p>
-            or <Link to={"/signin"}>sign in</Link>?
+            or{" "}
+            <Link to={redirect ? `/signin?redirect=${redirect}` : "/signin"}>
+              sign in
+            </Link>
+            ?
           </p>
         </div>
       </form>

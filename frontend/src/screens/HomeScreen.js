@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import BgImage from "../components/BgImage";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import Footer from "../components/Footer";
@@ -9,6 +11,23 @@ import { ThemeContext } from "../context/ThemeContext";
 
 const HomeScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
+
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
+  const location = useLocation();
+
+  const redirect = location.search
+    ? location.search.split("=")[1]
+    : "/task-manager";
+
+  useEffect(() => {
+    if (userDetails) {
+      navigate(redirect);
+    }
+  }, [userDetails, navigate, redirect]);
 
   return (
     <div className="home">
