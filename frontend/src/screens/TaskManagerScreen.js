@@ -1,12 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import { listUserTasks } from "../redux/actions/taskActions";
 
 const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
+  const [rank, setRank] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -14,11 +17,17 @@ const TaskManagerScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
+  const listTasks = useSelector((state) => state.getUserTasks);
+  const { loading, tasks, error } = listTasks;
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!userDetails) {
       navigate("/signin");
     }
-  }, [userDetails, navigate]);
+    dispatch(listUserTasks());
+  }, [userDetails, navigate, dispatch]);
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -45,6 +54,14 @@ const TaskManagerScreen = () => {
         <h1>Tasks</h1>
 
         <div className="task-actions-section">
+          {error && (
+            <Alert
+              bgColor={"red"}
+              color={"red"}
+              iconName={"fa-solid fa-xmark"}
+              message={error}
+            />
+          )}
           <div className="add-task">
             <input
               type="text"
@@ -56,7 +73,11 @@ const TaskManagerScreen = () => {
                 setTask(e.target.value);
               }}
             />
-            <select className="priority-select">
+            <select
+              className="priority-select"
+              value={rank}
+              onChange={(e) => setRank(e.target.value)}
+            >
               <option value="">--Priority level--</option>
               <option value="important">Important</option>
               <option value="very important">Very important</option>
@@ -68,41 +89,41 @@ const TaskManagerScreen = () => {
           </div>
 
           <div className="show-tasks-section">
-            <table>
-              <thead>
-                <tr>
-                  <th>Task</th>
-                  <th className="priority">Priority level</th>
-                  <th className="btns"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Buy Suya</td>
-                  <td className="priority">Priority</td>
-                  <td>
-                    <button type="button" className="btn-edit">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button type="button" className="btn-delete">
-                      <i className="fas fa-trash"></i>{" "}
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Buy Suya</td>
-                  <td className="priority">Priority</td>
-                  <td>
-                    <button type="button" className="btn-edit">
-                      <i className="fas fa-edit"></i>
-                    </button>
-                    <button type="button" className="btn-delete">
-                      <i className="fas fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {/* {loading && <p>loading...</p>} */}
+
+            {loading ? (
+              <p>loading...</p>
+            ) : !tasks || tasks.length === 0 ? (
+              <p>No tasks added</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th className="priority">Priority level</th>
+                    <th className="btns"></th>
+                  </tr>
+                </thead>
+                {tasks &&
+                  tasks.length > 0 &&
+                  tasks.map((t) => (
+                    <tbody key={t._id}>
+                      <tr>
+                        <td>{t.task}</td>
+                        <td className="priority">{t.rank}</td>
+                        <td>
+                          <button type="button" className="btn-edit">
+                            <i className="fas fa-edit"></i>
+                          </button>
+                          <button type="button" className="btn-delete">
+                            <i className="fas fa-trash"></i>{" "}
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+              </table>
+            )}
           </div>
         </div>
       </div>
