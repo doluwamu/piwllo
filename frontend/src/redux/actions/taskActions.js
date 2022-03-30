@@ -22,6 +22,7 @@ export const listUserTasks = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/tasks/auser", config);
+    console.log(data);
 
     dispatch({
       type: GET_USER_TASKS_SUCCESS,

@@ -7,7 +7,7 @@ export const getAllUserTasks = async (req, res, next) => {
   try {
     const user = req.user;
 
-    const tasks = await Task.find({ owner: user.id });
+    const tasks = await Task.find({ owner: user.id }).select("-owner");
 
     return res.json(tasks);
   } catch (error) {
