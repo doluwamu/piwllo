@@ -1,10 +1,15 @@
 import React from "react";
 
-const Alert = ({ bgColor, color, iconName, message }) => {
+const Alert = ({
+  bgColor = "green",
+  color = "green",
+  iconName = "fa-solid fa-check",
+  message,
+}) => {
   return (
     <div
       style={{
-        backgroundColor: bgColor ? bgColor : "green",
+        backgroundColor: bgColor,
         // color: color ? color : "white",
         width: "90%",
         margin: "0 auto",
@@ -29,7 +34,7 @@ const Alert = ({ bgColor, color, iconName, message }) => {
             marginRight: "10px",
             borderRadius: "40%",
             backgroundColor: "white",
-            color: color ? color : "green",
+            color: color,
             fontSize: "14px",
           }}
         ></i>

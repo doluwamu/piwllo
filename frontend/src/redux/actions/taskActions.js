@@ -59,7 +59,7 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
 
     dispatch({
       type: ADD_TASK_SUCCESS,
-      payload: data,
+      payload: data.message,
     });
   } catch (error) {
     dispatch({

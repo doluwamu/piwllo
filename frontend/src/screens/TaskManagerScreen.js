@@ -6,7 +6,7 @@ import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import FormValidationErrors from "../errors/FormValidationErrors";
-import { listUserTasks } from "../redux/actions/taskActions";
+import { createTask, listUserTasks } from "../redux/actions/taskActions";
 
 const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
@@ -24,6 +24,9 @@ const TaskManagerScreen = () => {
   const listTasks = useSelector((state) => state.getUserTasks);
   const { loading, tasks, error } = listTasks;
 
+  const addTask = useSelector((state) => state.addTask);
+  const { message: addTaskMessage, error: addTaskError } = addTask;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,8 +38,7 @@ const TaskManagerScreen = () => {
 
   const handleAddTask = (e) => {
     if (!task) {
-      setTaskRequiredError(true);
-      return;
+      return setTaskRequiredError(true);
     }
 
     if (!rank) {
@@ -45,6 +47,13 @@ const TaskManagerScreen = () => {
     }
 
     e.preventDefault();
+
+    dispatch(createTask(task, rank));
+    if (addTaskMessage) {
+      window.location = "/task-manager";
+    }
+    setTask("");
+    setRank("");
   };
 
   return (
@@ -76,6 +85,15 @@ const TaskManagerScreen = () => {
               message={error}
             />
           )}
+          {addTaskError && (
+            <Alert
+              bgColor={"red"}
+              color={"red"}
+              iconName={"fa-solid fa-xmark"}
+              message={addTaskError}
+            />
+          )}
+          {addTaskMessage && <Alert message={addTaskMessage} />}
           <div className="add-task">
             <div className="task-input">
               <input
@@ -86,6 +104,7 @@ const TaskManagerScreen = () => {
                 value={task}
                 onChange={(e) => {
                   setTask(e.target.value);
+                  if (task && taskRequiredError) setTaskRequiredError(false);
                 }}
               />
               <FormValidationErrors error={taskRequiredError} />
@@ -95,7 +114,10 @@ const TaskManagerScreen = () => {
               <select
                 className="priority-select"
                 value={rank}
-                onChange={(e) => setRank(e.target.value)}
+                onChange={(e) => {
+                  setRank(e.target.value);
+                  if (rank && rankRequiredError) setRankRequiredError(false);
+                }}
               >
                 <option value="">--Priority level--</option>
                 <option value="important">Important</option>
@@ -115,39 +137,39 @@ const TaskManagerScreen = () => {
           <div className="show-tasks-section">
             {/* {loading && <p>loading...</p>} */}
 
-            {loading ? (
-              <p>loading...</p>
-            ) : !tasks || tasks.length === 0 ? (
-              <p>No tasks added</p>
-            ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Task</th>
-                    <th className="priority">Priority level</th>
-                    <th className="btns"></th>
-                  </tr>
-                </thead>
-                {tasks &&
-                  tasks.length > 0 &&
-                  tasks.map((t) => (
-                    <tbody key={t._id}>
-                      <tr>
-                        <td>{t.task}</td>
-                        <td className="priority">{t.rank}</td>
-                        <td>
-                          <button type="button" className="btn-edit">
-                            <i className="fas fa-edit"></i>
-                          </button>
-                          <button type="button" className="btn-delete">
-                            <i className="fas fa-trash"></i>{" "}
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ))}
-              </table>
-            )}
+            <table>
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th className="priority">Priority level</th>
+                  <th className="btns"></th>
+                </tr>
+              </thead>
+              {loading ? (
+                <p>loading...</p>
+              ) : !tasks || tasks.length === 0 ? (
+                <p>No tasks added</p>
+              ) : (
+                tasks &&
+                tasks.length > 0 &&
+                tasks.map((t) => (
+                  <tbody key={t._id}>
+                    <tr>
+                      <td>{t.task}</td>
+                      <td className="priority">{t.rank}</td>
+                      <td>
+                        <button type="button" className="btn-edit">
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button type="button" className="btn-delete">
+                          <i className="fas fa-trash"></i>{" "}
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
+              )}
+            </table>
           </div>
         </div>
       </div>
