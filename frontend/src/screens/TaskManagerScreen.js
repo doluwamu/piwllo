@@ -6,7 +6,11 @@ import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import FormValidationErrors from "../errors/FormValidationErrors";
-import { createTask, listUserTasks } from "../redux/actions/taskActions";
+import {
+  createTask,
+  listUserTasks,
+  removeTask,
+} from "../redux/actions/taskActions";
 
 const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
@@ -14,6 +18,8 @@ const TaskManagerScreen = () => {
 
   const [taskRequiredError, setTaskRequiredError] = useState(false);
   const [rankRequiredError, setRankRequiredError] = useState(false);
+
+  // const [reload, setReload] = false;
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -27,6 +33,9 @@ const TaskManagerScreen = () => {
   const addTask = useSelector((state) => state.addTask);
   const { message: addTaskMessage, error: addTaskError } = addTask;
 
+  const deleteTask = useSelector((state) => state.deleteTask);
+  const { message: deleteTaskMessage, error: deleteTaskError } = deleteTask;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,7 +43,7 @@ const TaskManagerScreen = () => {
       navigate("/signin");
     }
     dispatch(listUserTasks());
-  }, [userDetails, navigate, dispatch]);
+  }, [userDetails, navigate, dispatch, addTaskMessage, deleteTaskMessage]);
 
   const handleAddTask = (e) => {
     if (!task) {
@@ -42,18 +51,24 @@ const TaskManagerScreen = () => {
     }
 
     if (!rank) {
-      setRankRequiredError(true);
-      return;
+      return setRankRequiredError(true);
     }
 
     e.preventDefault();
 
     dispatch(createTask(task, rank));
-    if (addTaskMessage) {
-      window.location = "/task-manager";
-    }
+    // if (addTaskMessage) {
+    //   window.location.reload();
+    // }
     setTask("");
     setRank("");
+  };
+
+  const handleDeleteTask = (id) => {
+    dispatch(removeTask(id));
+    // if (deleteTaskMessage) {
+    //   return window.location.reload();
+    // }
   };
 
   return (
@@ -93,7 +108,16 @@ const TaskManagerScreen = () => {
               message={addTaskError}
             />
           )}
+          {deleteTaskError && (
+            <Alert
+              bgColor={"red"}
+              color={"red"}
+              iconName={"fa-solid fa-xmark"}
+              message={deleteTaskError}
+            />
+          )}
           {addTaskMessage && <Alert message={addTaskMessage} />}
+          {deleteTaskMessage && <Alert message={deleteTaskMessage} />}
           <div className="add-task">
             <div className="task-input">
               <input
@@ -161,7 +185,11 @@ const TaskManagerScreen = () => {
                         <button type="button" className="btn-edit">
                           <i className="fas fa-edit"></i>
                         </button>
-                        <button type="button" className="btn-delete">
+                        <button
+                          type="button"
+                          className="btn-delete"
+                          onClick={() => handleDeleteTask(t._id)}
+                        >
                           <i className="fas fa-trash"></i>{" "}
                         </button>
                       </td>

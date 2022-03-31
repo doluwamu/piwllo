@@ -5,6 +5,9 @@ import {
   ADD_TASK_REQUEST,
   ADD_TASK_FAIL,
   ADD_TASK_SUCCESS,
+  DELETE_TASK_REQUEST,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAIL,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -27,6 +30,19 @@ export const addTask = (state = {}, action) => {
     case ADD_TASK_SUCCESS:
       return { loading: false, success: true, message: action.payload };
     case ADD_TASK_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const deleteTask = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_TASK_REQUEST:
+      return { loading: true };
+    case DELETE_TASK_SUCCESS:
+      return { loading: false, success: true, message: action.payload };
+    case DELETE_TASK_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:
       return state;

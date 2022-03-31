@@ -18,7 +18,11 @@ const deleteTask = async (req, res, next) => {
       return next(new AppError("This task is not yours", 401));
     }
 
-    await task.remove();
+    const deletedTask = await task.remove();
+
+    if (!deletedTask) {
+      return next(new AppError("Could not delete this task", 401));
+    }
 
     return res.json({ message: "Task successfully deleted!" });
   } catch (error) {
