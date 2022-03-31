@@ -113,8 +113,6 @@ const SignupScreen = () => {
     dispatch(registerUser(name, email, password, confirmPassword));
   };
 
-  const requiredMsg = "This field is required";
-
   return (
     <>
       {/* Theme tuggle button */}
@@ -165,10 +163,7 @@ const SignupScreen = () => {
                   }
                 }}
               />
-              <FormValidationErrors
-                error={usernameRequiredError}
-                message={requiredMsg}
-              />
+              <FormValidationErrors error={usernameRequiredError} />
             </div>
           </div>
 
@@ -187,10 +182,7 @@ const SignupScreen = () => {
                   }
                 }}
               />
-              <FormValidationErrors
-                error={emailRequiredError}
-                message={requiredMsg}
-              />
+              <FormValidationErrors error={emailRequiredError} />
               <FormValidationErrors
                 error={emailValidationError}
                 message={"Please enter a valid email!"}
@@ -213,10 +205,7 @@ const SignupScreen = () => {
                   }
                 }}
               />
-              <FormValidationErrors
-                error={passwordRequiredError}
-                message={requiredMsg}
-              />
+              <FormValidationErrors error={passwordRequiredError} />
               <FormValidationErrors
                 error={passwordMinLengthError}
                 message={"Password must be at least 8 characters long"}
@@ -248,10 +237,7 @@ const SignupScreen = () => {
                     setConfirmPasswordMinLengthError(false);
                 }}
               />
-              <FormValidationErrors
-                error={confirmPasswordRequiredError}
-                message={requiredMsg}
-              />
+              <FormValidationErrors error={confirmPasswordRequiredError} />
               <FormValidationErrors
                 error={confirmPasswordMinLengthError}
                 message={

@@ -8,7 +8,7 @@ const FormValidationErrors = ({ error, message }) => {
         color: "red",
       }}
     >
-      *{message}!
+      *{message ? message : "This field is required"}!
     </p>
   );
 };

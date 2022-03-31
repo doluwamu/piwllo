@@ -29,9 +29,9 @@ const createTask = async (req, res, next) => {
       rank,
     });
 
-    taskToCreate.save();
+    await taskToCreate.save();
 
-    return res.status(201).json(taskToCreate);
+    return res.status(201).json({ message: "Task added successfully :)" });
   } catch (error) {
     return next(error);
   }

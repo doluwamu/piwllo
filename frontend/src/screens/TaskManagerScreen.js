@@ -5,11 +5,15 @@ import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import FormValidationErrors from "../errors/FormValidationErrors";
 import { listUserTasks } from "../redux/actions/taskActions";
 
 const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
   const [rank, setRank] = useState("");
+
+  const [taskRequiredError, setTaskRequiredError] = useState(false);
+  const [rankRequiredError, setRankRequiredError] = useState(false);
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -30,6 +34,16 @@ const TaskManagerScreen = () => {
   }, [userDetails, navigate, dispatch]);
 
   const handleAddTask = (e) => {
+    if (!task) {
+      setTaskRequiredError(true);
+      return;
+    }
+
+    if (!rank) {
+      setRankRequiredError(true);
+      return;
+    }
+
     e.preventDefault();
   };
 
@@ -63,29 +77,39 @@ const TaskManagerScreen = () => {
             />
           )}
           <div className="add-task">
-            <input
-              type="text"
-              name="task"
-              placeholder="Enter a task"
-              className="add-task-input"
-              value={task}
-              onChange={(e) => {
-                setTask(e.target.value);
-              }}
-            />
-            <select
-              className="priority-select"
-              value={rank}
-              onChange={(e) => setRank(e.target.value)}
-            >
-              <option value="">--Priority level--</option>
-              <option value="important">Important</option>
-              <option value="very important">Very important</option>
-              <option value="priority">Priority</option>
-            </select>
-            <button className="btn-add" type="submit" onClick={handleAddTask}>
-              Add task
-            </button>
+            <div className="task-input">
+              <input
+                type="text"
+                name="task"
+                placeholder="Enter a task"
+                className="add-task-input"
+                value={task}
+                onChange={(e) => {
+                  setTask(e.target.value);
+                }}
+              />
+              <FormValidationErrors error={taskRequiredError} />
+            </div>
+
+            <div className="task-rank">
+              <select
+                className="priority-select"
+                value={rank}
+                onChange={(e) => setRank(e.target.value)}
+              >
+                <option value="">--Priority level--</option>
+                <option value="important">Important</option>
+                <option value="very important">Very important</option>
+                <option value="priority">Priority</option>
+              </select>
+              <FormValidationErrors error={rankRequiredError} />
+            </div>
+
+            <div className="task-btn">
+              <button className="btn-add" type="submit" onClick={handleAddTask}>
+                Add task
+              </button>
+            </div>
           </div>
 
           <div className="show-tasks-section">

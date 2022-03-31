@@ -18,11 +18,17 @@
         input,
         select,
         button {
-          margin: 0 10px;
+          // margin: 0 10px;
           padding: 5px;
           border-radius: 3px;
           border: none;
           outline: none;
+        }
+
+        select {
+          option {
+            margin-top: 10px;
+          }
         }
 
         button {
@@ -194,28 +200,32 @@
           max-width: 1000px;
           padding: 15px 5px;
           margin-bottom: 10px;
+          display: flex;
 
-          // input,
-          // select,
-          // button {
-          //   margin: 0 10px;
-          //   padding: 5px;
-          //   border-radius: 3px;
-          //   border: none;
-          //   outline: none;
-          // }
+          div {
+            // background-color: green;
+            margin: 0 10px;
 
-          input {
-            width: 50%;
-            margin-left: 20px;
-          }
+            &.task-input {
+              width: 40%;
+              margin-left: 20px;
 
-          select {
-            width: 20%;
-          }
+              input {
+                width: 100%;
+              }
+            }
 
-          button {
-            width: 80px;
+            &.task-rank {
+              width: 30%;
+
+              select {
+                width: 100%;
+              }
+            }
+
+            &.task-btn {
+              width: 80px;
+            }
           }
         }
 
@@ -237,24 +247,34 @@
         .add-task {
           max-width: 700px;
           margin: 0 auto;
+          margin-bottom: 10px;
+          display: flex;
           // background: green;
 
-          input,
-          select,
-          button {
-            margin: 15px;
-          }
+          div {
+            // background-color: green;
+            margin: 0 10px;
 
-          input {
-            width: 40%;
-          }
+            &.task-input {
+              width: 40%;
+              margin-left: 20px;
 
-          select {
-            width: 30%;
-          }
+              input {
+                width: 100%;
+              }
+            }
 
-          button {
-            width: 15%;
+            &.task-rank {
+              width: 30%;
+
+              select {
+                width: 100%;
+              }
+            }
+
+            &.task-btn {
+              width: 80px;
+            }
           }
         }
 
@@ -274,35 +294,50 @@
   }
 }
 
-@media screen and (max-width: 666px) {
+@media screen and (max-width: 500px) {
   .task-manager-section {
     .task-section {
       .task-actions-section {
         .add-task {
           display: block !important;
-          max-width: 400px;
+          max-width: 90vw;
           overflow: hidden;
+          padding: 5px;
           margin-bottom: 20px;
           // background: green;
 
-          input,
-          select,
-          button {
-            margin: 5px 5px;
-            margin-right: 100px !important;
-          }
+          div {
+            // background-color: yellow;
+            margin: 0 !important;
 
-          input {
-            width: 93%;
-          }
+            &.task-input {
+              width: 100%;
+              margin-left: 20px;
+              margin-top: 5px !important;
 
-          select {
-            width: 96%;
-          }
+              input {
+                width: 97%;
+              }
+            }
 
-          button {
-            width: 50%;
-            margin-left: 25%;
+            &.task-rank {
+              width: 100%;
+              margin-top: 20px !important;
+
+              select {
+                width: 100%;
+              }
+            }
+
+            &.task-btn {
+              width: 100%;
+              margin-top: 20px !important;
+
+              button {
+                width: 50%;
+                margin-left: 25%;
+              }
+            }
           }
         }
       }
