@@ -21,7 +21,7 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("/api/v1/user/profile", config);
+    const { data } = await axios.get("/api/v1/users/user/profile", config);
     debugger;
 
     dispatch({
