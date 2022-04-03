@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
+import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import FormValidationErrors from "../errors/FormValidationErrors";
@@ -192,7 +193,13 @@ const TaskManagerScreen = () => {
                 ))}
             </table>
             {loading ? (
-              <p style={{ textAlign: "center" }}>loading...</p>
+              <Spinner
+                width="30px"
+                height="30px"
+                marginLeft="50%"
+                marginTop={"10px"}
+                marginBottom={"10px"}
+              />
             ) : (
               (!tasks || tasks.length === 0) && (
                 <p style={{ textAlign: "center" }}>No tasks added</p>

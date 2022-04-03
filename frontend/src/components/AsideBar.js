@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/authActions";
 
 const AsideBar = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -70,10 +73,16 @@ const AsideBar = () => {
             <li>User</li>
             <div className="actions">
               <li>
-                <Link to={"/user/profile"}>Your profile</Link>{" "}
+                <Link to={`/user/${userDetails && userDetails._id}/profile`}>
+                  Your profile
+                </Link>{" "}
               </li>
               <li>
-                <Link to="/user/profile/edit">Edit profile</Link>{" "}
+                <Link
+                  to={`/user/${userDetails && userDetails._id}/profile/edit`}
+                >
+                  Edit profile
+                </Link>{" "}
               </li>
             </div>
           </div>

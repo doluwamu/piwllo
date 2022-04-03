@@ -10,9 +10,9 @@ export const getUserProfile = (state = {}, action) => {
     case GET_USER_PROFILE_REQUEST:
       return { loading: true };
     case GET_USER_PROFILE_SUCCESS:
-      return { loading: false, success: true, profileInfo: action.payload };
+      return { loading: false, profileInfo: action.payload };
     case GET_USER_PROFILE_FAIL:
-      return { loading: false, success: false, error: action.payload };
+      return { loading: false, error: action.payload };
     case GET_USER_PROFILE_RESET:
       return {};
     default:

@@ -23,11 +23,12 @@
         .btn-edit {
           a {
             button {
-              background-color: var(--light-bg);
-              color: var(--dark-bg) !important;
+              background-color: var(--dark-bg);
+              color: var(--light-bg) !important;
+              border: 1px solid var(--light-bg) !important;
             }
             :hover {
-              box-shadow: 0 0 1px 0.1px var(--light-bg);
+              box-shadow: 0 0 2.5px 0.2px var(--light-bg);
             }
           }
         }
@@ -45,11 +46,12 @@
         .btn-edit {
           a {
             button {
-              background-color: var(--dark-bg);
-              color: var(--light-bg) !important;
+              background-color: var(--light-bg);
+              color: var(--dark-bg) !important;
+              border: 1px solid var(--dark-bg) !important;
             }
             :hover {
-              box-shadow: 0 0 2px 0.2px var(--dark-bg);
+              box-shadow: 0 0 5px 0.3px var(--dark-bg);
             }
           }
         }

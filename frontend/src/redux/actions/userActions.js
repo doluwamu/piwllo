@@ -22,14 +22,12 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/users/user/profile", config);
-    debugger;
 
     dispatch({
       type: GET_USER_PROFILE_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    debugger;
     dispatch({
       type: GET_USER_PROFILE_FAIL,
       payload: error.response.data.message,

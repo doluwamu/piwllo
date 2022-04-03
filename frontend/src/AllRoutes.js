@@ -19,8 +19,11 @@ const AllRoutes = () => {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
-        <Route path="/user/profile" element={<ProfileViewScreen />} />
-        <Route path="/user/profile/edit" element={<ProfileEditScreen />} />
+        <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
+        <Route
+          path="/user/:userId/profile/edit"
+          element={<ProfileEditScreen />}
+        />
         <Route
           path="/task-manager"
           index={true}

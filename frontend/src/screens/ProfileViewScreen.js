@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "../redux/actions/userActions";
+import Alert from "../components/Alert";
+import Spinner from "../components/shared/Spinner";
 
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
+
+  const getUserProfile = useSelector((state) => state.getUserProfile);
+  const { loading, profileInfo, error } = getUserProfile;
 
   useEffect(() => {
     dispatch(fetchUserProfile());
@@ -32,26 +37,32 @@ const ProfileViewScreen = () => {
           </div>
         </div>
 
+        {error && <Alert bgColor="red" color="red" message={error} />}
+
+        <h2 style={{ textAlign: "center", fontFamily: "cursive" }}>
+          Your profile
+        </h2>
+
         <div className="profile-info">
           {/* Profile */}
           <div className="user-image">
-            <img src="/images/avatar.jpg" alt="img" />
+            <img src={profileInfo && profileInfo.image.url} alt="img" />
           </div>
 
           <div className="user-info">
             <div className="info user-name">
               <h3>Username:</h3>
-              <p>Test1</p>
+              <p>{profileInfo && profileInfo.name}</p>
             </div>
 
             <div className="info user-name">
               <h3>Email:</h3>
-              <p>test1@gmail.com</p>
+              <p>{profileInfo && profileInfo.email}</p>
             </div>
 
             <div className="btn-edit">
               <Link to={"/user/profile/edit"}>
-                <button>Edit</button>
+                <button>{loading ? <Spinner /> : "Edit"}</button>
               </Link>
             </div>
           </div>
