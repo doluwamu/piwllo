@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/actions/authActions";
 
 const AsideBar = () => {
+  // const [signout, setSignout] = useState(false);
   const { darkTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // console.log(signout);
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -17,8 +24,14 @@ const AsideBar = () => {
     aside.classList.add("close");
   };
 
+  const handleSignout = () => {
+    dispatch(logoutUser());
+    navigate("/signin");
+  };
+
   return (
     <aside className={`side-bar ${darkTheme ? "dark" : "light"}`}>
+      {/* {signout && <Navigate to="/signin" />} */}
       <h2>Piwllo</h2>
       <ul className="aside-items" id="aside-itms">
         <div className="cancel-aside-icon" onClick={closeAside}>
@@ -73,7 +86,11 @@ const AsideBar = () => {
             <Link to="/review">Review</Link>
           </li>
 
-          <li className="signout" style={{ cursor: "pointer" }}>
+          <li
+            className="signout"
+            style={{ cursor: "pointer" }}
+            onClick={handleSignout}
+          >
             Sign out
           </li>
 

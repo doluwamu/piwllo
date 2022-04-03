@@ -2,7 +2,9 @@ import axios from "axios";
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
+  USER_LOGIN_RESET,
   USER_LOGIN_SUCCESS,
+  USER_LOGOUT,
   USER_REGISTERATION_FAIL,
   USER_REGISTERATION_REQUEST,
   USER_REGISTERATION_RESET,
@@ -74,4 +76,11 @@ export const loginUser = (email, password) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
+};
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("userDetails");
+  dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_LOGIN_RESET });
+  dispatch({ type: USER_REGISTERATION_RESET });
 };

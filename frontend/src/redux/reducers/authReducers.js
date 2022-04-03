@@ -7,6 +7,7 @@ import {
   USER_REGISTERATION_REQUEST,
   USER_REGISTERATION_RESET,
   USER_REGISTERATION_SUCCESS,
+  USER_LOGOUT,
 } from "../constants/authConstants";
 
 export const userRegistration = (state = {}, action) => {
@@ -32,7 +33,7 @@ export const userLogin = (state = {}, action) => {
       return { loading: false, success: true, userDetails: action.payload };
     case USER_LOGIN_FAIL:
       return { loading: false, success: false, error: action.payload };
-    case USER_LOGIN_RESET:
+    case USER_LOGIN_RESET || USER_LOGOUT:
       return {};
     default:
       return state;

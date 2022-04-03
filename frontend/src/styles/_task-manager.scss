@@ -201,14 +201,17 @@
           padding: 15px 5px;
           margin-bottom: 10px;
           display: flex;
+          // justify-content: space-around;
+          // background-color: green;
 
           div {
             // background-color: green;
             margin: 0 10px;
 
             &.task-input {
-              width: 40%;
-              margin-left: 20px;
+              // background-color: green;
+              width: 43%;
+              margin-left: 2px;
 
               input {
                 width: 100%;
@@ -224,7 +227,11 @@
             }
 
             &.task-btn {
-              width: 80px;
+              width: 100px;
+
+              button {
+                width: 100%;
+              }
             }
           }
         }
@@ -245,7 +252,7 @@
     .task-section {
       .task-actions-section {
         .add-task {
-          max-width: 700px;
+          max-width: 600px;
           margin: 0 auto;
           margin-bottom: 10px;
           display: flex;
@@ -261,6 +268,7 @@
 
               input {
                 width: 100%;
+                margin-left: -5px;
               }
             }
 
@@ -274,6 +282,10 @@
 
             &.task-btn {
               width: 80px;
+
+              button {
+                width: 100%;
+              }
             }
           }
         }
