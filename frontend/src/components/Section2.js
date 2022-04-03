@@ -3,7 +3,12 @@ import React from "react";
 
 const Section2 = ({ darkTheme }) => {
   return (
-    <div className={`section2 ${darkTheme ? "dark" : "light"}`} id="why-piwllo">
+    <div
+      className={`section2 ${darkTheme ? "dark" : "light"}`}
+      id="why-piwllo"
+      data-aos="fade-up"
+      data-aos-once={true}
+    >
       <div className="section-container">
         <div>
           <div className="subject">

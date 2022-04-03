@@ -24,7 +24,9 @@ const deleteTask = async (req, res, next) => {
       return next(new AppError("Could not delete this task", 401));
     }
 
-    return res.json({ message: "Task successfully deleted!" });
+    const tasks = await Task.find({});
+
+    return res.json({ message: "Task successfully deleted!", tasks });
   } catch (error) {
     return next(error);
   }

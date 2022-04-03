@@ -103,14 +103,14 @@
 @media screen and (max-width: 610px) {
   .bg-image-section {
     padding-bottom: 10px;
-    height: 400px;
+    height: 100vh !important;
     color: #000;
 
     .bg-image-container {
       .bg-item {
         &.intro {
           max-width: 600px;
-          margin: 0 auto;
+          margin: 30% auto 0;
 
           h1,
           h3 {
@@ -209,5 +209,17 @@
   }
   .block {
     display: block !important;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .bg-image-section {
+    .bg-image-container {
+      .bg-item {
+        &.intro {
+          margin: 10% auto 0;
+        }
+      }
+    }
   }
 }

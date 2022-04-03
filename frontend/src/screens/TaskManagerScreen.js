@@ -19,8 +19,6 @@ const TaskManagerScreen = () => {
   const [taskRequiredError, setTaskRequiredError] = useState(false);
   const [rankRequiredError, setRankRequiredError] = useState(false);
 
-  // const [reload, setReload] = false;
-
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
 
@@ -29,6 +27,9 @@ const TaskManagerScreen = () => {
 
   const listTasks = useSelector((state) => state.getUserTasks);
   const { loading, tasks, error } = listTasks;
+
+  const [allTasks, setAllTasks] = useState([]);
+  // console.log(allTasks);
 
   const addTask = useSelector((state) => state.addTask);
   const { message: addTaskMessage, error: addTaskError } = addTask;
@@ -43,7 +44,19 @@ const TaskManagerScreen = () => {
       navigate("/signin");
     }
     dispatch(listUserTasks());
-  }, [userDetails, navigate, dispatch, addTaskMessage, deleteTaskMessage]);
+    // if (tasks || tasks !== undefined) {
+    //   setAllTasks([...tasks]);
+    //   console.log(allTasks);
+    // }
+  }, [
+    userDetails,
+    navigate,
+    dispatch,
+    addTaskMessage,
+    tasks,
+    setAllTasks,
+    allTasks,
+  ]);
 
   const handleAddTask = (e) => {
     if (!task) {
@@ -57,18 +70,18 @@ const TaskManagerScreen = () => {
     e.preventDefault();
 
     dispatch(createTask(task, rank));
-    // if (addTaskMessage) {
-    //   window.location.reload();
-    // }
     setTask("");
     setRank("");
+    setTaskRequiredError(false);
+    setRankRequiredError(false);
   };
 
   const handleDeleteTask = (id) => {
     dispatch(removeTask(id));
-    // if (deleteTaskMessage) {
-    //   return window.location.reload();
-    // }
+    if (tasks && tasks.length > 0) {
+      tasks.filter((task) => task._id === id);
+      // console.log([...tasks]);
+    }
   };
 
   return (
@@ -123,6 +136,7 @@ const TaskManagerScreen = () => {
               <input
                 type="text"
                 name="task"
+                // draggable={true}
                 placeholder="Enter a task"
                 className="add-task-input"
                 value={task}
@@ -169,12 +183,7 @@ const TaskManagerScreen = () => {
                   <th className="btns"></th>
                 </tr>
               </thead>
-              {loading ? (
-                <p>loading...</p>
-              ) : !tasks || tasks.length === 0 ? (
-                <p>No tasks added</p>
-              ) : (
-                tasks &&
+              {tasks &&
                 tasks.length > 0 &&
                 tasks.map((t) => (
                   <tbody key={t._id}>
@@ -195,9 +204,15 @@ const TaskManagerScreen = () => {
                       </td>
                     </tr>
                   </tbody>
-                ))
-              )}
+                ))}
             </table>
+            {loading ? (
+              <p style={{ textAlign: "center" }}>loading...</p>
+            ) : (
+              (!tasks || tasks.length === 0) && (
+                <p style={{ textAlign: "center" }}>No tasks added</p>
+              )
+            )}
           </div>
         </div>
       </div>

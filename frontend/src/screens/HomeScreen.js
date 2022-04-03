@@ -8,6 +8,8 @@ import Section1 from "../components/Section1";
 import Section2 from "../components/Section2";
 import Section3 from "../components/Section3";
 import { ThemeContext } from "../context/ThemeContext";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const HomeScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
@@ -27,6 +29,12 @@ const HomeScreen = () => {
     if (userDetails) {
       navigate(redirect);
     }
+    Aos.init({
+      offset: 200,
+      duration: 600,
+      easing: "ease-in-sine",
+      delay: 50,
+    });
   }, [userDetails, navigate, redirect]);
 
   return (

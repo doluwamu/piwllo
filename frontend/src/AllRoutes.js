@@ -16,14 +16,21 @@ const AllRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" index={true} element={<HomeScreen />} />
+        <Route path="/" element={<HomeScreen />} />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
         <Route path="/user/profile" element={<ProfileViewScreen />} />
         <Route path="/user/profile/edit" element={<ProfileEditScreen />} />
-        <Route path="/task-manager" element={<TaskManagerScreen />} />
+        <Route
+          path="/task-manager"
+          index={true}
+          element={<TaskManagerScreen />}
+        />
         <Route path="/tasks/important" element={<ImportantTasksScreen />} />
-        <Route path="/tasks/very-important" element={<VeryImportantTasksScreen />} />
+        <Route
+          path="/tasks/very-important"
+          element={<VeryImportantTasksScreen />}
+        />
         <Route path="/tasks/priority" element={<PriorityTasksScreen />} />
         <Route path="/teams/create" element={<CreateTeamScreen />} />
         <Route path="/review" element={<AddRewiewScreen />} />
