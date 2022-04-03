@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../redux/actions/userActions";
 
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
 
   return (
     <div className="profile-view-section main">

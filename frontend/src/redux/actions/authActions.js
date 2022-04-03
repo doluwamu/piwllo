@@ -10,6 +10,7 @@ import {
   USER_REGISTERATION_RESET,
   USER_REGISTERATION_SUCCESS,
 } from "../constants/authConstants";
+import { GET_USER_PROFILE_RESET } from "../constants/userConstants";
 
 export const registerUser =
   (name, email, password, confirmPassword) => async (dispatch) => {
@@ -83,4 +84,5 @@ export const logoutUser = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_LOGIN_RESET });
   dispatch({ type: USER_REGISTERATION_RESET });
+  dispatch({ type: GET_USER_PROFILE_RESET });
 };

@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLogin, userRegistration } from "./reducers/authReducers";
 import { getUserTasks, addTask, deleteTask } from "./reducers/taskReducers";
+import { getUserProfile } from "./reducers/userReducers";
 
 const reducer = combineReducers({
   userLogin,
@@ -10,6 +11,7 @@ const reducer = combineReducers({
   getUserTasks,
   addTask,
   deleteTask,
+  getUserProfile,
 });
 
 const userDetailsFromStorage = localStorage.getItem("userDetails")
