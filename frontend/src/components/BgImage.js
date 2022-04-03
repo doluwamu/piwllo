@@ -30,10 +30,15 @@ const BgImage = () => {
             <li>
               <Link to={"/signin"}>Sign in</Link>
             </li>
-            <li>
-              <a href={"https://github.com/doluwamu/piwllo.web"}>
-                <i className="fa-brands fa-github"></i>
-              </a>
+            <li
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                window
+                  .open("https://github.com/doluwamu/piwllo.web", "_blank")
+                  .focus()
+              }
+            >
+              <i className="fa-brands fa-github"></i>
             </li>
           </div>
         </ul>

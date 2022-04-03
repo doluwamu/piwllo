@@ -77,10 +77,16 @@ const AsideBar = () => {
             Sign out
           </li>
 
-          <li className="github">
-            <a href="https://github.com/doluwamu/piwllo.web">
-              <i className="fa-brands fa-github"></i>
-            </a>
+          <li
+            className="github"
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              window
+                .open("https://github.com/doluwamu/piwllo.web", "_blank")
+                .focus()
+            }
+          >
+            <i className="fa-brands fa-github"></i>
           </li>
         </div>
       </ul>

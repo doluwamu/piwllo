@@ -28,9 +28,6 @@ const TaskManagerScreen = () => {
   const listTasks = useSelector((state) => state.getUserTasks);
   const { loading, tasks, error } = listTasks;
 
-  const [allTasks, setAllTasks] = useState([]);
-  // console.log(allTasks);
-
   const addTask = useSelector((state) => state.addTask);
   const { message: addTaskMessage, error: addTaskError } = addTask;
 
@@ -44,19 +41,7 @@ const TaskManagerScreen = () => {
       navigate("/signin");
     }
     dispatch(listUserTasks());
-    // if (tasks || tasks !== undefined) {
-    //   setAllTasks([...tasks]);
-    //   console.log(allTasks);
-    // }
-  }, [
-    userDetails,
-    navigate,
-    dispatch,
-    addTaskMessage,
-    tasks,
-    setAllTasks,
-    allTasks,
-  ]);
+  }, [userDetails, navigate, dispatch, addTaskMessage, deleteTaskMessage]);
 
   const handleAddTask = (e) => {
     if (!task) {
