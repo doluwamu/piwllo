@@ -7,7 +7,7 @@ const Section2 = ({ darkTheme }) => {
       className={`section2 ${darkTheme ? "dark" : "light"}`}
       id="why-piwllo"
       data-aos="fade-up"
-      data-aos-once={true}
+      // data-aos-once={true}
     >
       <div className="section-container">
         <div>
@@ -38,7 +38,11 @@ const Section2 = ({ darkTheme }) => {
         </div>
 
         <div className="avatar">
-          <img src="/images/avatar.jpg" alt="avatar" />
+          <img
+            src="/images/avatar.jpg"
+            alt="avatar"
+            style={{ marginLeft: "13%" }}
+          />
         </div>
       </div>
     </div>

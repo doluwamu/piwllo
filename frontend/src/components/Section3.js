@@ -7,7 +7,7 @@ const Section3 = ({ darkTheme }) => {
       className={`sections ${darkTheme ? "dark" : "light"}`}
       id="get-started"
       data-aos="fade-up"
-      data-aos-once={true}
+      // data-aos-once={true}
     >
       <div className="sections-container">
         <div className="avatar">
