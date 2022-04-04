@@ -1,15 +1,10 @@
 import React from "react";
 
-const Alert = ({
-  bgColor = "green",
-  color = "green",
-  iconName = "fa-solid fa-check",
-  message,
-}) => {
+const Alert = ({ message, isError = false }) => {
   return (
     <div
       style={{
-        backgroundColor: bgColor,
+        backgroundColor: isError ? "red" : "green",
         // color: color ? color : "white",
         width: "90%",
         margin: "0 auto",
@@ -28,13 +23,13 @@ const Alert = ({
         }}
       >
         <i
-          className={iconName}
+          className={isError ? "fa-solid fa-xmark" : "fa-solid fa-check"}
           style={{
             padding: "3px",
             marginRight: "10px",
             borderRadius: "40%",
             backgroundColor: "white",
-            color: color,
+            color: isError ? "red" : "green",
             fontSize: "14px",
           }}
         ></i>

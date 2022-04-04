@@ -130,14 +130,8 @@ const SignupScreen = () => {
 
         <h2>Sign up</h2>
 
-        {error && (
-          <Alert
-            bgColor={"red"}
-            color={"red"}
-            iconName={"fa-solid fa-xmark"}
-            message={error}
-          />
-        )}
+        {/* Registration error message */}
+        {error && <Alert message={error} isError={true} />}
 
         {success && (
           <Navigate
@@ -186,7 +180,7 @@ const SignupScreen = () => {
               <FormValidationErrors error={emailRequiredError} />
               <FormValidationErrors
                 error={emailValidationError}
-                message={"Please enter a valid email!"}
+                message={"Please enter a valid email"}
               />
             </div>
           </div>

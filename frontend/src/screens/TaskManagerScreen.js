@@ -91,32 +91,17 @@ const TaskManagerScreen = () => {
         <h1>Tasks</h1>
 
         <div className="task-actions-section">
-          {error && (
-            <Alert
-              bgColor={"red"}
-              color={"red"}
-              iconName={"fa-solid fa-xmark"}
-              message={error}
-            />
-          )}
-          {addTaskError && (
-            <Alert
-              bgColor={"red"}
-              color={"red"}
-              iconName={"fa-solid fa-xmark"}
-              message={addTaskError}
-            />
-          )}
+          {/* Error on performing actions */}
+          {error && <Alert message={error} isError={true} />}
+          {addTaskError && <Alert message={addTaskError} isError={true} />}
           {deleteTaskError && (
-            <Alert
-              bgColor={"red"}
-              color={"red"}
-              iconName={"fa-solid fa-xmark"}
-              message={deleteTaskError}
-            />
+            <Alert message={deleteTaskError} isError={true} />
           )}
+
+          {/* Success messages */}
           {addTaskMessage && <Alert message={addTaskMessage} />}
           {deleteTaskMessage && <Alert message={deleteTaskMessage} />}
+
           <div className="add-task">
             <div className="task-input">
               <input

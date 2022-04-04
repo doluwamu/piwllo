@@ -89,16 +89,11 @@ const SigninScreen = () => {
 
         <h2>Sign in</h2>
 
-        {message && <Alert message={message} iconName="fa-solid fa-check" />}
+        {/* Registration success message */}
+        {message && <Alert message={message} />}
 
-        {error && (
-          <Alert
-            bgColor={"red"}
-            color={"red"}
-            iconName={"fa-solid fa-xmark"}
-            message={error}
-          />
-        )}
+        {/* Login error message */}
+        {error && <Alert message={error} isError={true} />}
 
         {/* {success && <Navigate to="/task-manager" />} */}
 

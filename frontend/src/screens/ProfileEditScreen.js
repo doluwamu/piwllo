@@ -1,19 +1,74 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
+import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import {
+  editUserProfile,
+  fetchUserProfile,
+} from "../redux/actions/userActions";
+import FormValidationErrors from "../errors/FormValidationErrors";
+import validator from "validator";
+import { UPDATE_USER_PROFILE_RESET } from "../redux/constants/userConstants";
 
 const ProfileEditScreen = () => {
+  const params = useParams();
+  const { userId } = params;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  // Email validation error state
+  const [emailValidationError, setEmailValidationError] = useState(false);
+
+  const getUserProfile = useSelector((state) => state.getUserProfile);
+  const { loading, profileInfo, error } = getUserProfile;
+
+  const updateUserProfile = useSelector((state) => state.updateUserProfile);
+  const {
+    loading: updateLoading,
+    success: successUpdate,
+    error: updateError,
+  } = updateUserProfile;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
 
   const { darkTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userDetails) navigate("signin");
+    if (successUpdate) {
+      dispatch({ type: UPDATE_USER_PROFILE_RESET });
+      navigate(`/user/${userId}/profile`);
+    }
+    if (!profileInfo || profileInfo._id !== userId) {
+      dispatch(fetchUserProfile());
+    } else {
+      setName(profileInfo.name);
+      setEmail(profileInfo.email);
+      setImage(profileInfo.image.url);
+    }
+  }, [userDetails, dispatch, profileInfo, userId, successUpdate, navigate]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    // Form submission validation starts
+    if (email && !validator.isEmail(email)) {
+      return setEmailValidationError(true);
+    }
+    // Form submission validation ends
+
+    dispatch(editUserProfile(name, email, password, confirmPassword));
   };
 
   return (
@@ -36,9 +91,13 @@ const ProfileEditScreen = () => {
         <form className={`form-container ${darkTheme ? "dark" : "light"}`}>
           <h2>Edit profile</h2>
 
+          {/* Error messages */}
+          {error && <Alert message={error} isError={true} />}
+          {updateError && <Alert message={updateError} isError={true} />}
+
           <div className="avatar">
-            <label for="upload">
-              <img title={image} src={"/images/avatar.jpg"} alt="avatar" />
+            <label htmlFor="upload">
+              <img title={image} src={image} alt="avatar" />
             </label>
 
             <input
@@ -46,8 +105,8 @@ const ProfileEditScreen = () => {
               style={{ display: "none", visibility: "none" }}
               type="file"
               name="image"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
 
@@ -74,6 +133,10 @@ const ProfileEditScreen = () => {
                   placeholder="Write here"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+                <FormValidationErrors
+                  error={emailValidationError}
+                  message={"Please enter a valid email"}
                 />
               </div>
             </div>
@@ -106,7 +169,11 @@ const ProfileEditScreen = () => {
 
             <div className="form-element">
               <button type="submit" onClick={handleUpdate}>
-                Update
+                {loading || updateLoading ? (
+                  <Spinner width="25px" height="25px" marginLeft="45%" />
+                ) : (
+                  "Update"
+                )}
               </button>
             </div>
           </div>

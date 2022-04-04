@@ -1,6 +1,7 @@
 import AppError from "../../error/appError.js";
 import User from "../../models/userModel.js";
 import validator from "validator";
+import { generateToken } from "../../utils/token.js";
 
 // Request type: GET
 // To: /api/v1/users/user/profile
@@ -36,7 +37,9 @@ export const updateProfile = async (req, res, next) => {
       );
     }
 
-    const user = await User.findById(req.user._id).select("+password");
+    const user = await User.findById(req.user._id)
+      .select("+password")
+      .populate("image", "-createdAt -updatedAt");
 
     if (!user) {
       return next(new AppError("User doesn't exist", 400));
@@ -52,11 +55,15 @@ export const updateProfile = async (req, res, next) => {
     user.image = image || user.image;
 
     await user.save();
-    const updatedUser = await User.findById(user._id)
-      .populate("image", "-createdAt -updatedAt")
-      .select("-isAdmin -createdAt -updatedAt");
 
-    return res.json(updatedUser);
+    return res.json({
+      _id: user._id,
+      image: user.image,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    });
   } catch (error) {
     return next(error);
   }

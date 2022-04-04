@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -11,13 +11,22 @@ import Spinner from "../components/shared/Spinner";
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams();
+  const { userId } = params;
 
   const getUserProfile = useSelector((state) => state.getUserProfile);
   const { loading, profileInfo, error } = getUserProfile;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
   useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, [dispatch]);
+    if (!userDetails) navigate("/signin");
+    if (!profileInfo || profileInfo._id !== userId) {
+      dispatch(fetchUserProfile());
+    }
+  }, [dispatch, profileInfo, userId, userDetails, navigate]);
 
   return (
     <div className="profile-view-section main">
@@ -37,7 +46,9 @@ const ProfileViewScreen = () => {
           </div>
         </div>
 
-        {error && <Alert bgColor="red" color="red" message={error} />}
+        {error && (
+          <Alert bgColor="red" color="red" message={error} error={true} />
+        )}
 
         <h2
           style={{
@@ -68,7 +79,7 @@ const ProfileViewScreen = () => {
             </div>
 
             <div className="btn-edit">
-              <Link to={"/user/profile/edit"}>
+              <Link to={`/user/${userDetails && userDetails._id}/profile/edit`}>
                 <button>{loading ? <Spinner /> : "Edit"}</button>
               </Link>
             </div>

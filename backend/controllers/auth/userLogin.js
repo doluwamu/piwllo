@@ -16,7 +16,9 @@ const signIn = async (req, res, next) => {
       return next(new AppError("password is required!", 400));
     }
 
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email })
+      .select("+password")
+      .populate("image", "-createdAt -updatedAt");
 
     if (!user) {
       return next(new AppError("Invalid email or password!", 400));
@@ -25,6 +27,7 @@ const signIn = async (req, res, next) => {
     if (user && (await user.matchPassword(password))) {
       return res.json({
         _id: user._id,
+        image: user.image,
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
