@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/authActions";
 import FormValidationErrors from "../errors/FormValidationErrors";
 import validator from "validator";
+import Spinner from "../components/shared/Spinner";
 
 const SigninScreen = () => {
   const [email, setEmail] = useState("");
@@ -152,7 +153,11 @@ const SigninScreen = () => {
 
           <div className="form-element">
             <button type="submit" onClick={handleSignIn}>
-              {loading ? "loading..." : "Sign in"}
+              {loading ? (
+                <Spinner width="25px" height="25px" marginLeft="45%" />
+              ) : (
+                "Sign in"
+              )}
             </button>
           </div>
         </div>

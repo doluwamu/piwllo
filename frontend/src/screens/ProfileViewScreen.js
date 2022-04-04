@@ -39,7 +39,14 @@ const ProfileViewScreen = () => {
 
         {error && <Alert bgColor="red" color="red" message={error} />}
 
-        <h2 style={{ textAlign: "center", fontFamily: "cursive" }}>
+        <h2
+          style={{
+            textAlign: "center",
+            fontFamily: "cursive",
+            marginTop: "40px",
+            marginBottom: "20px",
+          }}
+        >
           Your profile
         </h2>
 

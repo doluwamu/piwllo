@@ -8,6 +8,7 @@ import { USER_REGISTERATION_RESET } from "../redux/constants/authConstants";
 import Alert from "../components/Alert";
 import validator from "validator";
 import FormValidationErrors from "../errors/FormValidationErrors";
+import Spinner from "../components/shared/Spinner";
 
 const SignupScreen = () => {
   const [name, setName] = useState("");
@@ -249,7 +250,11 @@ const SignupScreen = () => {
 
           <div className="form-element">
             <button type="submit" onClick={handleSignUp}>
-              {loading ? "loading..." : "Sign up"}
+              {loading ? (
+                <Spinner width="25px" height="25px" marginLeft="45%" />
+              ) : (
+                "Sign up"
+              )}
             </button>
           </div>
         </div>
