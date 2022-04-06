@@ -10,10 +10,12 @@ const taskSchema = new Schema(
     task: {
       type: String,
       required: [true, "Please write in a task"],
+      lowercase: true,
     },
     rank: {
       type: String,
       required: [true, "Please rank this task"],
+      lowercase: true,
     },
     owner: {
       type: Schema.Types.ObjectId,

@@ -105,6 +105,7 @@ const SigninScreen = () => {
                 type="email"
                 name="email"
                 placeholder="Write here"
+                autoComplete={"email"}
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);

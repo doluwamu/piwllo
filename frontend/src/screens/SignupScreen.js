@@ -150,6 +150,7 @@ const SignupScreen = () => {
                 type="text"
                 name="name"
                 placeholder="Write here"
+                autoComplete={"name"}
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -169,6 +170,7 @@ const SignupScreen = () => {
                 type="email"
                 name="email"
                 placeholder="Write here"
+                autoComplete={"email"}
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);

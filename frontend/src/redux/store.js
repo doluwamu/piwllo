@@ -2,13 +2,19 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLogin, userRegistration } from "./reducers/authReducers";
-import { getUserTasks, addTask, deleteTask } from "./reducers/taskReducers";
+import {
+  getUserTasks,
+  addTask,
+  deleteTask,
+  getTaskByRank,
+} from "./reducers/taskReducers";
 import { getUserProfile, updateUserProfile } from "./reducers/userReducers";
 
 const reducer = combineReducers({
   userLogin,
   userRegistration,
   getUserTasks,
+  getTaskByRank,
   addTask,
   deleteTask,
   getUserProfile,

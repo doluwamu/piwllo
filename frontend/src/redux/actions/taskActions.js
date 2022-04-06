@@ -9,7 +9,11 @@ import {
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_FAIL,
+  GET_TASK_BY_RANK_REQUEST,
+  GET_TASK_BY_RANK_SUCCESS,
+  GET_TASK_BY_RANK_FAIL,
 } from "../constants/taskConstants";
+import { logoutUser } from "./authActions";
 
 export const listUserTasks = () => async (dispatch, getState) => {
   try {
@@ -38,6 +42,9 @@ export const listUserTasks = () => async (dispatch, getState) => {
       type: GET_USER_TASKS_FAIL,
       payload: error.response.data.message,
     });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
   }
 };
 
@@ -69,6 +76,9 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
       type: ADD_TASK_FAIL,
       payload: error.response.data.message,
     });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
   }
 };
 
@@ -99,5 +109,41 @@ export const removeTask = (id) => async (dispatch, getState) => {
       type: DELETE_TASK_FAIL,
       payload: error.response.data.message,
     });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
+  }
+};
+
+export const listTaskByRank = (rank) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_TASK_BY_RANK_REQUEST,
+    });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/v1/tasks/${rank}`, config);
+
+    dispatch({
+      type: GET_TASK_BY_RANK_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_TASK_BY_RANK_FAIL,
+      payload: error.response.data.message,
+    });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
   }
 };

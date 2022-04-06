@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -11,9 +11,11 @@ import Spinner from "../components/shared/Spinner";
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
+  // const params = useParams();
+  // const { userId } = params;
   const navigate = useNavigate();
-  const params = useParams();
-  const { userId } = params;
+  const location = useLocation();
+  const { message } = location.state || "";
 
   const getUserProfile = useSelector((state) => state.getUserProfile);
   const { loading, profileInfo, error } = getUserProfile;
@@ -23,10 +25,9 @@ const ProfileViewScreen = () => {
 
   useEffect(() => {
     if (!userDetails) navigate("/signin");
-    if (!profileInfo || profileInfo._id !== userId) {
-      dispatch(fetchUserProfile());
-    }
-  }, [dispatch, profileInfo, userId, userDetails, navigate]);
+
+    dispatch(fetchUserProfile());
+  }, [dispatch, userDetails, navigate]);
 
   return (
     <div className="profile-view-section main">
@@ -46,10 +47,6 @@ const ProfileViewScreen = () => {
           </div>
         </div>
 
-        {error && (
-          <Alert bgColor="red" color="red" message={error} error={true} />
-        )}
-
         <h2
           style={{
             textAlign: "center",
@@ -60,6 +57,9 @@ const ProfileViewScreen = () => {
         >
           Your profile
         </h2>
+
+        {error && <Alert message={error} isError={true} />}
+        {message && <Alert message={message} />}
 
         <div className="profile-info">
           {/* Profile */}

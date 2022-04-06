@@ -7,6 +7,7 @@ import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import FormValidationErrors from "../errors/FormValidationErrors";
+import { firstLetterToUpperCase } from "../helpers/wordHelpers";
 import {
   createTask,
   listUserTasks,
@@ -129,9 +130,9 @@ const TaskManagerScreen = () => {
                 }}
               >
                 <option value="">--Priority level--</option>
-                <option value="important">Important</option>
-                <option value="very important">Very important</option>
-                <option value="priority">Priority</option>
+                <option>Important</option>
+                <option>Very-important</option>
+                <option>Priority</option>
               </select>
               <FormValidationErrors error={rankRequiredError} />
             </div>
@@ -159,8 +160,10 @@ const TaskManagerScreen = () => {
                 tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
-                      <td>{t.task}</td>
-                      <td className="priority">{t.rank}</td>
+                      <td>{firstLetterToUpperCase(t.task)}</td>
+                      <td className="priority">
+                        {firstLetterToUpperCase(t.rank)}
+                      </td>
                       <td>
                         <button type="button" className="btn-edit">
                           <i className="fas fa-edit"></i>

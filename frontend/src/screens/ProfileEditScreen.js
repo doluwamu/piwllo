@@ -46,10 +46,14 @@ const ProfileEditScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userDetails) navigate("signin");
+    if (!userDetails) {
+      navigate("/signin");
+    }
     if (successUpdate) {
       dispatch({ type: UPDATE_USER_PROFILE_RESET });
-      navigate(`/user/${userId}/profile`);
+      navigate(`/user/${userId}/profile`, {
+        state: { message: "Profile updated successfully :)" },
+      });
     }
     if (!profileInfo || profileInfo._id !== userId) {
       dispatch(fetchUserProfile());
@@ -118,6 +122,7 @@ const ProfileEditScreen = () => {
                   type="text"
                   name="name"
                   placeholder="Write here"
+                  autoComplete={"name"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -131,6 +136,7 @@ const ProfileEditScreen = () => {
                   type="email"
                   name="email"
                   placeholder="Write here"
+                  autoComplete={"email"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

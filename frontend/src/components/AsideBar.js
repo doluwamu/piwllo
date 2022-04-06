@@ -39,7 +39,7 @@ const AsideBar = () => {
         <div className="aside-list-items">
           <div className="section task-priority">
             <li>
-              Task Priories <i className="fa-solid fa-triangle"></i>
+              Task Priorities <i className="fa-solid fa-triangle"></i>
             </li>
             <div className="actions">
               <li>
@@ -77,23 +77,25 @@ const AsideBar = () => {
                   Your profile
                 </Link>{" "}
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to={`/user/${userDetails && userDetails._id}/profile/edit`}
                 >
                   Edit profile
                 </Link>{" "}
-              </li>
+              </li> */}
             </div>
           </div>
 
           <li className="reviews">
-            <Link to="/review">Review</Link>
+            <Link to="/review" style={{ fontWeight: "lighter" }}>
+              Review
+            </Link>
           </li>
 
           <li
             className="signout"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", fontWeight: "lighter" }}
             onClick={handleSignout}
           >
             Sign out

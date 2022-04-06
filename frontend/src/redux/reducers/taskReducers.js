@@ -8,6 +8,9 @@ import {
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
   DELETE_TASK_FAIL,
+  GET_TASK_BY_RANK_REQUEST,
+  GET_TASK_BY_RANK_SUCCESS,
+  GET_TASK_BY_RANK_FAIL,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -44,6 +47,19 @@ export const deleteTask = (state = {}, action) => {
       return { loading: false, success: true, message: action.payload };
     case DELETE_TASK_FAIL:
       return { loading: false, success: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const getTaskByRank = (state = {}, action) => {
+  switch (action.type) {
+    case GET_TASK_BY_RANK_REQUEST:
+      return { loading: true };
+    case GET_TASK_BY_RANK_SUCCESS:
+      return { loading: false, tasks: action.payload };
+    case GET_TASK_BY_RANK_FAIL:
+      return { loading: false, getTasksError: action.payload };
     default:
       return state;
   }
