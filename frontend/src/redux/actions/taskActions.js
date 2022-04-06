@@ -12,9 +12,13 @@ import {
   GET_TASK_BY_RANK_REQUEST,
   GET_TASK_BY_RANK_SUCCESS,
   GET_TASK_BY_RANK_FAIL,
+  UPDATE_TASK_RESET,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_FAIL,
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
+// Action to get all tasks that belong to a user
 export const listUserTasks = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -48,6 +52,7 @@ export const listUserTasks = () => async (dispatch, getState) => {
   }
 };
 
+// Action for user to create task
 export const createTask = (task, rank) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -82,6 +87,7 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
   }
 };
 
+// Action to remove task
 export const removeTask = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -115,6 +121,7 @@ export const removeTask = (id) => async (dispatch, getState) => {
   }
 };
 
+// Action to list users by rank of importance
 export const listTaskByRank = (rank) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -140,6 +147,47 @@ export const listTaskByRank = (rank) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_TASK_BY_RANK_FAIL,
+      payload: error.response.data.message,
+    });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
+  }
+};
+
+// Action to edit task
+export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UPDATE_TASK_RESET,
+    });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/tasks/task/${taskId}`,
+      { task, rank },
+      config
+    );
+    debugger;
+
+    dispatch({
+      type: UPDATE_TASK_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    debugger;
+    dispatch({
+      type: UPDATE_TASK_FAIL,
       payload: error.response.data.message,
     });
     if (error.response.data.message === "jwt expired") {

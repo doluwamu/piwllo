@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
+import EditTaskModal from "../components/modals/EditTaskModal";
 import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -20,6 +21,8 @@ const TaskManagerScreen = () => {
 
   const [taskRequiredError, setTaskRequiredError] = useState(false);
   const [rankRequiredError, setRankRequiredError] = useState(false);
+
+  const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -44,6 +47,8 @@ const TaskManagerScreen = () => {
     }
     dispatch(listUserTasks());
   }, [userDetails, navigate, dispatch, addTaskMessage, deleteTaskMessage]);
+
+  const openModal = () => setModalIsOpen(true);
 
   const handleAddTask = (e) => {
     if (!task) {
@@ -88,6 +93,10 @@ const TaskManagerScreen = () => {
             <ThemeToggleButton />
           </div>
         </div>
+
+        {modalIsOpen && (
+          <EditTaskModal open={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+        )}
 
         <h1>Tasks</h1>
 
@@ -165,7 +174,11 @@ const TaskManagerScreen = () => {
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
-                        <button type="button" className="btn-edit">
+                        <button
+                          type="button"
+                          className="btn-edit"
+                          onClick={openModal}
+                        >
                           <i className="fas fa-edit"></i>
                         </button>
                         <button

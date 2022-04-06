@@ -6,6 +6,7 @@ import {
   UPDATE_USER_PROFILE_REQUEST,
   UPDATE_USER_PROFILE_SUCCESS,
 } from "../constants/userConstants";
+import { logoutUser } from "./authActions";
 import axios from "axios";
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
@@ -36,6 +37,9 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
       type: GET_USER_PROFILE_FAIL,
       payload: error.response.data.message,
     });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
   }
 };
 
@@ -72,5 +76,8 @@ export const editUserProfile =
         type: UPDATE_USER_PROFILE_FAIL,
         payload: error.response.data.message,
       });
+      if (error.response.data.message === "jwt expired") {
+        dispatch(logoutUser());
+      }
     }
   };

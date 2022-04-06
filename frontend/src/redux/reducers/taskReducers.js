@@ -11,6 +11,10 @@ import {
   GET_TASK_BY_RANK_REQUEST,
   GET_TASK_BY_RANK_SUCCESS,
   GET_TASK_BY_RANK_FAIL,
+  UPDATE_TASK_REQUEST,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_FAIL,
+  UPDATE_TASK_RESET,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -60,6 +64,21 @@ export const getTaskByRank = (state = {}, action) => {
       return { loading: false, tasks: action.payload };
     case GET_TASK_BY_RANK_FAIL:
       return { loading: false, getTasksError: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateTask = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_TASK_REQUEST:
+      return { loading: true };
+    case UPDATE_TASK_SUCCESS:
+      return { loading: false, message: action.payload };
+    case UPDATE_TASK_FAIL:
+      return { loading: false, updateTasksError: action.payload };
+    case UPDATE_TASK_RESET:
+      return {};
     default:
       return state;
   }
