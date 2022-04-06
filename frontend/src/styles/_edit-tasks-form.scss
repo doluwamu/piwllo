@@ -2,8 +2,20 @@
   margin-top: 40px;
   margin-left: 30px;
 
+  &.dark {
+    .back-btn {
+      border: 1px solid var(--dark-bg-text);
+    }
+  }
+
+  &.light {
+    .back-btn {
+      border: 1px solid var(--light-bg-text);
+    }
+  }
+
   .back-btn {
-    border: 1px solid var(--dark-bg-text);
+    border-radius: 5px;
     padding: 5px;
     text-decoration: none;
   }

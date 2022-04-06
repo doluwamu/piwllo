@@ -19,6 +19,7 @@ import {
   GET_TASK_BY_ID_REQUEST,
   GET_TASK_BY_ID_SUCCESS,
   GET_TASK_BY_ID_FAIL,
+  GET_TASK_BY_ID_RESET,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -70,6 +71,8 @@ export const getTaskById = (state = {}, action) => {
       return { loading: false, task: action.payload };
     case GET_TASK_BY_ID_FAIL:
       return { loading: false, getTasksByIdError: action.payload };
+    case GET_TASK_BY_ID_RESET:
+      return {};
     default:
       return state;
   }

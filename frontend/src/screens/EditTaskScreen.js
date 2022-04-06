@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { firstLetterToUpperCase } from "../helpers/wordHelpers";
 import { ThemeContext } from "../context/ThemeContext";
 import { Link } from "react-router-dom";
-import { fetchTaskById } from "../redux/actions/taskActions";
+import { fetchTaskById, editTask } from "../redux/actions/taskActions";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
+import { GET_TASK_BY_ID_RESET } from "../redux/constants/taskConstants";
 
 const EditTaskScreen = () => {
   const [task, setTask] = useState("");
@@ -19,8 +19,12 @@ const EditTaskScreen = () => {
   const { taskId } = params;
   const navigate = useNavigate();
 
-  //   const updateTask = useSelector((state) => state.updateTask);
-  //   const { loading, updateSuccess, updateTasksError } = updateTask;
+  const updateTask = useSelector((state) => state.updateTask);
+  const {
+    loading: updateLoading,
+    updateSuccess,
+    updateTasksError,
+  } = updateTask;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -28,12 +32,15 @@ const EditTaskScreen = () => {
   const getTaskById = useSelector((state) => state.getTaskById);
   const { loading, task: taskById, getTasksByIdError } = getTaskById;
 
-  console.log(task);
-
-  //   const closeModal = () => setModalIsOpen(false);
-
   useEffect(() => {
     if (!userDetails) navigate("/signin");
+
+    if (updateSuccess) {
+      dispatch({
+        type: GET_TASK_BY_ID_RESET,
+      });
+      navigate("/task-manager", { state: { message: "Update successful :)" } });
+    }
 
     if (!taskById || taskById._id !== taskId) {
       dispatch(fetchTaskById(taskId));
@@ -41,20 +48,17 @@ const EditTaskScreen = () => {
       setTask(taskById.task);
       setRank(taskById.rank);
     }
-  }, [dispatch, userDetails, navigate, taskId, taskById]);
+  }, [dispatch, userDetails, navigate, taskId, taskById, updateSuccess]);
 
   const handleEditTask = (e) => {
     e.preventDefault();
-    //     dispatch(editTask(task, rank, taskId));
-    //     // if (updateSuccess) {
-    //     // navigate("/task-manager", { state: { message: updateMessage } });
-    //     //   return pageWindow.location.reload();
-    //     // }
+    dispatch(editTask(task, rank, taskId));
   };
 
   return (
     <>
-      <div className="back-btn-container">
+      <br />
+      <div className={`back-btn-container ${darkTheme ? "dark" : "light"}`}>
         <Link to="/task-manager" className="back-btn">
           Go back
         </Link>
@@ -65,9 +69,18 @@ const EditTaskScreen = () => {
       >
         <h2 style={{ fontFamily: "cursive" }}>Edit task</h2>
 
-        {getTasksByIdError && (
-          <Alert message={getTasksByIdError} isError={true} />
-        )}
+        {getTasksByIdError ||
+          (updateTasksError && (
+            <Alert
+              message={getTasksByIdError || updateTasksError}
+              isError={true}
+            />
+          ))}
+
+        {/* {updateSuccess &&
+           navigate("/task-manager", {
+             state: { message: "Update successful :)" },
+           })} */}
 
         <div className="edit-task-form-element">
           <label>Task:</label>
@@ -76,7 +89,7 @@ const EditTaskScreen = () => {
               type="text"
               name="task"
               placeholder="Write here"
-              value={firstLetterToUpperCase(task)}
+              value={task}
               onChange={(e) => setTask(e.target.value)}
             />
           </div>
@@ -104,7 +117,7 @@ const EditTaskScreen = () => {
             className="edit-task-button"
             onClick={handleEditTask}
           >
-            {loading ? (
+            {loading || updateLoading ? (
               <Spinner width="25px" height="25px" marginLeft="45%" />
             ) : (
               "Update"

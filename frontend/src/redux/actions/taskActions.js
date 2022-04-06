@@ -142,14 +142,12 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/v1/tasks/task/${taskId}`, config);
-    debugger;
 
     dispatch({
       type: GET_TASK_BY_ID_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    debugger;
     dispatch({
       type: GET_TASK_BY_ID_FAIL,
       payload: error.response.data.message,
@@ -223,7 +221,6 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    debugger;
     dispatch({
       type: UPDATE_TASK_FAIL,
       payload: error.response.data.message,
