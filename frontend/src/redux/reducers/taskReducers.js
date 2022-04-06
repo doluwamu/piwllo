@@ -15,6 +15,10 @@ import {
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAIL,
   UPDATE_TASK_RESET,
+  GET_USER_TASKS_RESET,
+  GET_TASK_BY_ID_REQUEST,
+  GET_TASK_BY_ID_SUCCESS,
+  GET_TASK_BY_ID_FAIL,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -25,6 +29,8 @@ export const getUserTasks = (state = {}, action) => {
       return { loading: false, tasks: action.payload };
     case GET_USER_TASKS_FAIL:
       return { loading: false, error: action.payload };
+    case GET_USER_TASKS_RESET:
+      return {};
     default:
       return state;
   }
@@ -56,6 +62,19 @@ export const deleteTask = (state = {}, action) => {
   }
 };
 
+export const getTaskById = (state = {}, action) => {
+  switch (action.type) {
+    case GET_TASK_BY_ID_REQUEST:
+      return { loading: true };
+    case GET_TASK_BY_ID_SUCCESS:
+      return { loading: false, task: action.payload };
+    case GET_TASK_BY_ID_FAIL:
+      return { loading: false, getTasksByIdError: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const getTaskByRank = (state = {}, action) => {
   switch (action.type) {
     case GET_TASK_BY_RANK_REQUEST:
@@ -74,9 +93,17 @@ export const updateTask = (state = {}, action) => {
     case UPDATE_TASK_REQUEST:
       return { loading: true };
     case UPDATE_TASK_SUCCESS:
-      return { loading: false, message: action.payload };
+      return {
+        loading: false,
+        updateSuccess: true,
+        updateMessage: action.payload,
+      };
     case UPDATE_TASK_FAIL:
-      return { loading: false, updateTasksError: action.payload };
+      return {
+        loading: false,
+        updateSuccess: false,
+        updateTasksError: action.payload,
+      };
     case UPDATE_TASK_RESET:
       return {};
     default:

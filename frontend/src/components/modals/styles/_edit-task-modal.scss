@@ -8,7 +8,7 @@
 
     .edit-task-form-element {
       width: 100%;
-      margin: 20px 0 10px;
+      margin: 25px 0 10px;
 
       label {
         font-weight: bold;
@@ -19,6 +19,7 @@
         border-bottom: 1px solid darkgray;
         outline: none;
         width: 99%;
+        margin-top: 7.5px;
       }
 
       button {
@@ -44,7 +45,7 @@
           border-bottom: 1px solid darkgray;
           outline: none;
           width: 98%;
-          margin-top: 5px;
+          margin-top: 7.5px;
         }
       }
     }

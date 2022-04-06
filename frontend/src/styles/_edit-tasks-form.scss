@@ -1,0 +1,85 @@
+.back-btn-container {
+  margin-top: 40px;
+  margin-left: 30px;
+
+  .back-btn {
+    border: 1px solid var(--dark-bg-text);
+    padding: 5px;
+    text-decoration: none;
+  }
+}
+
+.edit-task-form-container {
+  margin-top: 25px;
+  max-width: 800px;
+  margin: 70px auto 20px;
+
+  &.dark {
+    .edit-task-form-element {
+      .edit-task-form-component {
+        input,
+        select {
+          background-color: var(--dark-bg);
+        }
+
+        select {
+          color: var(--dark-bg-text);
+
+          option {
+            font-size: 15px;
+          }
+        }
+
+        input {
+          &::placeholder {
+            color: var(--dark-bg-text);
+          }
+        }
+      }
+    }
+  }
+
+  h2 {
+    margin-left: 7px;
+  }
+
+  .edit-task-form-element {
+    width: 100%;
+    margin: 25px 0 10px;
+
+    label {
+      font-weight: bold;
+      margin-left: 7px;
+    }
+
+    button {
+      width: 50%;
+      margin-left: 22%;
+      background-color: green;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.5s;
+
+      &:hover {
+        background-color: darkgreen;
+      }
+    }
+
+    .edit-task-form-component {
+      input,
+      select {
+        border: none;
+        border-bottom: 1px solid darkgray;
+        outline: none;
+        width: 90%;
+        margin-top: 7.5px;
+        margin-left: 7px;
+        padding: 4px 2px;
+      }
+    }
+  }
+}

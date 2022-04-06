@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import EditTaskModal from "../components/modals/EditTaskModal";
@@ -14,6 +14,7 @@ import {
   listUserTasks,
   removeTask,
 } from "../redux/actions/taskActions";
+// import { GET_USER_TASKS_RESET } from "../redux/constants/taskConstants";
 
 const TaskManagerScreen = () => {
   const [task, setTask] = useState("");
@@ -22,10 +23,13 @@ const TaskManagerScreen = () => {
   const [taskRequiredError, setTaskRequiredError] = useState(false);
   const [rankRequiredError, setRankRequiredError] = useState(false);
 
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [taskId, setTaskId] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -39,7 +43,8 @@ const TaskManagerScreen = () => {
   const deleteTask = useSelector((state) => state.deleteTask);
   const { message: deleteTaskMessage, error: deleteTaskError } = deleteTask;
 
-  const dispatch = useDispatch();
+  // const updateTask = useSelector((state) => state.updateTask);
+  // const { updateMessage } = updateTask;
 
   useEffect(() => {
     if (!userDetails) {
@@ -48,7 +53,10 @@ const TaskManagerScreen = () => {
     dispatch(listUserTasks());
   }, [userDetails, navigate, dispatch, addTaskMessage, deleteTaskMessage]);
 
-  const openModal = () => setModalIsOpen(true);
+  const openModal = (taskIdStr) => {
+    setTaskId(taskIdStr);
+    setModalIsOpen(true);
+  };
 
   const handleAddTask = (e) => {
     if (!task) {
@@ -95,7 +103,13 @@ const TaskManagerScreen = () => {
         </div>
 
         {modalIsOpen && (
-          <EditTaskModal open={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+          <EditTaskModal
+            open={modalIsOpen}
+            setModalIsOpen={setModalIsOpen}
+            tasks={tasks}
+            taskId={taskId}
+            pageWindow={navigate}
+          />
         )}
 
         <h1>Tasks</h1>
@@ -174,13 +188,15 @@ const TaskManagerScreen = () => {
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
-                        <button
-                          type="button"
-                          className="btn-edit"
-                          onClick={openModal}
-                        >
-                          <i className="fas fa-edit"></i>
-                        </button>
+                        <Link to={`/task/${t._id}/edit`}>
+                          <button
+                            type="button"
+                            className="btn-edit"
+                            onClick={() => openModal(t._id)}
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           className="btn-delete"

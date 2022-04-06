@@ -15,6 +15,9 @@ import {
   UPDATE_TASK_RESET,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAIL,
+  GET_TASK_BY_ID_REQUEST,
+  GET_TASK_BY_ID_SUCCESS,
+  GET_TASK_BY_ID_FAIL,
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
@@ -121,7 +124,43 @@ export const removeTask = (id) => async (dispatch, getState) => {
   }
 };
 
-// Action to list users by rank of importance
+// Action to fetch task by provided id
+export const fetchTaskById = (taskId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_TASK_BY_ID_REQUEST,
+    });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/v1/tasks/task/${taskId}`, config);
+    debugger;
+
+    dispatch({
+      type: GET_TASK_BY_ID_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    debugger;
+    dispatch({
+      type: GET_TASK_BY_ID_FAIL,
+      payload: error.response.data.message,
+    });
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
+  }
+};
+
+// Action to list tasks by rank of importance
 export const listTaskByRank = (rank) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -178,7 +217,6 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
       { task, rank },
       config
     );
-    debugger;
 
     dispatch({
       type: UPDATE_TASK_SUCCESS,

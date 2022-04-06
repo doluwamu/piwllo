@@ -18,12 +18,20 @@ const editTask = async (req, res, next) => {
       return next(new AppError("This task is not yours", 401));
     }
 
+    // const existingTask = await Task.findOne({
+    //   task: req.body.task,
+    // }).populate("owner");
+
+    // if (existingTask && existingTask.owner.id === user.id) {
+    //   return next(new AppError("This task already exists!", 400));
+    // }
+
     task.task = req.body.task || task.task;
     task.rank = req.body.rank || task.rank;
 
     await task.save();
 
-    return res.json(task);
+    return res.json({ message: "Task succefully updated :)" });
   } catch (error) {
     return next(error);
   }

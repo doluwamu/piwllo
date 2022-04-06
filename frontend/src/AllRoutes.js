@@ -11,6 +11,7 @@ import ProfileViewScreen from "./screens/ProfileViewScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import AddRewiewScreen from "./screens/AddRewiewScreen";
 import CreateTeamScreen from "./screens/CreateTeamScreen";
+import EditTaskScreen from "./screens/EditTaskScreen";
 
 const AllRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AllRoutes = () => {
           element={<TaskManagerScreen />}
         />
         <Route path="/tasks/:taskRank" element={<TaskRankingScreen />} />
+        <Route path="/task/:taskId/edit" element={<EditTaskScreen />} />
         {/* <Route
           path="/tasks/very-important"
           element={<VeryImportantTasksScreen />}

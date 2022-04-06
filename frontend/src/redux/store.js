@@ -7,6 +7,7 @@ import {
   addTask,
   deleteTask,
   getTaskByRank,
+  getTaskById,
   updateTask,
 } from "./reducers/taskReducers";
 import { getUserProfile, updateUserProfile } from "./reducers/userReducers";
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   userLogin,
   userRegistration,
   getUserTasks,
+  getTaskById,
   getTaskByRank,
   addTask,
   deleteTask,
