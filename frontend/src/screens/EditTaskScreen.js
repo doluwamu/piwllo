@@ -25,6 +25,7 @@ const EditTaskScreen = () => {
     updateSuccess,
     updateTasksError,
   } = updateTask;
+  console.log(updateLoading);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -39,7 +40,9 @@ const EditTaskScreen = () => {
       dispatch({
         type: GET_TASK_BY_ID_RESET,
       });
-      navigate("/task-manager", { state: { message: "Update successful :)" } });
+      navigate("/task-manager", {
+        state: { message: "Task update successful :)" },
+      });
     }
 
     if (!taskById || taskById._id !== taskId) {

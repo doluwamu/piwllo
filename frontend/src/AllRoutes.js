@@ -5,13 +5,12 @@ import SignupScreen from "./screens/SignupScreen";
 import SigninScreen from "./screens/SigninScreen";
 import TaskManagerScreen from "./screens/TaskManagerScreen";
 import TaskRankingScreen from "./screens/TaskRankingScreen";
-// import VeryImportantTasksScreen from "./screens/VeryImportantTasksScreen";
-// import PriorityTasksScreen from "./screens/PriorityTasksScreen";
 import ProfileViewScreen from "./screens/ProfileViewScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
 import AddRewiewScreen from "./screens/AddRewiewScreen";
 import CreateTeamScreen from "./screens/CreateTeamScreen";
 import EditTaskScreen from "./screens/EditTaskScreen";
+import PageNotFoundScreen from "./screens/PageNotFound";
 
 const AllRoutes = () => {
   return (
@@ -32,13 +31,9 @@ const AllRoutes = () => {
         />
         <Route path="/tasks/:taskRank" element={<TaskRankingScreen />} />
         <Route path="/task/:taskId/edit" element={<EditTaskScreen />} />
-        {/* <Route
-          path="/tasks/very-important"
-          element={<VeryImportantTasksScreen />}
-        />
-        <Route path="/tasks/priority" element={<PriorityTasksScreen />} /> */}
         <Route path="/teams/create" element={<CreateTeamScreen />} />
         <Route path="/review" element={<AddRewiewScreen />} />
+        <Route path="*" element={<PageNotFoundScreen />} />
       </Routes>
     </Router>
   );
