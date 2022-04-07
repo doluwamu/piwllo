@@ -21,6 +21,7 @@ const EditTaskScreen = () => {
 
   const location = useLocation();
   const { routeUrl } = location.state || "";
+  const { task: taskToEdit } = location.state || {};
 
   const updateTask = useSelector((state) => state.updateTask);
   const {
@@ -47,7 +48,10 @@ const EditTaskScreen = () => {
       });
     }
 
-    if (!taskById || taskById._id !== taskId) {
+    if (taskToEdit) {
+      setTask(taskToEdit.task);
+      setRank(taskToEdit.rank);
+    } else if (!taskById || taskById._id !== taskId) {
       dispatch(fetchTaskById(taskId));
     } else {
       setTask(taskById.task);
@@ -61,6 +65,7 @@ const EditTaskScreen = () => {
     taskById,
     updateSuccess,
     routeUrl,
+    taskToEdit,
   ]);
 
   const handleEditTask = (e) => {

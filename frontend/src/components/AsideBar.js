@@ -39,7 +39,7 @@ const AsideBar = () => {
         <div className="aside-list-items">
           <div className="section task-priority">
             <li>
-              Task Priorities <i className="fa-solid fa-triangle"></i>
+              Task Ranks <i className="fa-solid fa-triangle"></i>
             </li>
             <div className="actions">
               <li>

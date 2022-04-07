@@ -191,7 +191,7 @@ const TaskManagerScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: `/task-manager` }}
+                          state={{ routeUrl: "/task-manager", task: t }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -222,6 +222,7 @@ const TaskManagerScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks added</p>
               )
             )}
+            <br />
           </div>
         </div>
       </div>

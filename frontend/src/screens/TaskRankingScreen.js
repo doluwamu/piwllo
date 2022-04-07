@@ -106,7 +106,7 @@ const TaskRankingScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: `/tasks/${taskRank}` }}
+                          state={{ routeUrl: `/tasks/${taskRank}`, task: t }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>

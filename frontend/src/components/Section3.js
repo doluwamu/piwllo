@@ -27,8 +27,8 @@ const Section3 = ({ darkTheme }) => {
                 <Link to={"/signin"}>
                   <b>sign in</b>
                 </Link>{" "}
-                if you already have an account and boooom, there you go. You can
-                start enjoying the benefits of piwllo with me.
+                if you already have an account and there you go. You can start
+                enjoying the benefits of piwllo.
                 <br />
                 <br />
                 So what are you waiting for, let's get start. Hurray!!!

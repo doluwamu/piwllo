@@ -14,7 +14,7 @@ const ReviewSuccessModal = () => {
         <p>
           <b>Review submitted successfully :)</b>
         </p>
-        <p>Thank you for the feedback</p>
+        <p>Thank you for your feedback</p>
 
         <button type="button" onClick={() => setIsOpen(false)}>
           Okay
