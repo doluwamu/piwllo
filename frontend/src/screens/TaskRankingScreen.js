@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
@@ -19,6 +19,8 @@ const TaskRankingScreen = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { taskRank } = params;
+  const location = useLocation();
+  const { message } = location.state || "";
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -79,6 +81,8 @@ const TaskRankingScreen = () => {
         {getTasksError && <Alert message={getTasksError} isError={true} />}
         {deleteTaskError && <Alert message={deleteTaskError} isError={true} />}
         {deleteTaskMessage && <Alert message={deleteTaskMessage} />}
+
+        {message && <Alert message={message} />}
 
         <div className="task-actions-section">
           <div className="show-tasks-section">
