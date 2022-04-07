@@ -49,6 +49,12 @@ export const updateProfile = async (req, res, next) => {
       return next(new AppError("Please provide a valid email", 400));
     }
 
+    const userExists = await User.findOne({ email });
+
+    if (userExists && userExists.id !== user.id) {
+      return next(new AppError("User with this email already exists!", 400));
+    }
+
     user.name = name || user.name;
     user.email = email || user.email;
     user.password = password || user.password;
