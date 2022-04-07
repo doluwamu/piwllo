@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
@@ -8,6 +8,10 @@ import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
 import { firstLetterToUpperCase } from "../helpers/wordHelpers";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
+import {
+  GET_USER_TASKS_RESET,
+  UPDATE_TASK_RESET,
+} from "../redux/constants/taskConstants";
 
 const TaskRankingScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
@@ -25,10 +29,28 @@ const TaskRankingScreen = () => {
   const deleteTask = useSelector((state) => state.deleteTask);
   const { message: deleteTaskMessage, error: deleteTaskError } = deleteTask;
 
+  const updateTask = useSelector((state) => state.updateTask);
+  const { updateSuccess } = updateTask;
+
   useEffect(() => {
     if (!userDetails) navigate("/signin");
+    if (updateSuccess) {
+      dispatch({
+        type: GET_USER_TASKS_RESET,
+      });
+      dispatch({
+        type: UPDATE_TASK_RESET,
+      });
+    }
     dispatch(listTaskByRank(taskRank));
-  }, [dispatch, taskRank, userDetails, navigate, deleteTaskMessage]);
+  }, [
+    dispatch,
+    taskRank,
+    userDetails,
+    navigate,
+    deleteTaskMessage,
+    updateSuccess,
+  ]);
 
   const handleDeleteTask = (id) => {
     dispatch(removeTask(id));
@@ -78,9 +100,14 @@ const TaskRankingScreen = () => {
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
-                        <button type="button" className="btn-edit">
-                          <i className="fas fa-edit"></i>
-                        </button>
+                        <Link
+                          to={`/task/${t._id}/edit`}
+                          state={{ routeUrl: `/tasks/${taskRank}` }}
+                        >
+                          <button type="button" className="btn-edit">
+                            <i className="fas fa-edit"></i>
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           className="btn-delete"

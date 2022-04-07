@@ -189,7 +189,10 @@ const TaskManagerScreen = () => {
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
-                        <Link to={`/task/${t._id}/edit`}>
+                        <Link
+                          to={`/task/${t._id}/edit`}
+                          state={{ routeUrl: `/task-manager` }}
+                        >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
                           </button>

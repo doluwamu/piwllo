@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { fetchTaskById, editTask } from "../redux/actions/taskActions";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
@@ -19,13 +19,15 @@ const EditTaskScreen = () => {
   const { taskId } = params;
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const { routeUrl } = location.state || "";
+
   const updateTask = useSelector((state) => state.updateTask);
   const {
     loading: updateLoading,
     updateSuccess,
     updateTasksError,
   } = updateTask;
-  console.log(updateLoading);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -40,7 +42,7 @@ const EditTaskScreen = () => {
       dispatch({
         type: GET_TASK_BY_ID_RESET,
       });
-      navigate("/task-manager", {
+      navigate(routeUrl ? routeUrl : "/task-manager", {
         state: { message: "Task update successful :)" },
       });
     }
@@ -51,7 +53,15 @@ const EditTaskScreen = () => {
       setTask(taskById.task);
       setRank(taskById.rank);
     }
-  }, [dispatch, userDetails, navigate, taskId, taskById, updateSuccess]);
+  }, [
+    dispatch,
+    userDetails,
+    navigate,
+    taskId,
+    taskById,
+    updateSuccess,
+    routeUrl,
+  ]);
 
   const handleEditTask = (e) => {
     e.preventDefault();
@@ -62,7 +72,7 @@ const EditTaskScreen = () => {
     <>
       <br />
       <div className={`back-btn-container ${darkTheme ? "dark" : "light"}`}>
-        <Link to="/task-manager" className="back-btn">
+        <Link to={routeUrl ? routeUrl : "/task-manager"} className="back-btn">
           Go back
         </Link>
       </div>
