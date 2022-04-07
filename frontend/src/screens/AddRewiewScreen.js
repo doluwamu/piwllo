@@ -1,14 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
+import ReviewSuccessModal from "../components/modals/ReviewSuccessModal";
+import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import { createReview } from "../redux/actions/reviewActions";
 
 const AddRewiewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const [review, setReview] = useState("");
 
+  // const [openModal, setOpenModal] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
+  const addReview = useSelector((state) => state.addReview);
+  const { loading: addReviewLoading, success: addReviewSuccess } = addReview;
+
+  // if (addReviewSuccess) {
+  //   setReview("");
+  // }
+
+  useEffect(() => {
+    if (!userDetails) navigate("/signin");
+  }, [userDetails, navigate]);
+
   const handleReview = (e) => {
     e.preventDefault();
+    dispatch(createReview(review));
+    setReview("");
   };
 
   return (
@@ -28,6 +54,8 @@ const AddRewiewScreen = () => {
           </div>
         </div>
 
+        {addReviewSuccess && <ReviewSuccessModal />}
+
         {/* Review */}
         <div className="review">
           <h2>What do you think? We'd love to hear from you</h2>
@@ -38,7 +66,11 @@ const AddRewiewScreen = () => {
           ></textarea>
           <div className="review-btn-section">
             <button className="btn-review" type="submit" onClick={handleReview}>
-              Submit
+              {addReviewLoading ? (
+                <Spinner width="25px" height="25px" marginLeft="45%" />
+              ) : (
+                "Submit"
+              )}
             </button>
           </div>
         </div>

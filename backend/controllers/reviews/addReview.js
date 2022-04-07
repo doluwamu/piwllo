@@ -19,7 +19,7 @@ const addReview = async (req, res, next) => {
     });
 
     await addedReview.save();
-    return res.json(addedReview);
+    return res.json({ message: "Review sent successfully :)" });
   } catch (error) {
     return next(error);
   }

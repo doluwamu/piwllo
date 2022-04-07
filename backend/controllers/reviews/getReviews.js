@@ -6,7 +6,7 @@ import AppError from "../../error/appError.js";
 // Desc: to get all reviews from DB (Admins Only)
 const getReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({});
+    const reviews = await Review.find({}).populate("user");
     return res.json(reviews);
   } catch (error) {
     return next(error);
