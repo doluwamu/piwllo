@@ -68,6 +68,12 @@ textarea {
 
     input {
       color: var(--light-bg-text);
+      background-color: var(--light-bg);
+
+      &::placeholder,
+      &:focus {
+        color: var(--light-bg-text);
+      }
     }
 
     a {
@@ -81,10 +87,25 @@ textarea {
 
     input {
       color: var(--dark-bg-text);
+      background-color: var(--dark-bg);
+
+      &::placeholder,
+      &:focus {
+        color: var(--dark-bg-text);
+      }
+    }
+
+    select {
+      color: var(--dark-bg-text);
+      background-color: var(--dark-bg);
     }
 
     a {
       color: var(--dark-bg-text);
     }
   }
+}
+
+.display-none {
+  display: none !important;
 }

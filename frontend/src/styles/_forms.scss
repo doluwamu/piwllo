@@ -74,13 +74,7 @@
       .form-element {
         .input-element {
           input {
-            background-color: var(--dark-bg);
             box-shadow: 0 0 3px 0.1px var(--light-bg);
-
-            &::placeholder,
-            &:focus {
-              color: var(--dark-bg-text);
-            }
           }
         }
         button {
@@ -115,11 +109,6 @@
           input {
             // background-color: var(--dark-bg);
             box-shadow: 0 0 3px 0.1px var(--dark-bg);
-
-            &::placeholder,
-            &:focus {
-              color: var(--dark-bg);
-            }
           }
         }
         button {
@@ -129,8 +118,6 @@
           color: var(--dark-bg);
 
           &:hover {
-            // border: 2px solid var(--dark-bg);
-            // background-color: rgba(255, 255, 238, 0.2);
             background-color: rgba(68, 3, 68, 0.6);
             color: #ffe;
           }

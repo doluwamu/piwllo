@@ -1,0 +1,60 @@
+.react-responsive-modal-modal {
+  width: 70%;
+  top: 10%;
+  border-radius: 9px;
+
+  .view-task-modal-content {
+    margin-top: 30px;
+
+    .view-task-element {
+      margin: 10px 0;
+
+      div {
+        margin-top: 5px;
+      }
+    }
+
+    .view-buttons {
+      display: flex;
+      flex-wrap: wrap;
+
+      a {
+        outline: none;
+      }
+      button {
+        width: 100px;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        padding: 4px;
+        color: #fff;
+        transition: 0.5s;
+        margin-bottom: 10px;
+
+        &.edit-btn {
+          background-color: green;
+          margin-right: 10px;
+
+          &:hover {
+            background-color: darkgreen;
+          }
+        }
+
+        &.delete-btn {
+          background-color: red;
+
+          &:hover {
+            background-color: darkred;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .react-responsive-modal-modal {
+    top: -50px !important;
+  }
+}

@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+// import { Alert } from "react-bootstrap";
+// import { useDispatch } from "react-redux";
 
-const Alert = ({ message, isError = false }) => {
+const AlertMsg = ({
+  message,
+  isError = false,
+  messageVisible = null,
+  setMessageVisible = null,
+}) => {
+  const [open, setOpen] = useState(true);
+
+  const closeAlert = () => {
+    setOpen(false);
+    setMessageVisible(false);
+  };
+
   return (
     <div
+      id="alert"
       style={{
+        display: open ? "block" : "none",
         backgroundColor: isError ? "red" : "green",
         // color: color ? color : "white",
         width: "90%",
@@ -34,9 +50,24 @@ const Alert = ({ message, isError = false }) => {
           }}
         ></i>
         {message}
+        <b onClick={closeAlert} style={{ cursor: "pointer" }}>
+          x
+        </b>
       </p>
     </div>
   );
 };
 
-export default Alert;
+export default AlertMsg;
+
+// <>
+//   {close && (
+//     <Alert
+//       variant={isError ? "danger" : "success"}
+//       closeLabel="x"
+//       onClose={() => setClose(true)}
+//     >
+//       {message}
+//     </Alert>
+//   )}
+// </>

@@ -45,13 +45,20 @@ export const listUserTasks = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_USER_TASKS_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: GET_USER_TASKS_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message ===
+            "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -80,13 +87,17 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    dispatch({
-      type: ADD_TASK_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: ADD_TASK_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -114,13 +125,17 @@ export const removeTask = (id) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    dispatch({
-      type: DELETE_TASK_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: DELETE_TASK_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -148,13 +163,17 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_TASK_BY_ID_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: GET_TASK_BY_ID_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -182,13 +201,17 @@ export const listTaskByRank = (rank) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_TASK_BY_RANK_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: GET_TASK_BY_RANK_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -221,12 +244,16 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    dispatch({
-      type: UPDATE_TASK_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: UPDATE_TASK_FAIL,
+      payload:
+        error.response.data.message ===
+        "Operation `users.findOne()` buffering timed out after 10000msx"
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };

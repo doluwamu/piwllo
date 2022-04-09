@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
+import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -24,6 +25,11 @@ const TaskManagerScreen = () => {
 
   const [taskRequiredError, setTaskRequiredError] = useState(false);
   const [rankRequiredError, setRankRequiredError] = useState(false);
+
+  const [taskDetailsView, setTaskDetailsView] = useState(false);
+  const [taskDetails, setTaskDetails] = useState("");
+
+  const [openDeleteTaskAlert, setOpenDeleteTaskAlert] = useState(false);
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -86,12 +92,21 @@ const TaskManagerScreen = () => {
     setRankRequiredError(false);
   };
 
-  const handleDeleteTask = (id) => {
+  const handleDeleteTask = async (id) => {
     dispatch(removeTask(id));
-    if (tasks && tasks.length > 0) {
-      tasks.filter((task) => task._id === id);
-      // console.log([...tasks]);
+
+    // if (deleteTaskMessage) {
+    //   setOpenDeleteTaskAlert(true);
+    // }
+
+    // setOpenDeleteTaskAlert(true)
+  };
+
+  const openTaskViewModal = (detail) => {
+    if (!taskDetailsView) {
+      setTaskDetailsView(true);
     }
+    setTaskDetails(detail);
   };
 
   return (
@@ -123,8 +138,19 @@ const TaskManagerScreen = () => {
           )}
 
           {/* Success messages */}
-          {addTaskMessage && <Alert message={addTaskMessage} />}
-          {deleteTaskMessage && <Alert message={deleteTaskMessage} />}
+          {addTaskMessage && (
+            <Alert message={addTaskMessage}>Task successfully added :)</Alert>
+          )}
+
+          {/* {deleteTaskMessage  setOpenDeleteTaskAlert(true)} */}
+          {openDeleteTaskAlert && (
+            <Alert
+              message={deleteTaskMessage}
+              messageVisible={openDeleteTaskAlert}
+              setMessageVisible={setOpenDeleteTaskAlert}
+            />
+          )}
+
           {message && <Alert message={message} />}
 
           <div className="add-task">
@@ -153,7 +179,7 @@ const TaskManagerScreen = () => {
                   if (rank && rankRequiredError) setRankRequiredError(false);
                 }}
               >
-                <option value="">--Priority level--</option>
+                <option value="">--Rank--</option>
                 <option>Important</option>
                 <option>Very-important</option>
                 <option>Priority</option>
@@ -175,7 +201,7 @@ const TaskManagerScreen = () => {
               <thead>
                 <tr>
                   <th>Task</th>
-                  <th className="priority">Priority level</th>
+                  <th className="priority">Rank</th>
                   <th className="btns"></th>
                 </tr>
               </thead>
@@ -184,8 +210,13 @@ const TaskManagerScreen = () => {
                 tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
-                      <td>{firstLetterToUpperCase(t.task)}</td>
-                      <td className="priority">
+                      <td onClick={() => openTaskViewModal(t)}>
+                        {firstLetterToUpperCase(t.task)}
+                      </td>
+                      <td
+                        className="priority"
+                        onClick={() => openTaskViewModal(t)}
+                      >
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
@@ -208,6 +239,14 @@ const TaskManagerScreen = () => {
                     </tr>
                   </tbody>
                 ))}
+              {taskDetailsView && (
+                <ViewTaskDetailsModal
+                  taskDetails={taskDetails}
+                  setTaskDetailsView={setTaskDetailsView}
+                  routeUrl={"/task-manager"}
+                  deleteTask={handleDeleteTask}
+                />
+              )}
             </table>
             {loading ? (
               <Spinner
@@ -222,8 +261,8 @@ const TaskManagerScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks added</p>
               )
             )}
-            <br />
           </div>
+          <br />
         </div>
       </div>
     </div>

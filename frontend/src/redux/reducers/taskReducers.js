@@ -20,6 +20,8 @@ import {
   GET_TASK_BY_ID_SUCCESS,
   GET_TASK_BY_ID_FAIL,
   GET_TASK_BY_ID_RESET,
+  ADD_TASK_RESET,
+  DELETE_TASK_RESET,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -45,6 +47,8 @@ export const addTask = (state = {}, action) => {
       return { loading: false, success: true, message: action.payload };
     case ADD_TASK_FAIL:
       return { loading: false, success: false, error: action.payload };
+    case ADD_TASK_RESET:
+      return {};
     default:
       return state;
   }
@@ -58,6 +62,8 @@ export const deleteTask = (state = {}, action) => {
       return { loading: false, success: true, message: action.payload };
     case DELETE_TASK_FAIL:
       return { loading: false, success: false, error: action.payload };
+    case DELETE_TASK_RESET:
+      return {};
     default:
       return state;
   }

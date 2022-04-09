@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
+import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
@@ -21,6 +22,9 @@ const TaskRankingScreen = () => {
   const { taskRank } = params;
   const location = useLocation();
   const { message } = location.state || "";
+
+  const [taskDetailsView, setTaskDetailsView] = useState(false);
+  const [taskDetails, setTaskDetails] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -56,6 +60,14 @@ const TaskRankingScreen = () => {
 
   const handleDeleteTask = (id) => {
     dispatch(removeTask(id));
+    setTaskDetailsView(false);
+  };
+
+  const openTaskViewModal = (detail) => {
+    if (!taskDetailsView) {
+      setTaskDetailsView(true);
+    }
+    setTaskDetails(detail);
   };
 
   return (
@@ -90,7 +102,7 @@ const TaskRankingScreen = () => {
               <thead>
                 <tr>
                   <th>Task</th>
-                  <th className="priority">Priority level</th>
+                  <th className="priority">Rank</th>
                   <th className="btns"></th>
                 </tr>
               </thead>
@@ -99,8 +111,13 @@ const TaskRankingScreen = () => {
                 tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
-                      <td>{firstLetterToUpperCase(t.task)}</td>
-                      <td className="priority">
+                      <td onClick={() => openTaskViewModal(t)}>
+                        {firstLetterToUpperCase(t.task)}
+                      </td>
+                      <td
+                        className="priority"
+                        onClick={() => openTaskViewModal(t)}
+                      >
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td>
@@ -123,6 +140,14 @@ const TaskRankingScreen = () => {
                     </tr>
                   </tbody>
                 ))}
+              {taskDetailsView && (
+                <ViewTaskDetailsModal
+                  routeUrl={`/tasks/${taskRank}`}
+                  taskDetails={taskDetails}
+                  setTaskDetailsView={setTaskDetailsView}
+                  deleteTask={handleDeleteTask}
+                />
+              )}
             </table>
             {loading ? (
               <Spinner
@@ -138,6 +163,7 @@ const TaskRankingScreen = () => {
               )
             )}
           </div>
+          <br />
         </div>
       </div>
     </div>
