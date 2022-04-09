@@ -40,9 +40,7 @@ const SignupScreen = () => {
 
   const { darkTheme } = useContext(ThemeContext);
 
-  const redirect = location.search
-    ? location.search.split("=")[1]
-    : "/task-manager";
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (userDetails) {

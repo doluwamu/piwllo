@@ -94,12 +94,6 @@ const TaskManagerScreen = () => {
 
   const handleDeleteTask = async (id) => {
     dispatch(removeTask(id));
-
-    // if (deleteTaskMessage) {
-    //   setOpenDeleteTaskAlert(true);
-    // }
-
-    // setOpenDeleteTaskAlert(true)
   };
 
   const openTaskViewModal = (detail) => {
@@ -222,7 +216,7 @@ const TaskManagerScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: "/task-manager", task: t }}
+                          state={{ routeUrl: "/", task: t }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -243,7 +237,7 @@ const TaskManagerScreen = () => {
                 <ViewTaskDetailsModal
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
-                  routeUrl={"/task-manager"}
+                  routeUrl={"/"}
                   deleteTask={handleDeleteTask}
                 />
               )}

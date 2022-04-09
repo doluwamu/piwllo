@@ -25,9 +25,7 @@ const SigninScreen = () => {
   const location = useLocation();
   const { message } = location.state || "";
 
-  const redirect = location.search
-    ? location.search.split("=")[1]
-    : "/task-manager";
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   // console.log(location);
   // console.log(userDetails);

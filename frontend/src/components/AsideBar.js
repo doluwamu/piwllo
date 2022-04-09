@@ -43,7 +43,7 @@ const AsideBar = () => {
             </li>
             <div className="actions">
               <li>
-                <Link to={"/task-manager"}>All</Link>{" "}
+                <Link to={"/"}>All</Link>{" "}
               </li>
               <li>
                 <Link to={"/tasks/important"}>Important</Link>{" "}

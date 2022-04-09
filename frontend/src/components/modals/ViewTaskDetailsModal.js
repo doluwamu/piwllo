@@ -61,7 +61,7 @@ const ViewTaskDetailsModal = ({
           <Link
             to={`/task/${taskDetails._id}/edit`}
             state={{
-              routeUrl: routeUrl ? routeUrl : "/task-manager",
+              routeUrl: routeUrl ? routeUrl : "/",
               task: taskDetails,
             }}
           >

@@ -8,6 +8,7 @@ import {
 } from "../constants/userConstants";
 import { logoutUser } from "./authActions";
 import axios from "axios";
+import { globalError } from "./errors.global";
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
   try {
@@ -33,13 +34,16 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    dispatch({
-      type: GET_USER_PROFILE_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: GET_USER_PROFILE_FAIL,
+      payload:
+        error.response.data.message === globalError
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
 
@@ -72,12 +76,15 @@ export const editUserProfile =
 
       localStorage.setItem("userDetails", JSON.stringify(data));
     } catch (error) {
-      dispatch({
-        type: UPDATE_USER_PROFILE_FAIL,
-        payload: error.response.data.message,
-      });
       if (error.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
+      dispatch({
+        type: UPDATE_USER_PROFILE_FAIL,
+        payload:
+          error.response.data.message === globalError
+            ? "Ooops, something went wrong :("
+            : error.response.data.message,
+      });
     }
   };

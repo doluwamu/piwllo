@@ -9,6 +9,7 @@
 @import "./profile-edit";
 @import "./general";
 @import "./review";
+@import "./reviews-list";
 @import "./create-team";
 @import "./edit-tasks-form";
 
@@ -23,7 +24,7 @@ body {
   min-height: 100%;
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 7px;
     height: 6px;
   }
 

@@ -43,7 +43,7 @@ const EditTaskScreen = () => {
       dispatch({
         type: GET_TASK_BY_ID_RESET,
       });
-      navigate(routeUrl ? routeUrl : "/task-manager", {
+      navigate(routeUrl ? routeUrl : "/", {
         state: { message: "Task update successful :)" },
       });
     }
@@ -77,7 +77,7 @@ const EditTaskScreen = () => {
     <>
       <br />
       <div className={`back-btn-container ${darkTheme ? "dark" : "light"}`}>
-        <Link to={routeUrl ? routeUrl : "/task-manager"} className="back-btn">
+        <Link to={routeUrl ? routeUrl : "/"} className="back-btn">
           Go back
         </Link>
       </div>

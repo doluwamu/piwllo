@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 // import { Alert } from "react-bootstrap";
 // import { useDispatch } from "react-redux";
 
 const AlertMsg = ({
   message,
   isError = false,
-  messageVisible = null,
-  setMessageVisible = null,
+  // messageVisible = null,
+  // setMessageVisible = null,
 }) => {
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
 
-  const closeAlert = () => {
-    setOpen(false);
-    setMessageVisible(false);
-  };
+  // const closeAlert = () => {
+  //   setOpen(false);
+  //   setMessageVisible(false);
+  // };
 
   return (
     <div
       id="alert"
       style={{
-        display: open ? "block" : "none",
+        // display: open ? "block" : "none",
         backgroundColor: isError ? "red" : "green",
         // color: color ? color : "white",
         width: "90%",
@@ -50,9 +50,9 @@ const AlertMsg = ({
           }}
         ></i>
         {message}
-        <b onClick={closeAlert} style={{ cursor: "pointer" }}>
+        {/* <b onClick={closeAlert} style={{ cursor: "pointer" }}>
           x
-        </b>
+        </b> */}
       </p>
     </div>
   );

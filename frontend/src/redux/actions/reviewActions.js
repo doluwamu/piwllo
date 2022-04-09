@@ -5,6 +5,7 @@ import {
   ADD_REVIEW_SUCCESS,
 } from "../constants/reviewConstants";
 import { logoutUser } from "./authActions";
+import { globalError } from "./errors.global";
 
 export const createReview = (review) => async (dispatch, getState) => {
   try {
@@ -29,12 +30,15 @@ export const createReview = (review) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    dispatch({
-      type: ADD_REVIEW_FAIL,
-      payload: error.response.data.message,
-    });
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }
+    dispatch({
+      type: ADD_REVIEW_FAIL,
+      payload:
+        error.response.data.message === globalError
+          ? "Ooops, something went wrong :("
+          : error.response.data.message,
+    });
   }
 };
