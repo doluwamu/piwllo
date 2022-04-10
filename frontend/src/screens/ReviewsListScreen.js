@@ -58,7 +58,11 @@ const AddRewiewScreen = () => {
           {error && <Alert message={error} isError={true} />}
           <div className="reviews-list">
             {loading ? (
-              <Spinner width="40px" height="40px" margin="30px auto" />
+              <div
+                style={{ width: "50px", height: "50px", margin: "30px auto" }}
+              >
+                <Spinner width="40px" height="40px" />
+              </div>
             ) : (
               !loading &&
               reviews &&
