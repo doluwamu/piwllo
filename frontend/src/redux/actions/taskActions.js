@@ -21,7 +21,7 @@ import {
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
-import { globalError } from "./errors.global";
+import { connectionError, connectionErrorMessage } from "./errors.global";
 
 // Action to get all tasks that belong to a user
 export const listUserTasks = () => async (dispatch, getState) => {
@@ -53,8 +53,8 @@ export const listUserTasks = () => async (dispatch, getState) => {
     dispatch({
       type: GET_USER_TASKS_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -91,8 +91,8 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
     dispatch({
       type: ADD_TASK_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -128,8 +128,8 @@ export const removeTask = (id) => async (dispatch, getState) => {
     dispatch({
       type: DELETE_TASK_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -165,8 +165,8 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
     dispatch({
       type: GET_TASK_BY_ID_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -202,8 +202,8 @@ export const listTaskByRank = (rank) => async (dispatch, getState) => {
     dispatch({
       type: GET_TASK_BY_RANK_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -244,8 +244,8 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
     dispatch({
       type: UPDATE_TASK_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }

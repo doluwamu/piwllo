@@ -11,7 +11,7 @@ import {
   USER_REGISTERATION_SUCCESS,
 } from "../constants/authConstants";
 import { GET_USER_PROFILE_RESET } from "../constants/userConstants";
-import { globalError } from "./errors.global";
+import { connectionError, connectionErrorMessage } from "./errors.global";
 
 export const registerUser =
   (name, email, password, confirmPassword) => async (dispatch) => {
@@ -44,8 +44,8 @@ export const registerUser =
       dispatch({
         type: USER_REGISTERATION_FAIL,
         payload:
-          error.response.data.message === globalError
-            ? "Ooops, something went wrong :("
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
             : error.response.data.message,
       });
     }
@@ -79,8 +79,8 @@ export const loginUser = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }

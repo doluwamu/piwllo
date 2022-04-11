@@ -8,7 +8,7 @@ import {
 } from "../constants/userConstants";
 import { logoutUser } from "./authActions";
 import axios from "axios";
-import { globalError } from "./errors.global";
+import { connectionError, connectionErrorMessage } from "./errors.global";
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
   try {
@@ -40,8 +40,8 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
     dispatch({
       type: GET_USER_PROFILE_FAIL,
       payload:
-        error.response.data.message === globalError
-          ? "Ooops, something went wrong :("
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
           : error.response.data.message,
     });
   }
@@ -82,8 +82,8 @@ export const editUserProfile =
       dispatch({
         type: UPDATE_USER_PROFILE_FAIL,
         payload:
-          error.response.data.message === globalError
-            ? "Ooops, something went wrong :("
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
             : error.response.data.message,
       });
     }

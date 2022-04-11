@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+import {useDispatch}  from 'react-redux'
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import "./styles/_review-success-modal.scss";
+import {ADD_REVIEW_RESET} from '../../redux/constants/reviewConstants'
 
 const ReviewSuccessModal = () => {
   const [isOpen, setIsOpen] = useState(true);
 
-  const closeModal = () => setIsOpen(false);
+  const dispatch = useDispatch()
+
+  const closeModal = () => {
+    setIsOpen(false)
+    dispatch({ type: ADD_REVIEW_RESET })
+  };
 
   return (
     <Modal open={isOpen} onClose={closeModal}>

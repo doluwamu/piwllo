@@ -11,7 +11,7 @@ import {
   updateTask,
 } from "./reducers/taskReducers";
 import { getUserProfile, updateUserProfile } from "./reducers/userReducers";
-import { addReview, getReviews } from "./reducers/reviewReducers";
+import { addReview, getReviews, deleteReview } from "./reducers/reviewReducers";
 
 const reducer = combineReducers({
   userLogin,
@@ -25,7 +25,8 @@ const reducer = combineReducers({
   getUserProfile,
   updateUserProfile,
   addReview,
-  getReviews
+  getReviews,
+  deleteReview,
 });
 
 const userDetailsFromStorage = localStorage.getItem("userDetails")

@@ -16,6 +16,11 @@ const reviewSchema = new Schema(
       type: String,
       required: [true, "Please write a review"],
     },
+    liked: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,

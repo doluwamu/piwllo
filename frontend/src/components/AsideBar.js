@@ -57,7 +57,7 @@ const AsideBar = () => {
             </div>
           </div>
 
-          <div className="section teams">
+          {/* <div className="section teams">
             <li>Teams</li>
             <div className="actions">
               <li>
@@ -67,7 +67,24 @@ const AsideBar = () => {
                 <Link to="/teams/user">Your teams</Link>{" "}
               </li>
             </div>
-          </div>
+          </div> */}
+
+          {userDetails && userDetails.isAdmin && (
+            <div className="section admin">
+              <li>Admin</li>
+              <div className="actions">
+                <li>
+                  <Link to={"/reviews"}>Reviews</Link>{" "}
+                </li>
+                <li>
+                  <Link to="/users/list">Manage users</Link>{" "}
+                </li>
+                <li>
+                  <Link to="/tasks/list">Tasks list</Link>{" "}
+                </li>
+              </div>
+            </div>
+          )}
 
           <div className="section user">
             <li>User</li>
