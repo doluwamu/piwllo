@@ -25,7 +25,10 @@
             line-height: 22px;
             font-family: Georgia, "Times New Roman", Times, serif;
           }
+        }
 
+        &.owner {
+          margin: -10px 0 35px;
           &.owner-info {
             .owner-email {
               margin-top: 5px;

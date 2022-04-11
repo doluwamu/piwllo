@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -14,8 +14,6 @@ const ProfileViewScreen = () => {
   // const params = useParams();
   // const { userId } = params;
   const navigate = useNavigate();
-  const location = useLocation();
-  const { message } = location.state || "";
 
   const getUserProfile = useSelector((state) => state.getUserProfile);
   const { loading, profileInfo, error } = getUserProfile;
@@ -59,7 +57,6 @@ const ProfileViewScreen = () => {
         </h2>
 
         {error && <Alert message={error} isError={true} />}
-        {message && <Alert message={message} />}
 
         <div className="profile-info">
           {/* Profile */}

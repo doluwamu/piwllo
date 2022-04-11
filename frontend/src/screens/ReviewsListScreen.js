@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
@@ -12,9 +12,6 @@ import { extendMoment } from "moment-range";
 
 const ReviewListScreen = () => {
   const moment = extendMoment(Moment);
-
-  const [deleteReviewMsg, setDeleteReviewMsg] = useState("");
-  const [deleteReviewErr, setDeleteReviewErr] = useState("");
 
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -31,11 +28,8 @@ const ReviewListScreen = () => {
   } = getReviews;
 
   const deleteReview = useSelector((state) => state.deleteReview);
-  const {
-    loading: deleteReviewLoading,
-    message: deleteReviewMessage,
-    error: deleteReviewError,
-  } = deleteReview;
+  const { message: deleteReviewMessage, error: deleteReviewError } =
+    deleteReview;
   console.log(deleteReview);
 
   useEffect(() => {
@@ -46,8 +40,6 @@ const ReviewListScreen = () => {
 
   const handleDeleteReview = (reviewId) => {
     dispatch(removeReview(reviewId));
-    setDeleteReviewMsg(deleteReviewMessage);
-    setDeleteReviewErr(deleteReviewError);
   };
 
   return (
@@ -75,10 +67,8 @@ const ReviewListScreen = () => {
             <Alert message={getReviewsError} isError={true} />
           )}
           {deleteReviewError && (
-            <Alert message={deleteReviewErr} isError={true} />
+            <Alert message={deleteReviewError} isError={true} />
           )}
-
-          {deleteReviewMessage && <Alert message={deleteReviewMsg} />}
 
           <div className="reviews-list">
             {getReviewsLoading ? (
@@ -94,12 +84,14 @@ const ReviewListScreen = () => {
               reviews.map((review) => (
                 <div className="each-review" key={review._id}>
                   <div className="review-item owner">
-                    <label>
+                    {/* <label>
                       <b>Owner:</b>
-                    </label>
+                    </label> */}
                     <div className="review-topic owner-info">
                       {/* <div className="owner-name">{review.user.name}</div> */}
-                      <div className="owner-email">{review.user.email}</div>
+                      <div className="owner-email" style={{ fontSize: "12px" }}>
+                        {review.user.email}
+                      </div>
                     </div>
                   </div>
 

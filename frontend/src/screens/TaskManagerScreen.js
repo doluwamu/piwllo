@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
@@ -29,13 +29,9 @@ const TaskManagerScreen = () => {
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
 
-  const [openDeleteTaskAlert, setOpenDeleteTaskAlert] = useState(false);
-
   const { darkTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const { message } = location.state || "";
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -130,22 +126,6 @@ const TaskManagerScreen = () => {
           {deleteTaskError && (
             <Alert message={deleteTaskError} isError={true} />
           )}
-
-          {/* Success messages */}
-          {addTaskMessage && (
-            <Alert message={addTaskMessage}>Task successfully added :)</Alert>
-          )}
-
-          {/* {deleteTaskMessage  setOpenDeleteTaskAlert(true)} */}
-          {openDeleteTaskAlert && (
-            <Alert
-              message={deleteTaskMessage}
-              messageVisible={openDeleteTaskAlert}
-              setMessageVisible={setOpenDeleteTaskAlert}
-            />
-          )}
-
-          {message && <Alert message={message} />}
 
           <div className="add-task">
             <div className="task-input">

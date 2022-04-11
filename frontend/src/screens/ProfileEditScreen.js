@@ -51,9 +51,7 @@ const ProfileEditScreen = () => {
     }
     if (successUpdate) {
       dispatch({ type: UPDATE_USER_PROFILE_RESET });
-      navigate(`/user/${userId}/profile`, {
-        state: { message: "Profile updated successfully :)" },
-      });
+      navigate(`/user/${userId}/profile`);
     }
     if (!profileInfo || profileInfo._id !== userId) {
       dispatch(fetchUserProfile());
@@ -176,7 +174,7 @@ const ProfileEditScreen = () => {
             <div className="form-element">
               <button type="submit" onClick={handleUpdate}>
                 {loading || updateLoading ? (
-                  <Spinner width="25px" height="25px" marginLeft="45%" />
+                  <Spinner width="20px" height="20px" marginLeft="45%" />
                 ) : (
                   "Update"
                 )}

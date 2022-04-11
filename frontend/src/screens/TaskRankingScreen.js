@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
@@ -20,8 +20,6 @@ const TaskRankingScreen = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { taskRank } = params;
-  const location = useLocation();
-  const { message } = location.state || "";
 
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
@@ -92,9 +90,6 @@ const TaskRankingScreen = () => {
 
         {getTasksError && <Alert message={getTasksError} isError={true} />}
         {deleteTaskError && <Alert message={deleteTaskError} isError={true} />}
-        {deleteTaskMessage && <Alert message={deleteTaskMessage} />}
-
-        {message && <Alert message={message} />}
 
         <div className="task-actions-section">
           <div className="show-tasks-section">

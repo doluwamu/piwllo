@@ -6,9 +6,11 @@ import {
   GET_REVIEWS_REQUEST,
   GET_REVIEWS_SUCCESS,
   GET_REVIEWS_FAIL,
+  GET_REVIEWS_RESET,
   DELETE_REVIEW_REQUEST,
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
+  DELETE_REVIEW_RESET,
 } from "../constants/reviewConstants";
 
 export const addReview = (state = {}, action) => {
@@ -26,7 +28,7 @@ export const addReview = (state = {}, action) => {
   }
 };
 
-export const getReviews = (state = {}, action) => {
+export const getReviews = (state = { reviews: [] }, action) => {
   switch (action.type) {
     case GET_REVIEWS_REQUEST:
       return { loading: true };
@@ -34,6 +36,8 @@ export const getReviews = (state = {}, action) => {
       return { loading: false, reviews: action.payload };
     case GET_REVIEWS_FAIL:
       return { loading: false, error: action.payload };
+    case GET_REVIEWS_RESET:
+      return { reviews: [] };
     default:
       return state;
   }
@@ -47,6 +51,8 @@ export const deleteReview = (state = {}, action) => {
       return { loading: false, success: true, message: action.payload };
     case DELETE_REVIEW_FAIL:
       return { loading: false, success: false, error: action.payload };
+    case DELETE_REVIEW_RESET:
+      return {};
     default:
       return state;
   }

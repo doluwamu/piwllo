@@ -148,7 +148,7 @@ const SigninScreen = () => {
           <div className="form-element">
             <button type="submit" onClick={handleSignIn}>
               {loading ? (
-                <Spinner width="25px" height="25px" marginLeft="45%" />
+                <Spinner width="20px" height="20px" marginLeft="45%" />
               ) : (
                 "Sign in"
               )}

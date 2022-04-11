@@ -43,9 +43,7 @@ const EditTaskScreen = () => {
       dispatch({
         type: GET_TASK_BY_ID_RESET,
       });
-      navigate(routeUrl ? routeUrl : "/", {
-        state: { message: "Task update successful :)" },
-      });
+      navigate(routeUrl ? routeUrl : "/");
     }
 
     if (taskToEdit) {
@@ -87,18 +85,12 @@ const EditTaskScreen = () => {
       >
         <h2 style={{ fontFamily: "cursive" }}>Edit task</h2>
 
-        {getTasksByIdError ||
-          (updateTasksError && (
-            <Alert
-              message={getTasksByIdError || updateTasksError}
-              isError={true}
-            />
-          ))}
-
-        {/* {updateSuccess &&
-           navigate("/task-manager", {
-             state: { message: "Update successful :)" },
-           })} */}
+        {getTasksByIdError && (
+          <Alert message={getTasksByIdError} isError={true} />
+        )}
+        {updateTasksError && (
+          <Alert message={updateTasksError} isError={true} />
+        )}
 
         <div className="edit-task-form-element">
           <label>Task:</label>

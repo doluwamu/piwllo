@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ReviewSuccessModal from "../components/modals/ReviewSuccessModal";
 import Spinner from "../components/shared/Spinner";
@@ -21,7 +22,11 @@ const AddRewiewScreen = () => {
   const { userDetails } = userLogin;
 
   const addReview = useSelector((state) => state.addReview);
-  const { loading: addReviewLoading, success: addReviewSuccess } = addReview;
+  const {
+    loading: addReviewLoading,
+    success: addReviewSuccess,
+    error: addReviewError,
+  } = addReview;
 
   // if (addReviewSuccess) {
   //   setReview("");
@@ -59,6 +64,9 @@ const AddRewiewScreen = () => {
         {/* Review */}
         <div className="review">
           <h2>What do you think? We'd love to hear from you</h2>
+
+          {addReviewError && <Alert message={addReviewError} isError={true} />}
+
           <textarea
             placeholder="Drop a review message"
             value={review}
