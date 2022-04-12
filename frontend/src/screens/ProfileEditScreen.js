@@ -18,6 +18,10 @@ const ProfileEditScreen = () => {
   const params = useParams();
   const { userId } = params;
 
+  // const fileReader = new FileReader();
+
+  const [imageBase64, setImageBase64] = useState("");
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,6 +77,10 @@ const ProfileEditScreen = () => {
     dispatch(editUserProfile(name, email, password, confirmPassword));
   };
 
+  // const handleProfileImageDisplay = (e) => {
+  //   console.log(e.target)
+  // }
+
   return (
     <div className="profile-edit-section main">
       {/* Aside bar */}
@@ -99,7 +107,14 @@ const ProfileEditScreen = () => {
 
           <div className="avatar">
             <label htmlFor="upload">
-              <img title={image} src={image} alt="avatar" />
+              <img
+                title={"Profile Image"}
+                src={
+                  imageBase64 && imageBase64.length > 0 ? imageBase64 : image
+                }
+                alt="avatar"
+              />
+              {/* onClick={(e) => setImageBase64(e.ta)} */}
             </label>
 
             <input

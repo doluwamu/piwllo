@@ -13,6 +13,7 @@ import CreateTeamScreen from "./screens/CreateTeamScreen";
 import EditTaskScreen from "./screens/EditTaskScreen";
 import PageNotFoundScreen from "./screens/PageNotFound";
 import ReviewsListScreen from "./screens/ReviewsListScreen";
+import UsersListScreen from "./screens/UsersListScreen";
 
 const AllRoutes = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -21,12 +22,15 @@ const AllRoutes = () => {
   return (
     <Router>
       <Routes>
+        {/* General */}
         <Route
           path="/"
           element={!userDetails ? <HomeScreen /> : <TaskManagerScreen />}
         />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
+
+        {/* Protected */}
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
         <Route
           path="/user/:userId/profile/edit"
@@ -36,7 +40,12 @@ const AllRoutes = () => {
         <Route path="/task/:taskId/edit" element={<EditTaskScreen />} />
         <Route path="/teams/create" element={<CreateTeamScreen />} />
         <Route path="/review" element={<AddRewiewScreen />} />
+
+        {/* Admins only */}
         <Route path="/reviews" element={<ReviewsListScreen />} />
+        <Route path="/users/list" element={<UsersListScreen />} />
+
+        {/* Unexisting pages */}
         <Route path="*" element={<PageNotFoundScreen />} />
       </Routes>
     </Router>
