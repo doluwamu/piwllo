@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -8,9 +7,6 @@ const PageNotFoundScreen = () => {
 
   return (
     <div className="add-review-section main">
-      {/* Aside bar */}
-      <AsideBar />
-
       <div
         className={`review-section general-section ${
           darkTheme ? "dark" : "light"

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
 import SignupScreen from "./screens/SignupScreen";
 import SigninScreen from "./screens/SigninScreen";
+import VerifyEmailScreen from "./screens/VerifyEmailScreen";
 import TaskManagerScreen from "./screens/TaskManagerScreen";
 import TaskRankingScreen from "./screens/TaskRankingScreen";
 import ProfileViewScreen from "./screens/ProfileViewScreen";
@@ -14,6 +15,7 @@ import EditTaskScreen from "./screens/EditTaskScreen";
 import PageNotFoundScreen from "./screens/PageNotFound";
 import ReviewsListScreen from "./screens/ReviewsListScreen";
 import UsersListScreen from "./screens/UsersListScreen";
+import ResetPassswordScreen from "./screens/ResetPasswordScreen";
 
 const AllRoutes = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -29,6 +31,11 @@ const AllRoutes = () => {
         />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
+        <Route
+          path="/password-reset/verify-email"
+          element={<VerifyEmailScreen />}
+        />
+        <Route path="/password-reset" element={<ResetPassswordScreen />} />
 
         {/* Protected */}
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />

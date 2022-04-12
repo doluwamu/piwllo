@@ -14,8 +14,8 @@ const SigninScreen = () => {
   const [password, setPassword] = useState("");
 
   const [emailRequiredError, setEmailRequiredError] = useState(false);
-  const [passwordRequiredError, setPasswordRequiredError] = useState(false);
   const [emailValidationError, setEmailValidationError] = useState(false);
+  const [passwordRequiredError, setPasswordRequiredError] = useState(false);
 
   const { darkTheme } = useContext(ThemeContext);
 
@@ -55,11 +55,6 @@ const SigninScreen = () => {
       setEmailValidationError(true);
 
       if (emailRequiredError) setEmailRequiredError(false);
-      return;
-    }
-
-    if (!validator.isEmail(email)) {
-      setEmailValidationError(true);
       return;
     }
 
@@ -165,7 +160,7 @@ const SigninScreen = () => {
             ?
           </p>
           <p>
-            <Link to={"/forgot-password"}>Forgot password?</Link>
+            <Link to={"/password-reset/verify-email"}>Forgot password?</Link>
           </p>
         </div>
       </form>
