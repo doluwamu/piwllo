@@ -133,25 +133,36 @@ export const emailVerify = (email) => async (dispatch) => {
   }
 };
 
-export const passwordReset = (email) => async (dispatch) => {
-  try {
-    dispatch({
-      type: RESET_PASSWORD_REQUEST,
-    });
+export const passwordReset =
+  (email, password, confirmPassword) => async (dispatch) => {
+    try {
+      dispatch({
+        type: RESET_PASSWORD_REQUEST,
+      });
 
-    const { data } = await axios.put(`/api/v1/auth/password-reset/${email}`);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    dispatch({
-      type: RESET_PASSWORD_SUCCESS,
-      payload: data.message,
-    });
-  } catch (error) {
-    dispatch({
-      type: RESET_PASSWORD_FAIL,
-      payload:
-        error.response.data.message === connectionError
-          ? connectionErrorMessage
-          : error.response.data.message,
-    });
-  }
-};
+      const { data } = await axios.put(
+        `/api/v1/auth/password-reset/${email}`,
+        { password, confirmPassword },
+        config
+      );
+
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_FAIL,
+        payload:
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
+            : error.response.data.message,
+      });
+    }
+  };

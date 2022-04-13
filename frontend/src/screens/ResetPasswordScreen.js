@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-// import Alert from "../components/Alert";
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Alert from "../components/Alert";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-// import { useSelector, useDispatch } from "react-redux";
-// import { loginUser } from "../redux/actions/authActions";
+import { useSelector, useDispatch } from "react-redux";
+import { passwordReset } from "../redux/actions/authActions";
 import FormValidationErrors from "../errors/FormValidationErrors";
-// import Spinner from "../components/shared/Spinner";
+import Spinner from "../components/shared/Spinner";
 
 const ResetPassswordScreen = () => {
   const [password, setPassword] = useState("");
@@ -22,6 +22,24 @@ const ResetPassswordScreen = () => {
   const [passwordsMismatchError, setPasswordsMismatchError] = useState(false);
 
   const { darkTheme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const { email } = location.state || "";
+  const navigate = useNavigate();
+
+  const resetPassword = useSelector((state) => state.resetPassword);
+  const {
+    loading: resetPasswordLoading,
+    message: resetPasswordMessage,
+    error: resetPasswordError,
+  } = resetPassword;
+
+  useEffect(() => {
+    if (!email || email.length < 1) navigate("/password-reset/verify-email");
+    if (resetPasswordMessage) {
+      navigate("/signin");
+    }
+  }, [email, resetPasswordMessage, navigate]);
 
   const handleResetPassword = (e) => {
     e.preventDefault();
@@ -57,6 +75,7 @@ const ResetPassswordScreen = () => {
       if (passwordMinLengthError) setPasswordMinLengthError(false);
       return;
     }
+    dispatch(passwordReset(email, password, confirmPassword));
   };
 
   return (
@@ -74,6 +93,10 @@ const ResetPassswordScreen = () => {
         </Link>
 
         <h2>Reset Password</h2>
+
+        {resetPasswordError && (
+          <Alert message={resetPasswordError} isError={true} />
+        )}
 
         <div className="form-elements">
           <div className="form-element">
@@ -135,7 +158,11 @@ const ResetPassswordScreen = () => {
 
           <div className="form-element">
             <button type="submit" onClick={handleResetPassword}>
-              Reset password
+              {resetPasswordLoading ? (
+                <Spinner width="20px" height="20px" marginLeft="45%" />
+              ) : (
+                "Reset password"
+              )}
             </button>
           </div>
         </div>

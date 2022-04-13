@@ -32,7 +32,7 @@ const VerifyEmailScreen = () => {
       dispatch({ type: VERIFY_EMAIL_RESET });
       navigate("/password-reset", { state: { email } });
     }
-  }, [verifyEmailMessage, navigate, email]);
+  }, [dispatch, verifyEmailMessage, navigate, email]);
 
   const handleVerifyEmail = (e) => {
     e.preventDefault();
