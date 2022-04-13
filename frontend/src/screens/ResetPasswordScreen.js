@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { passwordReset } from "../redux/actions/authActions";
 import FormValidationErrors from "../errors/FormValidationErrors";
 import Spinner from "../components/shared/Spinner";
+import { RESET_PASSWORD_RESET } from "../redux/constants/authConstants";
 
 const ResetPassswordScreen = () => {
   const [password, setPassword] = useState("");
@@ -37,9 +38,10 @@ const ResetPassswordScreen = () => {
   useEffect(() => {
     if (!email || email.length < 1) navigate("/password-reset/verify-email");
     if (resetPasswordMessage) {
+      dispatch({ type: RESET_PASSWORD_RESET });
       navigate("/signin");
     }
-  }, [email, resetPasswordMessage, navigate]);
+  }, [email, resetPasswordMessage, navigate, dispatch]);
 
   const handleResetPassword = (e) => {
     e.preventDefault();

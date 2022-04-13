@@ -16,6 +16,7 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
 } from "../constants/authConstants";
+import { GET_USER_TASKS_RESET } from "../constants/taskConstants";
 import { GET_USER_PROFILE_RESET } from "../constants/userConstants";
 import { connectionError, connectionErrorMessage } from "./errors.global";
 
@@ -98,6 +99,7 @@ export const logoutUser = () => (dispatch) => {
   dispatch({ type: USER_LOGIN_RESET });
   dispatch({ type: USER_REGISTERATION_RESET });
   dispatch({ type: GET_USER_PROFILE_RESET });
+  dispatch({ type: GET_USER_TASKS_RESET });
 };
 
 export const emailVerify = (email) => async (dispatch) => {
