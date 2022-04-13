@@ -2,6 +2,9 @@ import User from "../../models/userModel.js";
 import AppError from "../../error/appError.js";
 import validator from "validator";
 
+// Request type: POST
+// To: /api/v1/auth/verify-email
+// Desc: to verify that email exists before resetting password
 const verifyEmail = async (req, res, next) => {
   try {
     const { email } = req.body;

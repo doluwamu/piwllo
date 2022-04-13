@@ -1,7 +1,12 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { userLogin, userRegistration } from "./reducers/authReducers";
+import {
+  userLogin,
+  userRegistration,
+  verifyEmail,
+  resetPassword,
+} from "./reducers/authReducers";
 import {
   getUserTasks,
   addTask,
@@ -27,6 +32,8 @@ const reducer = combineReducers({
   addReview,
   getReviews,
   deleteReview,
+  verifyEmail,
+  resetPassword,
 });
 
 const userDetailsFromStorage = localStorage.getItem("userDetails")

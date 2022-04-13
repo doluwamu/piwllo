@@ -1,6 +1,9 @@
 import User from "../../models/userModel.js";
 import AppError from "../../error/appError.js";
 
+// Request type: PUT
+// To: /api/v1/auth/password-reset/:email
+// Desc: to reset password on forgetting password
 const resetPassword = async (req, res, next) => {
   try {
     const { password, confirmPassword } = req.body;
