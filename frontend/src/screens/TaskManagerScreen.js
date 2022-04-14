@@ -8,7 +8,7 @@ import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import FormValidationErrors from "../errors/FormValidationErrors";
-import { firstLetterToUpperCase } from "../helpers/wordHelpers";
+import { firstLetterToUpperCase, wordBreak } from "../helpers/wordHelpers";
 import {
   createTask,
   listUserTasks,
@@ -185,7 +185,7 @@ const TaskManagerScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(t.task)}
+                        {firstLetterToUpperCase(wordBreak(t.task))}
                       </td>
                       <td
                         className="priority"

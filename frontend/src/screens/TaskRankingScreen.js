@@ -6,7 +6,7 @@ import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
-import { firstLetterToUpperCase } from "../helpers/wordHelpers";
+import { firstLetterToUpperCase, wordBreak } from "../helpers/wordHelpers";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
 import {
@@ -107,7 +107,7 @@ const TaskRankingScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(t.task)}
+                        {firstLetterToUpperCase(wordBreak(t.task))}
                       </td>
                       <td
                         className="priority"

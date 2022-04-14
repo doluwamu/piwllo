@@ -272,14 +272,12 @@ export const listAllTasks = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/tasks", config);
-    debugger;
 
     dispatch({
       type: GET_ALL_TASKS_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    debugger;
     if (error.response.data.message === "jwt expired") {
       dispatch(logoutUser());
     }

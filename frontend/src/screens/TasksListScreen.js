@@ -6,7 +6,7 @@ import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { listAllTasks, removeTask } from "../redux/actions/taskActions";
-import { firstLetterToUpperCase } from "../helpers/wordHelpers";
+import { firstLetterToUpperCase, wordBreak } from "../helpers/wordHelpers";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
 // import {
@@ -18,8 +18,6 @@ const TasksListScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const params = useParams();
-  // const { taskRank } = params;
 
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
@@ -83,7 +81,10 @@ const TasksListScreen = () => {
               <thead>
                 <tr>
                   <th>Task</th>
-                  <th className="priority">Rank</th>
+                  <th className="priority" style={{ width: "130px" }}>
+                    Rank
+                  </th>
+                  <th>Owner</th>
                   <th className="btns"></th>
                 </tr>
               </thead>
@@ -93,7 +94,7 @@ const TasksListScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(t.task)}
+                        {firstLetterToUpperCase(wordBreak(t.task, 40))}
                       </td>
                       <td
                         className="priority"
@@ -101,10 +102,13 @@ const TasksListScreen = () => {
                       >
                         {firstLetterToUpperCase(t.rank)}
                       </td>
+                      <td onClick={() => openTaskViewModal(t)}>
+                        {t.owner.email}
+                      </td>
                       <td>
                         {/* <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: `/tasks/${taskRank}`, task: t }}
+                          state={{ routeUrl: `/tasks-list`, task: t }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
