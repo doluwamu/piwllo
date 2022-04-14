@@ -22,6 +22,10 @@ import {
   GET_TASK_BY_ID_RESET,
   ADD_TASK_RESET,
   DELETE_TASK_RESET,
+  GET_ALL_TASKS_REQUEST,
+  GET_ALL_TASKS_SUCCESS,
+  GET_ALL_TASKS_FAIL,
+  GET_ALL_TASKS_RESET,
 } from "../constants/taskConstants";
 
 export const getUserTasks = (state = {}, action) => {
@@ -114,6 +118,21 @@ export const updateTask = (state = {}, action) => {
         updateTasksError: action.payload,
       };
     case UPDATE_TASK_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const getAllTasks = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ALL_TASKS_REQUEST:
+      return { loading: true };
+    case GET_ALL_TASKS_SUCCESS:
+      return { loading: false, tasks: action.payload };
+    case GET_ALL_TASKS_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_ALL_TASKS_RESET:
       return {};
     default:
       return state;

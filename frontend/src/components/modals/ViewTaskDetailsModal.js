@@ -76,7 +76,10 @@ const ViewTaskDetailsModal = ({
           <button
             type="button"
             className="delete-btn"
-            onClick={() => deleteTask(taskDetails._id)}
+            onClick={() => {
+              deleteTask(taskDetails._id);
+              closeModal();
+            }}
           >
             Delete
           </button>

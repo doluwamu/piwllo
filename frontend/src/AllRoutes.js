@@ -15,7 +15,8 @@ import EditTaskScreen from "./screens/EditTaskScreen";
 import PageNotFoundScreen from "./screens/PageNotFound";
 import ReviewsListScreen from "./screens/ReviewsListScreen";
 import UsersListScreen from "./screens/UsersListScreen";
-import ResetPassswordScreen from "./screens/ResetPasswordScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
+import TasksListScreen from "./screens/TasksListScreen";
 
 const AllRoutes = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -35,7 +36,7 @@ const AllRoutes = () => {
           path="/password-reset/verify-email"
           element={<VerifyEmailScreen />}
         />
-        <Route path="/password-reset" element={<ResetPassswordScreen />} />
+        <Route path="/password-reset" element={<ResetPasswordScreen />} />
 
         {/* Protected */}
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
@@ -51,6 +52,7 @@ const AllRoutes = () => {
         {/* Admins only */}
         <Route path="/reviews" element={<ReviewsListScreen />} />
         <Route path="/users/list" element={<UsersListScreen />} />
+        <Route path="/tasks-list" element={<TasksListScreen />} />
 
         {/* Unexisting pages */}
         <Route path="*" element={<PageNotFoundScreen />} />

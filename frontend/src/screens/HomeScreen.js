@@ -21,21 +21,21 @@ const HomeScreen = () => {
 
   const location = useLocation();
 
-  const redirect = location.search
-    ? location.search.split("=")[1]
-    : "/task-manager";
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (userDetails) {
       navigate(redirect);
     }
-    Aos.init({
-      offset: 200,
-      duration: 1000,
-      easing: "ease-in-sine",
-      delay: 50,
-    });
-  }, [userDetails, navigate, redirect]);
+    if (!darkTheme !== "dark") {
+      Aos.init({
+        offset: 200,
+        duration: 1000,
+        easing: "ease-in-sine",
+        delay: 50,
+      });
+    }
+  }, [userDetails, navigate, redirect, darkTheme]);
 
   return (
     <div className="home">

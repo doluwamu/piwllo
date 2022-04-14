@@ -18,6 +18,9 @@ import {
   GET_TASK_BY_ID_REQUEST,
   GET_TASK_BY_ID_SUCCESS,
   GET_TASK_BY_ID_FAIL,
+  GET_ALL_TASKS_REQUEST,
+  GET_ALL_TASKS_SUCCESS,
+  GET_ALL_TASKS_FAIL,
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
@@ -243,6 +246,45 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
     }
     dispatch({
       type: UPDATE_TASK_FAIL,
+      payload:
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.response.data.message,
+    });
+  }
+};
+
+// Action to get all tasks that belong to a user
+export const listAllTasks = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_ALL_TASKS_REQUEST,
+    });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/v1/tasks", config);
+    debugger;
+
+    dispatch({
+      type: GET_ALL_TASKS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    debugger;
+    if (error.response.data.message === "jwt expired") {
+      dispatch(logoutUser());
+    }
+    dispatch({
+      type: GET_ALL_TASKS_FAIL,
       payload:
         error.response.data.message === connectionError
           ? connectionErrorMessage

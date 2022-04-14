@@ -80,7 +80,7 @@ const AsideBar = () => {
                   <Link to="/users/list">Manage users</Link>{" "}
                 </li>
                 <li>
-                  <Link to="/tasks/list">Tasks list</Link>{" "}
+                  <Link to="/tasks-list">Tasks list</Link>{" "}
                 </li>
               </div>
             </div>

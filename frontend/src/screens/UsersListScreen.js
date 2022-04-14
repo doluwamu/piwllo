@@ -1,28 +1,43 @@
-import React, { useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import {useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
+// import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchUserProfile } from "../redux/actions/userActions";
+// import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
+// import { firstLetterToUpperCase } from "../helpers/wordHelpers";
 // import Alert from "../components/Alert";
 // import Spinner from "../components/shared/Spinner";
 
-const UsersListScreen = () => {
+const UserListScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
   //   const dispatch = useDispatch();
-  // const params = useParams();
-  // const { userId } = params;
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
+  //   const params = useParams();
+  //   const { taskRank } = params;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
+  useEffect(() => {
+    if (!userDetails) navigate("/signin");
+    if (userDetails && !userDetails.isAdmin) navigate("/");
+  }, [ userDetails, navigate]);
+
+
+  const handleDeleteUser = () => {
+    console.log("deleted");
+  };
 
   return (
-    <div className="profile-view-section main">
+    <div className="user-list-section main">
       {/* Aside bar */}
       <AsideBar />
 
-      {/* Profile section */}
+      {/* task actions */}
       <div
-        className={`profile-section general-section ${
+        className={`list-section general-section ${
           darkTheme ? "dark" : "light"
         }`}
       >
@@ -33,10 +48,48 @@ const UsersListScreen = () => {
           </div>
         </div>
 
-        <div className="users-list-section">Users list</div>
+        <h1>Users</h1>
+
+        <div className="list-actions-section">
+          <div className="show-users-section">
+            <table>
+              <thead>
+                <tr>
+                  <th style={{}}>Email</th>
+                  <th className="username">Username</th>
+                  <th className="btns"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>test2@gmail.com</td>
+                  <td className="username">Adeitan Doluwamu Adeleye</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn-delete"
+                      onClick={() => handleDeleteUser()}
+                    >
+                      <i className="fas fa-trash"></i>{" "}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br />
+        </div>
       </div>
     </div>
   );
 };
 
-export default UsersListScreen;
+export default UserListScreen;
+
+//   <Spinner
+//     width="30px"
+//     height="30px"
+//     marginLeft="50%"
+//     marginTop={"10px"}
+//     marginBottom={"10px"}
+//   />
