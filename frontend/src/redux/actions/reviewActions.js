@@ -14,7 +14,7 @@ import {
   GET_REVIEWS_RESET,
 } from "../constants/reviewConstants";
 import { logoutUser } from "./authActions";
-import { connectionError, connectionErrorMessage } from "./errors.global";
+import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
 
 // Action to add a review
 export const createReview = (review) => async (dispatch, getState) => {
@@ -42,7 +42,7 @@ export const createReview = (review) => async (dispatch, getState) => {
 
     setTimeout(() => dispatch({ type: ADD_REVIEW_RESET }), 5000);
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -84,7 +84,7 @@ export const fetchReviews = () => async (dispatch, getState) => {
       error &&
       error.response &&
       error.response.data.message &&
-      error.response.data.message === "jwt expired"
+      error.response.data.message === jwtErrors
     ) {
       dispatch(logoutUser());
     }
@@ -127,7 +127,7 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
 
     dispatch({ type: DELETE_REVIEW_RESET });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({

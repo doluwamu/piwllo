@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/user/profile", isAuthenticated, getUserProfile);
 router.put("/user/profile/edit", isAuthenticated, updateProfile);
-router.delete("/user/delete", isAuthenticated, deleteUser);
+router.delete("/user/:userId/delete", isAuthenticated, deleteUser);
 router.delete("", isAuthenticated, isAdmin, deleteAllUsers);
 router.get("", isAuthenticated, isAdmin, getUsers);
 

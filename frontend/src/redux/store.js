@@ -16,7 +16,12 @@ import {
   updateTask,
   getAllTasks,
 } from "./reducers/taskReducers";
-import { getUserProfile, updateUserProfile } from "./reducers/userReducers";
+import {
+  getUserProfile,
+  updateUserProfile,
+  getAllUsers,
+  deleteUser,
+} from "./reducers/userReducers";
 import { addReview, getReviews, deleteReview } from "./reducers/reviewReducers";
 
 const reducer = combineReducers({
@@ -31,6 +36,8 @@ const reducer = combineReducers({
   getAllTasks,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
+  deleteUser,
   addReview,
   getReviews,
   deleteReview,

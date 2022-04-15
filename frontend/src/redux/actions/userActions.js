@@ -5,10 +5,16 @@ import {
   UPDATE_USER_PROFILE_FAIL,
   UPDATE_USER_PROFILE_REQUEST,
   UPDATE_USER_PROFILE_SUCCESS,
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
 } from "../constants/userConstants";
 import { logoutUser } from "./authActions";
 import axios from "axios";
-import { connectionError, connectionErrorMessage } from "./errors.global";
+import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
   try {
@@ -34,7 +40,7 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -76,7 +82,7 @@ export const editUserProfile =
 
       localStorage.setItem("userDetails", JSON.stringify(data));
     } catch (error) {
-      if (error.response.data.message === "jwt expired") {
+      if (error.response.data.message === jwtErrors) {
         dispatch(logoutUser());
       }
       dispatch({
@@ -88,3 +94,73 @@ export const editUserProfile =
       });
     }
   };
+
+export const listAllUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_USERS_REQUEST });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/v1/users", config);
+
+    dispatch({
+      type: GET_USERS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    if (error.response.data.message === jwtErrors) {
+      dispatch(logoutUser());
+    }
+    dispatch({
+      type: GET_USERS_FAIL,
+      payload:
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.response.data.message,
+    });
+  }
+};
+
+export const removeUser = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/v1/users/user/${userId}/delete`, config);
+    debugger;
+
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    debugger;
+    if (error.response.data.message === jwtErrors) {
+      dispatch(logoutUser());
+    }
+    dispatch({
+      type: DELETE_USER_FAIL,
+      payload:
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.response.data.message,
+    });
+  }
+};

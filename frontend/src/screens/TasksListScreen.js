@@ -84,8 +84,8 @@ const TasksListScreen = () => {
                   <th className="priority" style={{ width: "130px" }}>
                     Rank
                   </th>
-                  <th>Owner</th>
-                  <th className="btns"></th>
+                  <th style={{ width: "230px" }}>Owner</th>
+                  <th className="btns" style={{ width: "25px" }}></th>
                 </tr>
               </thead>
               {tasks &&
@@ -103,7 +103,7 @@ const TasksListScreen = () => {
                         {firstLetterToUpperCase(t.rank)}
                       </td>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {t.owner.email}
+                        {t.owner && t.owner.email}
                       </td>
                       <td>
                         {/* <Link

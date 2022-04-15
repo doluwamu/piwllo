@@ -1,33 +1,35 @@
 import React, { useContext, useEffect } from "react";
-import {useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import AsideBar from "../components/AsideBar";
-// import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-// import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
-// import { firstLetterToUpperCase } from "../helpers/wordHelpers";
-// import Alert from "../components/Alert";
-// import Spinner from "../components/shared/Spinner";
+import Alert from "../components/Alert";
+import Spinner from "../components/shared/Spinner";
+import { listAllUsers, removeUser } from "../redux/actions/userActions";
 
 const UserListScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
-  //   const dispatch = useDispatch();
-    const navigate = useNavigate();
-  //   const params = useParams();
-  //   const { taskRank } = params;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
+  const getAllUsers = useSelector((state) => state.getAllUsers);
+  const { loading: getUsersLoading, users, error: getUsersError } = getAllUsers;
+
+  const deleteUser = useSelector((state) => state.deleteUser);
+  const { message: deleteUserMessage, error: deleteUserError } = deleteUser;
+
   useEffect(() => {
     if (!userDetails) navigate("/signin");
     if (userDetails && !userDetails.isAdmin) navigate("/");
-  }, [ userDetails, navigate]);
+    dispatch(listAllUsers());
+  }, [userDetails, navigate, dispatch, deleteUserMessage]);
 
-
-  const handleDeleteUser = () => {
-    console.log("deleted");
+  const handleDeleteUser = (userId) => {
+    dispatch(removeUser(userId));
   };
 
   return (
@@ -50,32 +52,53 @@ const UserListScreen = () => {
 
         <h1>Users</h1>
 
+        {getUsersError && <Alert message={getUsersError} isError={true} />}
+        {deleteUserError && <Alert message={deleteUserError} isError={true} />}
+
         <div className="list-actions-section">
           <div className="show-users-section">
             <table>
               <thead>
                 <tr>
-                  <th style={{}}>Email</th>
+                  <th>Email</th>
                   <th className="username">Username</th>
-                  <th className="btns"></th>
+                  <th className="btns" style={{ width: "30px" }}></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>test2@gmail.com</td>
-                  <td className="username">Adeitan Doluwamu Adeleye</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn-delete"
-                      onClick={() => handleDeleteUser()}
-                    >
-                      <i className="fas fa-trash"></i>{" "}
-                    </button>
-                  </td>
-                </tr>
+                {users &&
+                  users.length > 0 &&
+                  users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user.email}</td>
+                      <td className="username">{user.name}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn-delete"
+                          style={{ width: "25px" }}
+                          onClick={() => handleDeleteUser(user._id)}
+                        >
+                          <i className="fas fa-trash"></i>{" "}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
+            {getUsersLoading ? (
+              <Spinner
+                width="30px"
+                height="30px"
+                marginLeft="50%"
+                marginTop={"10px"}
+                marginBottom={"10px"}
+              />
+            ) : (
+              (!users || users.length === 0) && (
+                <p style={{ textAlign: "center" }}>No users found</p>
+              )
+            )}
           </div>
           <br />
         </div>
@@ -85,11 +108,3 @@ const UserListScreen = () => {
 };
 
 export default UserListScreen;
-
-//   <Spinner
-//     width="30px"
-//     height="30px"
-//     marginLeft="50%"
-//     marginTop={"10px"}
-//     marginBottom={"10px"}
-//   />

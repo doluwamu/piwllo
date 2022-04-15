@@ -6,3 +6,5 @@ export const connectionError =
 
 export const connectionErrorMessage =
   "Ooops, Something went wrong with your connection :(";
+
+export const jwtErrors = "jwt expired" || "jwt malformed";

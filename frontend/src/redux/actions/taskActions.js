@@ -24,7 +24,7 @@ import {
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
-import { connectionError, connectionErrorMessage } from "./errors.global";
+import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
 
 // Action to get all tasks that belong to a user
 export const listUserTasks = () => async (dispatch, getState) => {
@@ -50,7 +50,7 @@ export const listUserTasks = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -88,7 +88,7 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -125,7 +125,7 @@ export const removeTask = (id) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -162,7 +162,7 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -199,7 +199,7 @@ export const listTaskByRank = (rank) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -241,7 +241,7 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
@@ -272,13 +272,15 @@ export const listAllTasks = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/tasks", config);
+    debugger
 
     dispatch({
       type: GET_ALL_TASKS_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === "jwt expired") {
+    debugger;
+    if (error.response.data.message === jwtErrors) {
       dispatch(logoutUser());
     }
     dispatch({
