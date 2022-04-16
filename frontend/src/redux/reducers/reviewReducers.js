@@ -11,6 +11,10 @@ import {
   DELETE_REVIEW_SUCCESS,
   DELETE_REVIEW_FAIL,
   DELETE_REVIEW_RESET,
+  LIKE_REVIEW_REQUEST,
+  LIKE_REVIEW_SUCCESS,
+  LIKE_REVIEW_FAIL,
+  LIKE_REVIEW_RESET,
 } from "../constants/reviewConstants";
 
 export const addReview = (state = {}, action) => {
@@ -52,6 +56,21 @@ export const deleteReview = (state = {}, action) => {
     case DELETE_REVIEW_FAIL:
       return { loading: false, success: false, error: action.payload };
     case DELETE_REVIEW_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const likeReview = (state = {}, action) => {
+  switch (action.type) {
+    case LIKE_REVIEW_REQUEST:
+      return { loading: true };
+    case LIKE_REVIEW_SUCCESS:
+      return { loading: false, success: true, liked: action.payload };
+    case LIKE_REVIEW_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case LIKE_REVIEW_RESET:
       return {};
     default:
       return state;

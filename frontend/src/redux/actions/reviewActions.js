@@ -14,7 +14,11 @@ import {
   GET_REVIEWS_RESET,
 } from "../constants/reviewConstants";
 import { logoutUser } from "./authActions";
-import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
+import {
+  connectionError,
+  connectionErrorMessage,
+  jwtErrors,
+} from "./errors.global";
 
 // Action to add a review
 export const createReview = (review) => async (dispatch, getState) => {
@@ -139,3 +143,5 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
     });
   }
 };
+
+// /api/v1/reviews/:reviewId/like

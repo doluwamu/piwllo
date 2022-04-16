@@ -106,17 +106,10 @@ const TasksListScreen = () => {
                         {t.owner && t.owner.email}
                       </td>
                       <td>
-                        {/* <Link
-                          to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: `/tasks-list`, task: t }}
-                        >
-                          <button type="button" className="btn-edit">
-                            <i className="fas fa-edit"></i>
-                          </button>
-                        </Link> */}
                         <button
                           type="button"
                           className="btn-delete"
+                          style={{ width: "25px" }}
                           onClick={() => handleDeleteTask(t._id)}
                         >
                           <i className="fas fa-trash"></i>{" "}

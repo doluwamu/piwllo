@@ -14,7 +14,7 @@ const deleteTask = async (req, res, next) => {
 
     const owner = await User.findById(task.owner);
 
-    if (user.id !== owner.id) {
+    if (user.id !== owner.id && !user.isAdmin) {
       return next(new AppError("This task is not yours", 401));
     }
 
