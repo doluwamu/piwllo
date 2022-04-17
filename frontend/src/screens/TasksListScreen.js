@@ -137,7 +137,7 @@ const TasksListScreen = () => {
               />
             ) : (
               (!tasks || tasks.length === 0) && (
-                <p style={{ textAlign: "center" }}>No tasks added</p>
+                <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
           </div>

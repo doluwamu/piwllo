@@ -14,6 +14,7 @@ export const getAllUserTasks = async (req, res, next) => {
             $regex: req.query.keyword,
             $options: "i",
           },
+          owner: user.id,
         }
       : { owner: user.id };
 

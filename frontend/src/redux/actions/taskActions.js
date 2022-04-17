@@ -27,7 +27,7 @@ import { logoutUser } from "./authActions";
 import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
 
 // Action to get all tasks that belong to a user
-export const listUserTasks = () => async (dispatch, getState) => {
+export const listUserTasks = (keyword ='') => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_USER_TASKS_REQUEST,
@@ -43,7 +43,7 @@ export const listUserTasks = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("/api/v1/tasks/auser", config);
+    const { data } = await axios.get(`/api/v1/tasks/auser?keyword=${keyword}`, config);
 
     dispatch({
       type: GET_USER_TASKS_SUCCESS,

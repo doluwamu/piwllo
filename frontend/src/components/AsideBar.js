@@ -1,19 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/authActions";
+import { listUserTasks } from "../redux/actions/taskActions";
 import { firstLetterOfEachWordToUpperCase } from "../helpers/wordHelpers";
+import { GET_USER_TASKS_RESET } from "../redux/constants/taskConstants";
 
 const AsideBar = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
+
+  const listTasks = useSelector((state) => state.getUserTasks);
+  const { tasks } = listTasks;
+
+  useEffect(() => {
+    if (tasks) navigate(`/?keyword=${keyword}`);
+    dispatch({ type: GET_USER_TASKS_RESET });
+  }, [tasks, navigate, keyword, dispatch]);
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -30,6 +40,10 @@ const AsideBar = () => {
   const handleSignout = () => {
     dispatch(logoutUser());
     navigate("/signin");
+  };
+
+  const handleSearch = () => {
+    dispatch(listUserTasks(keyword));
   };
 
   return (
@@ -57,13 +71,14 @@ const AsideBar = () => {
                 type="text"
                 name="search"
                 placeholder="Search task..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
               />
-              <div className="search-icon">
+              <div className="search-icon" onClick={handleSearch}>
                 <i className="fa-solid fa-search"></i>
               </div>
             </li>
+
             <li>
               Task Ranks <i className="fa-solid fa-triangle"></i>
             </li>
