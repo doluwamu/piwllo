@@ -12,6 +12,9 @@ import {
   GET_REVIEWS_REQUEST,
   GET_REVIEWS_SUCCESS,
   GET_REVIEWS_RESET,
+  LIKE_REVIEW_REQUEST,
+  LIKE_REVIEW_SUCCESS,
+  LIKE_REVIEW_FAIL,
 } from "../constants/reviewConstants";
 import { logoutUser } from "./authActions";
 import {
@@ -144,4 +147,42 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
   }
 };
 
-// /api/v1/reviews/:reviewId/like
+export const reviewLike = (reviewId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: LIKE_REVIEW_REQUEST });
+
+    const {
+      userLogin: { userDetails },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userDetails.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/reviews/${reviewId}/like`,
+      config
+    );
+    // debugger;
+
+    dispatch({
+      type: LIKE_REVIEW_SUCCESS,
+      payload: data.liked,
+    });
+  } catch (error) {
+    // debugger;
+    if (error.response.data.message === jwtErrors) {
+      dispatch(logoutUser());
+    }
+    dispatch({
+      type: LIKE_REVIEW_FAIL,
+      payload:
+        error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.response.data.message,
+    });
+  }
+};

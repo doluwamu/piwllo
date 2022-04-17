@@ -4,11 +4,16 @@ import { useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-import { fetchReviews, removeReview } from "../redux/actions/reviewActions";
+import {
+  fetchReviews,
+  removeReview,
+  reviewLike,
+} from "../redux/actions/reviewActions";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
+import { GET_REVIEWS_RESET } from "../redux/constants/reviewConstants";
 
 const ReviewListScreen = () => {
   const moment = extendMoment(Moment);
@@ -27,10 +32,13 @@ const ReviewListScreen = () => {
     error: getReviewsError,
   } = getReviews;
 
+  const likeReview = useSelector((state) => state.likeReview);
+  const { liked } = likeReview;
+  console.log(liked);
+
   const deleteReview = useSelector((state) => state.deleteReview);
   const { message: deleteReviewMessage, error: deleteReviewError } =
     deleteReview;
-  console.log(deleteReview);
 
   useEffect(() => {
     if (!userDetails) navigate("/signin");
@@ -38,7 +46,14 @@ const ReviewListScreen = () => {
     dispatch(fetchReviews());
   }, [userDetails, navigate, dispatch, deleteReviewMessage]);
 
+  const handleLikeReview = (reviewId) => {
+    dispatch(reviewLike(reviewId));
+    dispatch({ type: GET_REVIEWS_RESET });
+  };
+
   const handleDeleteReview = (reviewId) => {
+    console.log(reviewId);
+    debugger;
     dispatch(removeReview(reviewId));
   };
 
@@ -91,6 +106,20 @@ const ReviewListScreen = () => {
                       {/* <div className="owner-name">{review.user.name}</div> */}
                       <div className="owner-email" style={{ fontSize: "12px" }}>
                         {review.user.email}
+                      </div>
+
+                      <div className="like-review">
+                        {review.liked ? (
+                          <i
+                            className="fa-solid fa-heart red"
+                            onClick={() => handleLikeReview(review._id)}
+                          ></i>
+                        ) : (
+                          <i
+                            className="fa-solid fa-heart"
+                            onClick={() => handleLikeReview(review._id)}
+                          ></i>
+                        )}
                       </div>
                     </div>
                   </div>

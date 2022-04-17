@@ -22,7 +22,12 @@ import {
   getAllUsers,
   deleteUser,
 } from "./reducers/userReducers";
-import { addReview, getReviews, deleteReview } from "./reducers/reviewReducers";
+import {
+  addReview,
+  getReviews,
+  deleteReview,
+  likeReview,
+} from "./reducers/reviewReducers";
 
 const reducer = combineReducers({
   userLogin,
@@ -41,6 +46,7 @@ const reducer = combineReducers({
   addReview,
   getReviews,
   deleteReview,
+  likeReview,
   verifyEmail,
   resetPassword,
 });

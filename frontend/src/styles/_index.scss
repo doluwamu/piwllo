@@ -63,6 +63,11 @@ textarea {
   max-width: 1500px;
   margin: 0 auto;
 
+  input {
+    border: none;
+    outline: none;
+  }
+
   &.canvas-light {
     background-color: var(--light-bg);
     color: var(--light-bg-text);

@@ -56,6 +56,7 @@ const ProfileEditScreen = () => {
     if (successUpdate) {
       dispatch({ type: UPDATE_USER_PROFILE_RESET });
       navigate(`/user/${userId}/profile`);
+      window.location.reload();
     }
     if (!profileInfo || profileInfo._id !== userId) {
       dispatch(fetchUserProfile());

@@ -8,7 +8,16 @@ export const getAllUserTasks = async (req, res, next) => {
   try {
     const user = req.user;
 
-    const tasks = await Task.find({ owner: user.id }).select("-owner");
+    const keyword = req.query.keyword
+      ? {
+          task: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : { owner: user.id };
+
+    const tasks = await Task.find({ ...keyword }).select("-owner");
 
     return res.json(tasks);
   } catch (error) {

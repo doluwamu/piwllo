@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post("/", isAuthenticated, addReview);
 router.get("/", isAuthenticated, isAdmin, getReviews);
+router.put("/:reviewId/like", toggleLikeReview);
 router.delete("/:reviewId", isAuthenticated, isAdmin, deleteReview);
-router.put("/:reviewId/like", isAuthenticated, isAdmin, toggleLikeReview);
 
 export default router;

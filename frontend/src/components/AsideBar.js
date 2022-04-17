@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/authActions";
+import { firstLetterOfEachWordToUpperCase } from "../helpers/wordHelpers";
 
 const AsideBar = () => {
   const { darkTheme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -37,7 +40,30 @@ const AsideBar = () => {
           <i className="fa-solid fa-xmark"></i>
         </div>
         <div className="aside-list-items">
+          <li className="welcome-user">
+            Welcome:{" "}
+            <Link
+              to={`/user/${
+                userDetails && userDetails._id && userDetails._id
+              }/profile`}
+            >
+              {firstLetterOfEachWordToUpperCase(userDetails.name)}
+            </Link>
+          </li>
+
           <div className="section task-priority">
+            <li className="search-section">
+              <input
+                type="text"
+                name="search"
+                placeholder="Search task..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <div className="search-icon">
+                <i className="fa-solid fa-search"></i>
+              </div>
+            </li>
             <li>
               Task Ranks <i className="fa-solid fa-triangle"></i>
             </li>

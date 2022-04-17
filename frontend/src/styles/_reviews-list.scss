@@ -29,9 +29,34 @@
 
         &.owner {
           margin: -10px 0 35px;
-          &.owner-info {
-            .owner-email {
+          .owner-info {
+            display: flex;
+            justify-content: space-between;
+
+            .owner-email,
+            .like-review {
               margin-top: 5px;
+              // background-color: black !important;
+            }
+
+            .like-review {
+              background-color: gray;
+              border-radius: 50%;
+
+              i {
+                padding: 4px;
+                font-size: 12px;
+                color: #fff;
+                margin-top: 0.5px;
+                height: 8px;
+                width: 11.8px;
+                // border: 1px solid #000;
+                cursor: pointer;
+
+                &.red {
+                  color: rgb(253, 30, 30);
+                }
+              }
             }
           }
         }
