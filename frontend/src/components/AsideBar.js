@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/actions/authActions";
 import { listUserTasks } from "../redux/actions/taskActions";
 import { firstLetterOfEachWordToUpperCase } from "../helpers/wordHelpers";
-import { GET_USER_TASKS_RESET } from "../redux/constants/taskConstants";
+// import { GET_USER_TASKS_RESET } from "../redux/constants/taskConstants";
 
 const AsideBar = () => {
   const { darkTheme } = useContext(ThemeContext);
@@ -13,6 +13,7 @@ const AsideBar = () => {
   const navigate = useNavigate();
 
   const [keyword, setKeyword] = useState("");
+  const [tasksDuplicate, setTasksDuplicate] = useState([]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
@@ -21,9 +22,10 @@ const AsideBar = () => {
   const { tasks } = listTasks;
 
   useEffect(() => {
-    if (tasks) navigate(`/?keyword=${keyword}`);
-    dispatch({ type: GET_USER_TASKS_RESET });
-  }, [tasks, navigate, keyword, dispatch]);
+    if (tasks) {
+      setTasksDuplicate(tasks);
+    }
+  }, [tasks, navigate, keyword, dispatch, tasksDuplicate]);
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -43,7 +45,11 @@ const AsideBar = () => {
   };
 
   const handleSearch = () => {
-    dispatch(listUserTasks(keyword));
+    if (keyword.length < 1) return;
+    dispatch(listUserTasks(keyword && keyword.length > 0 && keyword));
+    if (tasksDuplicate && tasksDuplicate.length > 0) {
+      navigate(`/tasks/search?keyword=${keyword}`);
+    }
   };
 
   return (
@@ -68,7 +74,7 @@ const AsideBar = () => {
           <div className="section task-priority">
             <li className="search-section">
               <input
-                type="text"
+                type="search"
                 name="search"
                 placeholder="Search task..."
                 value={keyword}
@@ -84,7 +90,7 @@ const AsideBar = () => {
             </li>
             <div className="actions">
               <li>
-                <Link to={"/"}>All</Link>{" "}
+                <Link to={`/`}>All</Link>{" "}
               </li>
               <li>
                 <Link to={"/tasks/important"}>Important</Link>{" "}

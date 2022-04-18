@@ -17,6 +17,7 @@ import ReviewsListScreen from "./screens/ReviewsListScreen";
 import UsersListScreen from "./screens/UsersListScreen";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 import TasksListScreen from "./screens/TasksListScreen";
+import TasksSearchScreen from "./screens/TasksSearchScreen";
 
 const AllRoutes = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -39,6 +40,7 @@ const AllRoutes = () => {
         <Route path="/password-reset" element={<ResetPasswordScreen />} />
 
         {/* Protected */}
+        <Route path="/tasks/search" element={<TasksSearchScreen />} />
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
         <Route
           path="/user/:userId/profile/edit"
