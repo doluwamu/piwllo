@@ -7,6 +7,8 @@ import Task from "../../models/taskModel.js";
 export const getAllUserTasks = async (req, res, next) => {
   try {
     const user = req.user;
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
 
     const keyword = req.query.keyword
       ? {
@@ -18,9 +20,13 @@ export const getAllUserTasks = async (req, res, next) => {
         }
       : { owner: user.id };
 
-    const tasks = await Task.find({ ...keyword }).select("-owner");
+    const count = await Task.countDocuments({ ...keyword });
+    const tasks = await Task.find({ ...keyword })
+      .select("-owner")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
 
-    return res.json(tasks);
+    return res.json({ tasks, page, pages: Math.ceil(count / pageSize) });
   } catch (error) {
     return next(error);
   }

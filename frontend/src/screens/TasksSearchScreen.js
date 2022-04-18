@@ -7,10 +7,10 @@ import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
 import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-import FormValidationErrors from "../errors/FormValidationErrors";
+// import FormValidationErrors from "../errors/FormValidationErrors";
 import { firstLetterToUpperCase, wordBreak } from "../helpers/wordHelpers";
 import {
-  createTask,
+  // createTask,
   listUserTasks,
   removeTask,
 } from "../redux/actions/taskActions";
@@ -20,12 +20,6 @@ import {
 } from "../redux/constants/taskConstants";
 
 const TasksSearchScreen = () => {
-  const [task, setTask] = useState("");
-  const [rank, setRank] = useState("");
-
-  const [taskRequiredError, setTaskRequiredError] = useState(false);
-  const [rankRequiredError, setRankRequiredError] = useState(false);
-
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
 
@@ -74,24 +68,6 @@ const TasksSearchScreen = () => {
     keyword,
   ]);
 
-  const handleAddTask = (e) => {
-    if (!task) {
-      return setTaskRequiredError(true);
-    }
-
-    if (!rank) {
-      return setRankRequiredError(true);
-    }
-
-    e.preventDefault();
-
-    dispatch(createTask(task, rank));
-    setTask("");
-    setRank("");
-    setTaskRequiredError(false);
-    setRankRequiredError(false);
-  };
-
   const handleDeleteTask = async (id) => {
     dispatch(removeTask(id));
   };
@@ -121,7 +97,7 @@ const TasksSearchScreen = () => {
           </div>
         </div>
 
-        <h1>Tasks</h1>
+        <h1>{`Tasks for "${keyword}" found`}</h1>
 
         <div className="task-actions-section">
           {/* Error on performing actions */}
@@ -130,47 +106,6 @@ const TasksSearchScreen = () => {
           {deleteTaskError && (
             <Alert message={deleteTaskError} isError={true} />
           )}
-
-          <div className="add-task">
-            <div className="task-input">
-              <input
-                type="text"
-                name="task"
-                // draggable={true}
-                placeholder="Enter a task"
-                className="add-task-input"
-                value={task}
-                onChange={(e) => {
-                  setTask(e.target.value);
-                  if (task && taskRequiredError) setTaskRequiredError(false);
-                }}
-              />
-              <FormValidationErrors error={taskRequiredError} />
-            </div>
-
-            <div className="task-rank">
-              <select
-                className="priority-select"
-                value={rank}
-                onChange={(e) => {
-                  setRank(e.target.value);
-                  if (rank && rankRequiredError) setRankRequiredError(false);
-                }}
-              >
-                <option value="">--Rank--</option>
-                <option>Important</option>
-                <option>Very-important</option>
-                <option>Priority</option>
-              </select>
-              <FormValidationErrors error={rankRequiredError} />
-            </div>
-
-            <div className="task-btn">
-              <button className="btn-add" type="submit" onClick={handleAddTask}>
-                Add task
-              </button>
-            </div>
-          </div>
 
           <div className="show-tasks-section">
             {/* {loading && <p>loading...</p>} */}
@@ -184,8 +119,9 @@ const TasksSearchScreen = () => {
                 </tr>
               </thead>
               {tasks &&
-                tasks.length > 0 &&
-                tasks.map((t) => (
+                tasks.tasks &&
+                tasks.tasks.length > 0 &&
+                tasks.tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
@@ -235,7 +171,7 @@ const TasksSearchScreen = () => {
                 marginBottom={"10px"}
               />
             ) : (
-              (!tasks || tasks.length === 0) && (
+              (!tasks || !tasks.tasks || tasks.tasks.length === 0) && (
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}

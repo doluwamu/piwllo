@@ -1,4 +1,4 @@
-.task-manager-section ,
+.task-manager-section,
 .user-list-section {
   //   padding-top: 5px;
 
@@ -88,6 +88,7 @@
           tbody {
             tr {
               cursor: pointer;
+              transition: 0.1s;
               // row-gap: -5px;
 
               // &:hover {
@@ -303,8 +304,8 @@
               margin-left: 20px;
 
               input {
-                width: 100%;
-                margin-left: -5px;
+                width: 98%;
+                margin-left: 0;
               }
             }
 

@@ -180,8 +180,9 @@ const TaskManagerScreen = () => {
                 </tr>
               </thead>
               {tasks &&
-                tasks.length > 0 &&
-                tasks.map((t) => (
+                tasks.tasks &&
+                tasks.tasks.length > 0 &&
+                tasks.tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
@@ -231,7 +232,7 @@ const TaskManagerScreen = () => {
                 marginBottom={"10px"}
               />
             ) : (
-              (!tasks || tasks.length === 0) && (
+              (!tasks || !tasks.tasks || tasks.tasks.length === 0) && (
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}

@@ -44,11 +44,12 @@ const AsideBar = () => {
     navigate("/signin");
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     if (keyword.length < 1) return;
     dispatch(listUserTasks(keyword && keyword.length > 0 && keyword));
     if (tasksDuplicate && tasksDuplicate.length > 0) {
-      navigate(`/tasks/search?keyword=${keyword}`);
+      navigate(`/tasks/search/${keyword}`);
     }
   };
 
@@ -72,17 +73,23 @@ const AsideBar = () => {
           </li>
 
           <div className="section task-priority">
-            <li className="search-section">
-              <input
-                type="search"
-                name="search"
-                placeholder="Search task..."
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-              />
-              <div className="search-icon" onClick={handleSearch}>
-                <i className="fa-solid fa-search"></i>
-              </div>
+            <li>
+              <form className="search-section">
+                <input
+                  type="search"
+                  name="search"
+                  placeholder="Search task..."
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+                <button
+                  className="search-icon"
+                  type="submit"
+                  onClick={handleSearch}
+                >
+                  <i className="fa-solid fa-search"></i>
+                </button>
+              </form>
             </li>
 
             <li>

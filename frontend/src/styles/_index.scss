@@ -68,6 +68,11 @@ textarea {
     outline: none;
   }
 
+  button {
+    border: none;
+    outline: none;
+  }
+
   &.canvas-light {
     background-color: var(--light-bg);
     color: var(--light-bg-text);

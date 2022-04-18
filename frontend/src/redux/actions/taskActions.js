@@ -24,44 +24,53 @@ import {
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
 
-import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
+import {
+  connectionError,
+  connectionErrorMessage,
+  jwtErrors,
+} from "./errors.global";
 
 // Action to get all tasks that belong to a user
-export const listUserTasks = (keyword ='') => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: GET_USER_TASKS_REQUEST,
-    });
+export const listUserTasks =
+  (keyword = "", pageNumber = 1) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_USER_TASKS_REQUEST,
+      });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
+      const {
+        userLogin: { userDetails },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userDetails.token}`,
+        },
+      };
 
-    const { data } = await axios.get(`/api/v1/tasks/auser?keyword=${keyword}`, config);
+      const { data } = await axios.get(
+        `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`,
+        config
+      );
 
-    dispatch({
-      type: GET_USER_TASKS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    if (error.response.data.message === jwtErrors) {
-      dispatch(logoutUser());
+      dispatch({
+        type: GET_USER_TASKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.message === jwtErrors) {
+        dispatch(logoutUser());
+      }
+      dispatch({
+        type: GET_USER_TASKS_FAIL,
+        payload:
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
+            : error.response.data.message,
+      });
     }
-    dispatch({
-      type: GET_USER_TASKS_FAIL,
-      payload:
-        error.response.data.message === connectionError
-          ? connectionErrorMessage
-          : error.response.data.message,
-    });
-  }
-};
+  };
 
 // Action for user to create task
 export const createTask = (task, rank) => async (dispatch, getState) => {
@@ -272,7 +281,7 @@ export const listAllTasks = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/tasks", config);
-    debugger
+    debugger;
 
     dispatch({
       type: GET_ALL_TASKS_SUCCESS,

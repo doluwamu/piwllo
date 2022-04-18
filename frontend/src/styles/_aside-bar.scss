@@ -37,13 +37,16 @@
           }
 
           .search-icon {
+            background-color: var(--dark-bg);
+            color: var(--light-bg);
             font-size: 12px;
             box-shadow: 0 0 2px 0.1px grey;
+            border-radius: 0 4px 4px 0;
             padding: 0 5px;
             cursor: pointer;
 
             i {
-              margin-top: 5px;
+              margin-top: 3px;
             }
           }
         }
@@ -110,17 +113,17 @@
         .section {
           margin: 20px 0;
 
+          .search-section {
+            input {
+              width: 150px;
+              margin-left: -10px;
+            }
+          }
+
           li {
             margin: 8px 0;
             font-weight: bold;
             font-size: 17px;
-
-            &.search-section {
-              input {
-                width: 150px;
-                margin-left: -10px;
-              }
-            }
 
             a {
               font-size: 13px;
@@ -214,19 +217,19 @@
         }
 
         .section {
+          .search-section {
+            input {
+              width: 70%;
+              margin-left: 10%;
+            }
+
+            .search-icon {
+              margin-right: 10px;
+            }
+          }
+
           li {
             font-size: 21px;
-
-            &.search-section {
-              input {
-                width: 70%;
-                margin-left: 10%;
-              }
-
-              .search-icon {
-                margin-right: 10px;
-              }
-            }
           }
 
           .actions {

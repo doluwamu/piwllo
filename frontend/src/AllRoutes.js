@@ -40,7 +40,7 @@ const AllRoutes = () => {
         <Route path="/password-reset" element={<ResetPasswordScreen />} />
 
         {/* Protected */}
-        <Route path="/tasks/search" element={<TasksSearchScreen />} />
+        <Route path="/tasks/search/:keyword" element={<TasksSearchScreen />} />
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
         <Route
           path="/user/:userId/profile/edit"
