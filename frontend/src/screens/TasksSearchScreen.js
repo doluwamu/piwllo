@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
@@ -27,8 +27,8 @@ const TasksSearchScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const location = useLocation();
-  const keyword = location.search.split("=")[1] || "";
+  const params = useParams();
+  const { keyword } = params || "";
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
