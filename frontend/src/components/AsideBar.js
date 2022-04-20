@@ -49,7 +49,6 @@ const AsideBar = () => {
     if (keyword.length < 1) return;
     dispatch(listUserTasks(keyword && keyword.length > 0 && keyword));
     if (tasksDuplicate && tasksDuplicate.length > 0) {
-      console.log(tasksDuplicate);
       navigate(`/tasks/search/${keyword}`);
     }
   };

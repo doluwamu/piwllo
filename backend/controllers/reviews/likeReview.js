@@ -18,7 +18,7 @@ const toggleLikeReview = async (req, res, next) => {
     review.liked = !review.liked ? true : false;
     await review.save();
 
-    return res.json({ liked: review.liked });
+    return res.json({ liked: review.liked, reviewId: review.id });
   } catch (error) {
     return next(error);
   }

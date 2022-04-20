@@ -171,6 +171,7 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
     dispatch({
       type: LIKE_REVIEW_SUCCESS,
       payload: data.liked,
+      reviewId: data.reviewId
     });
   } catch (error) {
     // debugger;

@@ -13,7 +13,7 @@ import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
-import { GET_REVIEWS_RESET } from "../redux/constants/reviewConstants";
+// import { GET_REVIEWS_RESET } from "../redux/constants/reviewConstants";
 
 const ReviewListScreen = () => {
   const moment = extendMoment(Moment);
@@ -34,7 +34,6 @@ const ReviewListScreen = () => {
 
   const likeReview = useSelector((state) => state.likeReview);
   const { liked } = likeReview;
-  console.log(liked);
 
   const deleteReview = useSelector((state) => state.deleteReview);
   const { message: deleteReviewMessage, error: deleteReviewError } =
@@ -44,16 +43,14 @@ const ReviewListScreen = () => {
     if (!userDetails) navigate("/signin");
     if (userDetails && !userDetails.isAdmin) navigate("/");
     dispatch(fetchReviews());
-  }, [userDetails, navigate, dispatch, deleteReviewMessage]);
+  }, [userDetails, navigate, dispatch, deleteReviewMessage, liked]);
 
   const handleLikeReview = (reviewId) => {
     dispatch(reviewLike(reviewId));
-    dispatch({ type: GET_REVIEWS_RESET });
+    // dispatch({ type: GET_REVIEWS_RESET });
   };
 
   const handleDeleteReview = (reviewId) => {
-    console.log(reviewId);
-    debugger;
     dispatch(removeReview(reviewId));
   };
 

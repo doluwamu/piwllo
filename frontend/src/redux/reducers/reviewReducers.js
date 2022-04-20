@@ -65,13 +65,14 @@ export const deleteReview = (state = {}, action) => {
 export const likeReview = (state = {}, action) => {
   switch (action.type) {
     case LIKE_REVIEW_REQUEST:
-      debugger;
       return { loading: true };
     case LIKE_REVIEW_SUCCESS:
-      debugger;
-      return { loading: false, liked: action.payload };
+      return {
+        loading: false,
+        liked: action.payload,
+        reviewId: action.reviewId,
+      };
     case LIKE_REVIEW_FAIL:
-      debugger;
       return { loading: false, error: action.payload };
     case LIKE_REVIEW_RESET:
       return {};
