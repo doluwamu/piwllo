@@ -53,7 +53,7 @@ const AllRoutes = () => {
 
         <Route path="/tasks/:taskRank" element={<TaskRankingScreen />} />
         <Route
-          path="/tasks/:taskRank/:pageNumber"
+          path="/tasks/:taskRank/page/:pageNumber"
           element={<TaskRankingScreen />}
         />
 
@@ -63,9 +63,22 @@ const AllRoutes = () => {
 
         {/* Admins only */}
         <Route path="/reviews" element={<ReviewsListScreen />} />
+        <Route
+          path="/reviews/page/:pageNumber"
+          element={<ReviewsListScreen />}
+        />
+
         <Route path="/users/list" element={<UsersListScreen />} />
+        <Route
+          path="/users/list/page/:pageNumber"
+          element={<UsersListScreen />}
+        />
+
         <Route path="/tasks-list" element={<TasksListScreen />} />
-        <Route path="/tasks-list/:pageNumber" element={<TasksListScreen />} />
+        <Route
+          path="/tasks-list/page/:pageNumber"
+          element={<TasksListScreen />}
+        />
 
         {/* Unexisting pages */}
         <Route

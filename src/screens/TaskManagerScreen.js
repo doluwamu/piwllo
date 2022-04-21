@@ -202,7 +202,13 @@ const TaskManagerScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: "/", task: t }}
+                          state={{
+                            routeUrl:
+                              pageNumber && pageNumber > 0
+                                ? `/page/${pageNumber}`
+                                : "/",
+                            task: t,
+                          }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -223,7 +229,9 @@ const TaskManagerScreen = () => {
                 <ViewTaskDetailsModal
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
-                  routeUrl={"/"}
+                  routeUrl={
+                    pageNumber && pageNumber > 0 ? `/page/${pageNumber}` : "/"
+                  }
                   deleteTask={handleDeleteTask}
                 />
               )}

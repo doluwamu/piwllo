@@ -139,7 +139,13 @@ const TasksSearchScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: "/", task: t }}
+                          state={{
+                            routeUrl:
+                              pageNumber && pageNumber > 0
+                                ? `/task/search/${keyword}/page/${pageNumber}`
+                                : `/task/search/${keyword}`,
+                            task: t,
+                          }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -160,7 +166,11 @@ const TasksSearchScreen = () => {
                 <ViewTaskDetailsModal
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
-                  routeUrl={"/"}
+                  routeUrl={
+                    pageNumber && pageNumber > 0
+                      ? `/task/search/${keyword}/page/${pageNumber}`
+                      : `/task/search/${keyword}`
+                  }
                   deleteTask={handleDeleteTask}
                 />
               )}

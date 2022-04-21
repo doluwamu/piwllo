@@ -20,8 +20,6 @@ const AsideBar = () => {
 
   const listTasks = useSelector((state) => state.getUserTasks);
   const { tasks } = listTasks;
-  console.log(tasks);
-  console.log(tasksDuplicate);
 
   useEffect(() => {
     if (tasks) {
@@ -51,10 +49,8 @@ const AsideBar = () => {
     if (keyword.length < 1) return;
 
     dispatch(listUserTasks(keyword.length > 0 && keyword));
-    console.log(keyword.length > 0 && keyword);
     if (tasksDuplicate && tasksDuplicate.length > 0) {
-      console.log(tasksDuplicate);
-      navigate(`/task/search/${keyword}/page/${1}`);
+      navigate(`/task/search/${keyword}`);
     }
   };
 

@@ -14,7 +14,6 @@ const TasksPaginate = ({
     pages > 1 && (
       <Pagination>
         {[...Array(pages).keys()].map((x) => {
-          console.log(x);
           return (
             <LinkContainer
               key={x + 1}
@@ -22,9 +21,9 @@ const TasksPaginate = ({
                 keyword
                   ? `/task/search/${keyword}/page/${x + 1}`
                   : taskRank
-                  ? `/tasks/${taskRank}/${x + 1}`
+                  ? `/tasks/${taskRank}/page/${x + 1}`
                   : isAdmin
-                  ? `/tasks-list/${x + 1}`
+                  ? `/tasks-list/page/${x + 1}`
                   : `/page/${x + 1}`
               }
             >

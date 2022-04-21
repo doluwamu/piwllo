@@ -63,51 +63,56 @@ export const createReview = (review) => async (dispatch, getState) => {
 };
 
 // Action to fetch all reviews from  DB(Admin Only)
-export const fetchReviews = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: GET_REVIEWS_RESET });
-    dispatch({ type: GET_REVIEWS_REQUEST });
+export const fetchReviews =
+  (pageNumber = 1) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: GET_REVIEWS_RESET });
+      dispatch({ type: GET_REVIEWS_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
+      const {
+        userLogin: { userDetails },
+      } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userDetails.token}`,
+        },
+      };
 
-    const { data } = await axios.get("/api/v1/reviews", config);
+      const { data } = await axios.get(
+        `/api/v1/reviews?pageNumber=${pageNumber}`,
+        config
+      );
 
-    dispatch({
-      type: GET_REVIEWS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    // debugger;
-    if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
-    ) {
-      dispatch(logoutUser());
-    }
-    dispatch({
-      type: GET_REVIEWS_FAIL,
-      payload:
+      dispatch({
+        type: GET_REVIEWS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      // debugger;
+      if (
         error &&
         error.response &&
-        error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
-          ? connectionErrorMessage
-          : error.response.data.message || error.message,
-    });
-  }
-};
+        error.response.data.message === jwtErrors
+      ) {
+        dispatch(logoutUser());
+      }
+      dispatch({
+        type: GET_REVIEWS_FAIL,
+        payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
+            : error.response.data.message || error.message,
+      });
+    }
+  };
 
 // Action to remove a review(Admin Only)
 export const removeReview = (reviewId) => async (dispatch, getState) => {
@@ -171,7 +176,7 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
     dispatch({
       type: LIKE_REVIEW_SUCCESS,
       payload: data.liked,
-      reviewId: data.reviewId
+      reviewId: data.reviewId,
     });
   } catch (error) {
     // debugger;

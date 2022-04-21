@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
+import TasksPaginate from "../components/paginations/TasksPagination";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { listTaskByRank, removeTask } from "../redux/actions/taskActions";
@@ -19,7 +20,8 @@ const TaskRankingScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const { taskRank } = params;
+  const { taskRank } = params || '';
+  const { pageNumber } = params || 1;
 
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
@@ -28,7 +30,7 @@ const TaskRankingScreen = () => {
   const { userDetails } = userLogin;
 
   const getTaskByRank = useSelector((state) => state.getTaskByRank);
-  const { loading, tasks, getTasksError } = getTaskByRank;
+  const { loading, tasks, page, pages, getTasksError } = getTaskByRank;
 
   const deleteTask = useSelector((state) => state.deleteTask);
   const { message: deleteTaskMessage, error: deleteTaskError } = deleteTask;
@@ -46,7 +48,7 @@ const TaskRankingScreen = () => {
         type: UPDATE_TASK_RESET,
       });
     }
-    dispatch(listTaskByRank(taskRank));
+    dispatch(listTaskByRank(taskRank, pageNumber));
   }, [
     dispatch,
     taskRank,
@@ -54,6 +56,7 @@ const TaskRankingScreen = () => {
     navigate,
     deleteTaskMessage,
     updateSuccess,
+    pageNumber
   ]);
 
   const handleDeleteTask = (id) => {
@@ -118,7 +121,7 @@ const TaskRankingScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: `/tasks/${taskRank}`, task: t }}
+                          state={{ routeUrl: pageNumber && pageNumber > 0 ? `/tasks/${taskRank}/page/${pageNumber}` : `/tasks/${taskRank}`, task: t }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -137,7 +140,7 @@ const TaskRankingScreen = () => {
                 ))}
               {taskDetailsView && (
                 <ViewTaskDetailsModal
-                  routeUrl={`/tasks/${taskRank}`}
+                  routeUrl={pageNumber && pageNumber > 0 ? `/tasks/${taskRank}/page/${pageNumber}` : `/tasks/${taskRank}`}
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
                   deleteTask={handleDeleteTask}
@@ -157,6 +160,8 @@ const TaskRankingScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
+
+<TasksPaginate page={page} pages={pages} taskRank={taskRank} />
           </div>
           <br />
         </div>

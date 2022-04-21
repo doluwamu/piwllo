@@ -185,41 +185,46 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
 };
 
 // Action to list tasks by rank of importance
-export const listTaskByRank = (rank) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: GET_TASK_BY_RANK_REQUEST,
-    });
+export const listTaskByRank =
+  (rank, pageNumber = 1) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_TASK_BY_RANK_REQUEST,
+      });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
+      const {
+        userLogin: { userDetails },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userDetails.token}`,
+        },
+      };
 
-    const { data } = await axios.get(`/api/v1/tasks/${rank}`, config);
+      const { data } = await axios.get(
+        `/api/v1/tasks/${rank}?pageNumber=${pageNumber}`,
+        config
+      );
 
-    dispatch({
-      type: GET_TASK_BY_RANK_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    if (error.response.data.message === jwtErrors) {
-      dispatch(logoutUser());
+      dispatch({
+        type: GET_TASK_BY_RANK_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.message === jwtErrors) {
+        dispatch(logoutUser());
+      }
+      dispatch({
+        type: GET_TASK_BY_RANK_FAIL,
+        payload:
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
+            : error.response.data.message,
+      });
     }
-    dispatch({
-      type: GET_TASK_BY_RANK_FAIL,
-      payload:
-        error.response.data.message === connectionError
-          ? connectionErrorMessage
-          : error.response.data.message,
-    });
-  }
-};
+  };
 
 // Action to edit task
 export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
@@ -264,7 +269,7 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
 };
 
 // Action to get all tasks that belong to a user
-export const listAllTasks = () => async (dispatch, getState) => {
+export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_ALL_TASKS_REQUEST,
@@ -280,7 +285,10 @@ export const listAllTasks = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get("/api/v1/tasks", config);
+    const { data } = await axios.get(
+      `/api/v1/tasks?pageNumber=${pageNumber}`,
+      config
+    );
 
     dispatch({
       type: GET_ALL_TASKS_SUCCESS,

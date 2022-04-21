@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
+import TasksPaginate from "../components/paginations/TasksPagination";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
 import { listAllTasks, removeTask } from "../redux/actions/taskActions";
@@ -19,6 +20,9 @@ const TasksListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const params = useParams();
+  const { pageNumber } = params || 1;
+
   const [taskDetailsView, setTaskDetailsView] = useState(false);
   const [taskDetails, setTaskDetails] = useState("");
 
@@ -26,7 +30,7 @@ const TasksListScreen = () => {
   const { userDetails } = userLogin;
 
   const getAllTasks = useSelector((state) => state.getAllTasks);
-  const { loading, tasks, error: getTasksError } = getAllTasks;
+  const { loading, tasks, page, pages, error: getTasksError } = getAllTasks;
 
   const deleteTask = useSelector((state) => state.deleteTask);
   const { message: deleteTaskMessage, error: deleteTaskError } = deleteTask;
@@ -37,8 +41,8 @@ const TasksListScreen = () => {
   useEffect(() => {
     if (!userDetails) navigate("/signin");
     if (userDetails && !userDetails.isAdmin) navigate("/");
-    dispatch(listAllTasks());
-  }, [dispatch, userDetails, navigate, deleteTaskMessage]);
+    dispatch(listAllTasks(pageNumber));
+  }, [dispatch, userDetails, navigate, deleteTaskMessage, pageNumber]);
 
   const handleDeleteTask = (id) => {
     dispatch(removeTask(id));
@@ -120,7 +124,11 @@ const TasksListScreen = () => {
                 ))}
               {taskDetailsView && (
                 <ViewTaskDetailsModal
-                  routeUrl={`/tasks-list`}
+                  routeUrl={
+                    pageNumber && pageNumber > 0
+                      ? `/tasks-list/page/${pageNumber}`
+                      : `/tasks-list`
+                  }
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
                   deleteTask={handleDeleteTask}
@@ -140,6 +148,8 @@ const TasksListScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
+
+            <TasksPaginate page={page} pages={pages} isAdmin={true} />
           </div>
           <br />
         </div>

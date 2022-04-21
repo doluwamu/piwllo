@@ -98,7 +98,12 @@ export const getTaskByRank = (state = {}, action) => {
     case GET_TASK_BY_RANK_REQUEST:
       return { loading: true };
     case GET_TASK_BY_RANK_SUCCESS:
-      return { loading: false, tasks: action.payload };
+      return {
+        loading: false,
+        tasks: action.payload.tasks,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case GET_TASK_BY_RANK_FAIL:
       return { loading: false, getTasksError: action.payload };
     default:
@@ -134,7 +139,12 @@ export const getAllTasks = (state = {}, action) => {
     case GET_ALL_TASKS_REQUEST:
       return { loading: true };
     case GET_ALL_TASKS_SUCCESS:
-      return { loading: false, tasks: action.payload };
+      return {
+        loading: false,
+        tasks: action.payload.tasks,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case GET_ALL_TASKS_FAIL:
       return { loading: false, error: action.payload };
     case GET_ALL_TASKS_RESET:

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
+import ReviewsPaginate from "../components/paginations/ReviewPagination";
 import { ThemeContext } from "../context/ThemeContext";
 import {
   fetchReviews,
@@ -22,6 +23,9 @@ const ReviewListScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const params = useParams();
+  const { pageNumber } = params || 1;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
@@ -29,6 +33,8 @@ const ReviewListScreen = () => {
   const {
     loading: getReviewsLoading,
     reviews,
+    page,
+    pages,
     error: getReviewsError,
   } = getReviews;
 
@@ -42,8 +48,8 @@ const ReviewListScreen = () => {
   useEffect(() => {
     if (!userDetails) navigate("/signin");
     if (userDetails && !userDetails.isAdmin) navigate("/");
-    dispatch(fetchReviews());
-  }, [userDetails, navigate, dispatch, deleteReviewMessage, liked]);
+    dispatch(fetchReviews(pageNumber));
+  }, [userDetails, navigate, dispatch, deleteReviewMessage, liked, pageNumber]);
 
   const handleLikeReview = (reviewId) => {
     dispatch(reviewLike(reviewId));
@@ -150,6 +156,7 @@ const ReviewListScreen = () => {
                 </div>
               ))
             )}
+            <ReviewsPaginate page={page} pages={pages} />
           </div>
         </div>
         <br />

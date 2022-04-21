@@ -37,7 +37,12 @@ export const getReviews = (state = { reviews: [] }, action) => {
     case GET_REVIEWS_REQUEST:
       return { loading: true };
     case GET_REVIEWS_SUCCESS:
-      return { loading: false, reviews: action.payload };
+      return {
+        loading: false,
+        reviews: action.payload.reviews,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case GET_REVIEWS_FAIL:
       return { loading: false, error: action.payload };
     case GET_REVIEWS_RESET:
