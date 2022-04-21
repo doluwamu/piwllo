@@ -20,12 +20,14 @@ const AsideBar = () => {
 
   const listTasks = useSelector((state) => state.getUserTasks);
   const { tasks } = listTasks;
+  console.log(tasks);
+  console.log(tasksDuplicate);
 
   useEffect(() => {
     if (tasks) {
-      setTasksDuplicate(tasks.tasks);
+      setTasksDuplicate(tasks);
     }
-  }, [tasks, navigate, keyword, dispatch]);
+  }, [tasks]);
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -47,9 +49,12 @@ const AsideBar = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (keyword.length < 1) return;
-    dispatch(listUserTasks(keyword && keyword.length > 0 && keyword));
+
+    dispatch(listUserTasks(keyword.length > 0 && keyword));
+    console.log(keyword.length > 0 && keyword);
     if (tasksDuplicate && tasksDuplicate.length > 0) {
-      navigate(`/tasks/search/${keyword}`);
+      console.log(tasksDuplicate);
+      navigate(`/task/search/${keyword}/page/${1}`);
     }
   };
 
@@ -177,7 +182,7 @@ const AsideBar = () => {
             style={{ cursor: "pointer" }}
             onClick={() =>
               window
-                .open("https://github.com/doluwamu/piwllo.web", "_blank")
+                .open("https://github.com/doluwamu/piwllo.web.client", "_blank")
                 .focus()
             }
           >

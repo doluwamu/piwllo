@@ -37,9 +37,11 @@ const AllRoutes = () => {
         <Route path="/password-reset" element={<ResetPasswordScreen />} />
 
         {/* Protected */}
-        <Route path="/tasks/search/:keyword" element={<TasksSearchScreen />} />
+        <Route path="/page/:pageNumber" element={<TaskManagerScreen />} />
+
+        <Route path="/task/search/:keyword" element={<TasksSearchScreen />} />
         <Route
-          path="/tasks/search/:keyword/page/:pageNumber"
+          path="/task/search/:keyword/page/:pageNumber"
           element={<TasksSearchScreen />}
         />
 
@@ -73,8 +75,6 @@ const AllRoutes = () => {
         <Route path="*" element={<PageNotFoundScreen />} />
 
         {/* others */}
-
-        <Route path="/page/:pageNumber" element={<TaskManagerScreen />} />
       </Routes>
     </Router>
   );

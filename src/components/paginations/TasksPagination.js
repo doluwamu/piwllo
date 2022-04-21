@@ -1,26 +1,37 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+import "../../pagination.css";
 
-const TasksPaginate = ({ pages, page, keyword = "", taskRank = "" }) => {
+const TasksPaginate = ({
+  pages,
+  page,
+  keyword = "",
+  taskRank = "",
+  isAdmin = false,
+}) => {
   return (
     pages > 1 && (
       <Pagination>
         {[...Array(pages).keys()].map((x) => {
           console.log(x);
           return (
-            <Link
+            <LinkContainer
               key={x + 1}
               to={
                 keyword
-                  ? `/tasks/search/${keyword}/page/${x + 1}`
+                  ? `/task/search/${keyword}/page/${x + 1}`
                   : taskRank
                   ? `/tasks/${taskRank}/${x + 1}`
+                  : isAdmin
+                  ? `/tasks-list/${x + 1}`
                   : `/page/${x + 1}`
               }
             >
-              <div>{x + 1}</div>
-            </Link>
+              <Pagination.Item active={x + 1 === page} activeLabel={""}>
+                {x + 1}
+              </Pagination.Item>
+            </LinkContainer>
           );
         })}
       </Pagination>

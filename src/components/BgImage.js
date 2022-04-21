@@ -34,7 +34,10 @@ const BgImage = () => {
               style={{ cursor: "pointer" }}
               onClick={() =>
                 window
-                  .open("https://github.com/doluwamu/piwllo.web", "_blank")
+                  .open(
+                    "https://github.com/doluwamu/piwllo.web.client",
+                    "_blank"
+                  )
                   .focus()
               }
             >

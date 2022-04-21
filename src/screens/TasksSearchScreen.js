@@ -4,6 +4,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
+import TasksPaginate from "../components/paginations/TasksPagination";
 import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -29,12 +30,13 @@ const TasksSearchScreen = () => {
 
   const params = useParams();
   const { keyword } = params || "";
+  const { pageNumber } = params || 1;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
   const listTasks = useSelector((state) => state.getUserTasks);
-  const { loading, tasks, error } = listTasks;
+  const { loading, tasks, page, pages, error } = listTasks;
 
   const addTask = useSelector((state) => state.addTask);
   const { message: addTaskMessage, error: addTaskError } = addTask;
@@ -57,7 +59,7 @@ const TasksSearchScreen = () => {
         type: UPDATE_TASK_RESET,
       });
     }
-    dispatch(listUserTasks(keyword));
+    dispatch(listUserTasks(keyword, pageNumber));
   }, [
     userDetails,
     navigate,
@@ -66,6 +68,7 @@ const TasksSearchScreen = () => {
     deleteTaskMessage,
     updateSuccess,
     keyword,
+    pageNumber,
   ]);
 
   const handleDeleteTask = async (id) => {
@@ -119,9 +122,9 @@ const TasksSearchScreen = () => {
                 </tr>
               </thead>
               {tasks &&
-                tasks.tasks &&
-                tasks.tasks.length > 0 &&
-                tasks.tasks.map((t) => (
+                tasks &&
+                tasks.length > 0 &&
+                tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
@@ -171,10 +174,12 @@ const TasksSearchScreen = () => {
                 marginBottom={"10px"}
               />
             ) : (
-              (!tasks || !tasks.tasks || tasks.tasks.length === 0) && (
+              (!tasks || tasks.length === 0) && (
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
+
+            <TasksPaginate page={page} pages={pages} keyword={keyword} />
           </div>
           <br />
         </div>
