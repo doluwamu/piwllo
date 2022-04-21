@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
+import UsersPaginate from "../components/paginations/UserPagination";
 import Alert from "../components/Alert";
 import Spinner from "../components/shared/Spinner";
 import { listAllUsers, removeUser } from "../redux/actions/userActions";
@@ -13,11 +14,20 @@ const UserListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const params = useParams();
+  const { pageNumber } = params || 1;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
   const getAllUsers = useSelector((state) => state.getAllUsers);
-  const { loading: getUsersLoading, users, error: getUsersError } = getAllUsers;
+  const {
+    loading: getUsersLoading,
+    users,
+    page,
+    pages,
+    error: getUsersError,
+  } = getAllUsers;
 
   const deleteUser = useSelector((state) => state.deleteUser);
   const { message: deleteUserMessage, error: deleteUserError } = deleteUser;
@@ -25,8 +35,8 @@ const UserListScreen = () => {
   useEffect(() => {
     if (!userDetails) navigate("/signin");
     if (userDetails && !userDetails.isAdmin) navigate("/");
-    dispatch(listAllUsers());
-  }, [userDetails, navigate, dispatch, deleteUserMessage]);
+    dispatch(listAllUsers(pageNumber));
+  }, [userDetails, navigate, dispatch, deleteUserMessage, pageNumber]);
 
   const handleDeleteUser = (userId) => {
     dispatch(removeUser(userId));
@@ -99,6 +109,7 @@ const UserListScreen = () => {
                 <p style={{ textAlign: "center" }}>No users found</p>
               )
             )}
+            <UsersPaginate page={page} pages={pages} />
           </div>
           <br />
         </div>

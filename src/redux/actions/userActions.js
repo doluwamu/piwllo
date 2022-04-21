@@ -14,7 +14,11 @@ import {
 } from "../constants/userConstants";
 import { logoutUser } from "./authActions";
 import axios from "axios";
-import { connectionError, connectionErrorMessage, jwtErrors } from "./errors.global";
+import {
+  connectionError,
+  connectionErrorMessage,
+  jwtErrors,
+} from "./errors.global";
 
 export const fetchUserProfile = () => async (dispatch, getState) => {
   try {
@@ -95,39 +99,44 @@ export const editUserProfile =
     }
   };
 
-export const listAllUsers = () => async (dispatch, getState) => {
-  try {
-    dispatch({ type: GET_USERS_REQUEST });
+export const listAllUsers =
+  (pageNumber = 1) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: GET_USERS_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
+      const {
+        userLogin: { userDetails },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userDetails.token}`,
+        },
+      };
 
-    const { data } = await axios.get("/api/v1/users", config);
+      const { data } = await axios.get(
+        `/api/v1/users?pageNumber=${pageNumber}`,
+        config
+      );
 
-    dispatch({
-      type: GET_USERS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    if (error.response.data.message === jwtErrors) {
-      dispatch(logoutUser());
+      dispatch({
+        type: GET_USERS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      if (error.response.data.message === jwtErrors) {
+        dispatch(logoutUser());
+      }
+      dispatch({
+        type: GET_USERS_FAIL,
+        payload:
+          error.response.data.message === connectionError
+            ? connectionErrorMessage
+            : error.response.data.message,
+      });
     }
-    dispatch({
-      type: GET_USERS_FAIL,
-      payload:
-        error.response.data.message === connectionError
-          ? connectionErrorMessage
-          : error.response.data.message,
-    });
-  }
-};
+  };
 
 export const removeUser = (userId) => async (dispatch, getState) => {
   try {
@@ -143,7 +152,10 @@ export const removeUser = (userId) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/v1/users/user/${userId}/delete`, config);
+    const { data } = await axios.delete(
+      `/api/v1/users/user/${userId}/delete`,
+      config
+    );
     debugger;
 
     dispatch({

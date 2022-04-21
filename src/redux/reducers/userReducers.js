@@ -52,7 +52,12 @@ export const getAllUsers = (state = {}, action) => {
     case GET_USERS_REQUEST:
       return { loading: true };
     case GET_USERS_SUCCESS:
-      return { loading: false, users: action.payload };
+      return {
+        loading: false,
+        users: action.payload.users,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case GET_USERS_FAIL:
       return { loading: false, success: false, error: action.payload };
     case GET_USERS_RESET:
