@@ -27,10 +27,7 @@ const AllRoutes = () => {
     <Router>
       <Routes>
         {/* General */}
-        <Route
-          path="/"
-          element={!userDetails ? <HomeScreen /> : <TaskManagerScreen />}
-        />
+
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/signin" element={<SigninScreen />} />
         <Route
@@ -41,12 +38,23 @@ const AllRoutes = () => {
 
         {/* Protected */}
         <Route path="/tasks/search/:keyword" element={<TasksSearchScreen />} />
+        <Route
+          path="/tasks/search/:keyword/page/:pageNumber"
+          element={<TasksSearchScreen />}
+        />
+
         <Route path="/user/:userId/profile" element={<ProfileViewScreen />} />
         <Route
           path="/user/:userId/profile/edit"
           element={<ProfileEditScreen />}
         />
+
         <Route path="/tasks/:taskRank" element={<TaskRankingScreen />} />
+        <Route
+          path="/tasks/:taskRank/:pageNumber"
+          element={<TaskRankingScreen />}
+        />
+
         <Route path="/task/:taskId/edit" element={<EditTaskScreen />} />
         <Route path="/teams/create" element={<CreateTeamScreen />} />
         <Route path="/review" element={<AddRewiewScreen />} />
@@ -55,9 +63,18 @@ const AllRoutes = () => {
         <Route path="/reviews" element={<ReviewsListScreen />} />
         <Route path="/users/list" element={<UsersListScreen />} />
         <Route path="/tasks-list" element={<TasksListScreen />} />
+        <Route path="/tasks-list/:pageNumber" element={<TasksListScreen />} />
 
         {/* Unexisting pages */}
+        <Route
+          path={"/"}
+          element={!userDetails ? <HomeScreen /> : <TaskManagerScreen />}
+        />
         <Route path="*" element={<PageNotFoundScreen />} />
+
+        {/* others */}
+
+        <Route path="/page/:pageNumber" element={<TaskManagerScreen />} />
       </Routes>
     </Router>
   );

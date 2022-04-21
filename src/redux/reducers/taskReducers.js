@@ -33,7 +33,12 @@ export const getUserTasks = (state = {}, action) => {
     case GET_USER_TASKS_REQUEST:
       return { loading: true };
     case GET_USER_TASKS_SUCCESS:
-      return { loading: false, tasks: action.payload };
+      return {
+        loading: false,
+        tasks: action.payload.tasks,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
     case GET_USER_TASKS_FAIL:
       return { loading: false, error: action.payload };
     case GET_USER_TASKS_RESET:

@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import ViewTaskDetailsModal from "../components/modals/ViewTaskDetailsModal";
+import TasksPaginate from "../components/paginations/TasksPagination";
 import Spinner from "../components/shared/Spinner";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
@@ -33,11 +34,14 @@ const TaskManagerScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const params = useParams();
+  const { pageNumber } = params || 1;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
 
   const listTasks = useSelector((state) => state.getUserTasks);
-  const { loading, tasks, error } = listTasks;
+  const { loading, tasks, page, pages, error } = listTasks;
 
   const addTask = useSelector((state) => state.addTask);
   const { message: addTaskMessage, error: addTaskError } = addTask;
@@ -60,7 +64,7 @@ const TaskManagerScreen = () => {
         type: UPDATE_TASK_RESET,
       });
     }
-    dispatch(listUserTasks());
+    dispatch(listUserTasks("", pageNumber));
   }, [
     userDetails,
     navigate,
@@ -68,6 +72,7 @@ const TaskManagerScreen = () => {
     addTaskMessage,
     deleteTaskMessage,
     updateSuccess,
+    pageNumber,
   ]);
 
   const handleAddTask = (e) => {
@@ -180,9 +185,9 @@ const TaskManagerScreen = () => {
                 </tr>
               </thead>
               {tasks &&
-                tasks.tasks &&
-                tasks.tasks.length > 0 &&
-                tasks.tasks.map((t) => (
+                tasks &&
+                tasks.length > 0 &&
+                tasks.map((t) => (
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
@@ -232,10 +237,12 @@ const TaskManagerScreen = () => {
                 marginBottom={"10px"}
               />
             ) : (
-              (!tasks || !tasks.tasks || tasks.tasks.length === 0) && (
+              (!tasks || !tasks || tasks.length === 0) && (
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
+
+            <TasksPaginate page={page} pages={pages} />
           </div>
           <br />
         </div>
