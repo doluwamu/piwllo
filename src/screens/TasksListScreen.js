@@ -149,8 +149,8 @@ const TasksListScreen = () => {
               )
             )}
 
-            <TasksPaginate page={page} pages={pages} isAdmin={true} />
           </div>
+            <TasksPaginate page={page} pages={pages} isAdmin={true} />
           <br />
         </div>
       </div>

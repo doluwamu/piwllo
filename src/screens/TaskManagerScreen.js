@@ -249,9 +249,8 @@ const TaskManagerScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
-
-            <TasksPaginate page={page} pages={pages} />
           </div>
+          <TasksPaginate page={page} pages={pages} />
           <br />
         </div>
       </div>

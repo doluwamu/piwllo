@@ -49,15 +49,24 @@ export const createReview = (review) => async (dispatch, getState) => {
 
     setTimeout(() => dispatch({ type: ADD_REVIEW_RESET }), 5000);
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: ADD_REVIEW_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -139,15 +148,24 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
 
     dispatch({ type: DELETE_REVIEW_RESET });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: DELETE_REVIEW_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -180,15 +198,24 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
     });
   } catch (error) {
     // debugger;
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: LIKE_REVIEW_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };

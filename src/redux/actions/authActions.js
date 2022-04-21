@@ -51,9 +51,13 @@ export const registerUser =
       dispatch({
         type: USER_REGISTERATION_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };
@@ -86,9 +90,13 @@ export const loginUser = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -128,9 +136,13 @@ export const emailVerify = (email) => async (dispatch) => {
     dispatch({
       type: VERIFY_EMAIL_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -162,9 +174,13 @@ export const passwordReset =
       dispatch({
         type: RESET_PASSWORD_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };

@@ -59,15 +59,24 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
-      if (error.response.data.message === jwtErrors) {
+      if (
+        error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors
+      ) {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_USER_TASKS_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };
@@ -97,15 +106,24 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: ADD_TASK_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -134,15 +152,24 @@ export const removeTask = (id) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: DELETE_TASK_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -171,15 +198,24 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: GET_TASK_BY_ID_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -213,15 +249,24 @@ export const listTaskByRank =
         payload: data,
       });
     } catch (error) {
-      if (error.response.data.message === jwtErrors) {
+      if (
+        error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors
+      ) {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_TASK_BY_RANK_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };
@@ -255,15 +300,24 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
       payload: data.message,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: UPDATE_TASK_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -295,15 +349,24 @@ export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: GET_ALL_TASKS_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };

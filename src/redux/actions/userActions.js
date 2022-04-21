@@ -44,15 +44,24 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: GET_USER_PROFILE_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };
@@ -86,15 +95,24 @@ export const editUserProfile =
 
       localStorage.setItem("userDetails", JSON.stringify(data));
     } catch (error) {
-      if (error.response.data.message === jwtErrors) {
+      if (
+        error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors
+      ) {
         dispatch(logoutUser());
       }
       dispatch({
         type: UPDATE_USER_PROFILE_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };
@@ -125,15 +143,24 @@ export const listAllUsers =
         payload: data,
       });
     } catch (error) {
-      if (error.response.data.message === jwtErrors) {
+      if (
+        error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors
+      ) {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_USERS_FAIL,
         payload:
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
-            : error.response.data.message,
+            : error.response.data.message || error.message,
       });
     }
   };
@@ -156,23 +183,31 @@ export const removeUser = (userId) => async (dispatch, getState) => {
       `/api/v1/users/user/${userId}/delete`,
       config
     );
-    debugger;
+    // debugger;
 
     dispatch({
       type: DELETE_USER_SUCCESS,
       payload: data.message,
     });
   } catch (error) {
-    debugger;
-    if (error.response.data.message === jwtErrors) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
       dispatch(logoutUser());
     }
     dispatch({
       type: DELETE_USER_FAIL,
       payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
-          : error.response.data.message,
+          : error.response.data.message || error.message,
     });
   }
 };

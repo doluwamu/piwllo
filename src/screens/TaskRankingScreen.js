@@ -20,7 +20,7 @@ const TaskRankingScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
-  const { taskRank } = params || '';
+  const { taskRank } = params || "";
   const { pageNumber } = params || 1;
 
   const [taskDetailsView, setTaskDetailsView] = useState(false);
@@ -56,7 +56,7 @@ const TaskRankingScreen = () => {
     navigate,
     deleteTaskMessage,
     updateSuccess,
-    pageNumber
+    pageNumber,
   ]);
 
   const handleDeleteTask = (id) => {
@@ -121,7 +121,13 @@ const TaskRankingScreen = () => {
                       <td>
                         <Link
                           to={`/task/${t._id}/edit`}
-                          state={{ routeUrl: pageNumber && pageNumber > 0 ? `/tasks/${taskRank}/page/${pageNumber}` : `/tasks/${taskRank}`, task: t }}
+                          state={{
+                            routeUrl:
+                              pageNumber && pageNumber > 0
+                                ? `/tasks/${taskRank}/page/${pageNumber}`
+                                : `/tasks/${taskRank}`,
+                            task: t,
+                          }}
                         >
                           <button type="button" className="btn-edit">
                             <i className="fas fa-edit"></i>
@@ -140,7 +146,11 @@ const TaskRankingScreen = () => {
                 ))}
               {taskDetailsView && (
                 <ViewTaskDetailsModal
-                  routeUrl={pageNumber && pageNumber > 0 ? `/tasks/${taskRank}/page/${pageNumber}` : `/tasks/${taskRank}`}
+                  routeUrl={
+                    pageNumber && pageNumber > 0
+                      ? `/tasks/${taskRank}/page/${pageNumber}`
+                      : `/tasks/${taskRank}`
+                  }
                   taskDetails={taskDetails}
                   setTaskDetailsView={setTaskDetailsView}
                   deleteTask={handleDeleteTask}
@@ -160,9 +170,8 @@ const TaskRankingScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
-
-<TasksPaginate page={page} pages={pages} taskRank={taskRank} />
           </div>
+          <TasksPaginate page={page} pages={pages} taskRank={taskRank} />
           <br />
         </div>
       </div>

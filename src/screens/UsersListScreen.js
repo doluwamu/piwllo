@@ -109,8 +109,8 @@ const UserListScreen = () => {
                 <p style={{ textAlign: "center" }}>No users found</p>
               )
             )}
-            <UsersPaginate page={page} pages={pages} />
           </div>
+          <UsersPaginate page={page} pages={pages} />
           <br />
         </div>
       </div>

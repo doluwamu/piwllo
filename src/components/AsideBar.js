@@ -51,6 +51,7 @@ const AsideBar = () => {
     dispatch(listUserTasks(keyword.length > 0 && keyword));
     if (tasksDuplicate && tasksDuplicate.length > 0) {
       navigate(`/task/search/${keyword}`);
+      setKeyword("");
     }
   };
 
