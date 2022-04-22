@@ -61,7 +61,10 @@ const ProfileViewScreen = () => {
         <div className="profile-info">
           {/* Profile */}
           <div className="user-image">
-            <img src={profileInfo && profileInfo.image.url} alt="img" />
+            <img
+              src={profileInfo ? profileInfo.image.url : "/images/avatar.jpg"}
+              alt="img"
+            />
           </div>
 
           <div className="user-info">

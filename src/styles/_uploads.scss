@@ -1,0 +1,93 @@
+.profile-image-upload-section {
+  .upload-image-section {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 40px;
+    // background-color: green;
+    padding: 10px;
+
+    .image {
+      //   margin-left: 2%;
+
+      img {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+      }
+    }
+
+    .upload-button {
+      &.dark {
+        .image-upload-btn {
+          border: 1.2px solid #fff;
+          background-color: transparent;
+          color: #fff;
+
+          &:hover {
+            background-color: #fff1;
+          }
+        }
+
+        .image-select-btn {
+          div {
+            border: 1.2px solid #fff;
+
+            &:hover {
+              background-color: #fff1;
+            }
+          }
+        }
+      }
+
+      &.light {
+        .image-upload-btn {
+          border: 1.2px solid var(--dark-bg);
+
+          &:hover {
+            background-color: rgba(68, 3, 68, 0.3);
+            //   color: #fff;
+          }
+        }
+
+        .image-select-btn {
+          div {
+            border: 1.2px solid var(--dark-bg);
+
+            &:hover {
+              background-color: rgba(68, 3, 68, 0.3);
+              //   color: #fff;
+            }
+          }
+        }
+      }
+
+      .image-upload-btn {
+        margin-left: 12%;
+        margin-top: 20px;
+        width: 70%;
+        text-align: center;
+        padding: 4px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.4s;
+      }
+
+      .image-select-btn {
+        div {
+          margin-left: 12%;
+          margin-top: 20px;
+          width: 70%;
+          text-align: center;
+          padding: 4px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.4s;
+        }
+
+        input {
+          display: none;
+        }
+      }
+    }
+  }
+}

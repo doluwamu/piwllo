@@ -9,6 +9,7 @@ import TaskManagerScreen from "./screens/TaskManagerScreen";
 import TaskRankingScreen from "./screens/TaskRankingScreen";
 import ProfileViewScreen from "./screens/ProfileViewScreen";
 import ProfileEditScreen from "./screens/ProfileEditScreen";
+import ProfileImageUploadScreen from "./screens/ProfileImageUploadScreen";
 import AddRewiewScreen from "./screens/AddRewiewScreen";
 import CreateTeamScreen from "./screens/CreateTeamScreen";
 import EditTaskScreen from "./screens/EditTaskScreen";
@@ -49,6 +50,10 @@ const AllRoutes = () => {
         <Route
           path="/user/:userId/profile/edit"
           element={<ProfileEditScreen />}
+        />
+        <Route
+          path="/profile/edit/image/upload"
+          element={<ProfileImageUploadScreen />}
         />
 
         <Route path="/tasks/:taskRank" element={<TaskRankingScreen />} />

@@ -18,16 +18,10 @@ const ProfileEditScreen = () => {
   const params = useParams();
   const { userId } = params;
 
-  // const fileReader = new FileReader();
-
-  const [imageBase64, setImageBase64] = useState("");
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [image, setImage] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
 
   // Email validation error state
   const [emailValidationError, setEmailValidationError] = useState(false);
@@ -63,7 +57,6 @@ const ProfileEditScreen = () => {
     } else {
       setName(profileInfo.name);
       setEmail(profileInfo.email);
-      setImage(profileInfo.image.url);
     }
   }, [userDetails, dispatch, profileInfo, userId, successUpdate, navigate]);
 
@@ -77,10 +70,6 @@ const ProfileEditScreen = () => {
 
     dispatch(editUserProfile(name, email, password, confirmPassword));
   };
-
-  // const handleProfileImageDisplay = (e) => {
-  //   console.log(e.target)
-  // }
 
   return (
     <div className="profile-edit-section main">
@@ -107,25 +96,23 @@ const ProfileEditScreen = () => {
           {updateError && <Alert message={updateError} isError={true} />}
 
           <div className="avatar">
-            <label htmlFor="upload">
+            <label>
               <img
-                title={"Profile Image"}
+                title={profileInfo ? profileInfo.image.url : "Profile Image"}
                 src={
-                  imageBase64 && imageBase64.length > 0 ? imageBase64 : image
+                  profileInfo && profileInfo.image.url
+                    ? profileInfo.image.url
+                    : "/images/avatar.jpg"
                 }
-                alt="avatar"
+                alt={"avatar"}
+                onClick={() =>
+                  navigate("/profile/edit/image/upload", {
+                    state: { routeUrl: `/user/${userId}/profile/edit` },
+                  })
+                }
               />
               {/* onClick={(e) => setImageBase64(e.ta)} */}
             </label>
-
-            <input
-              id="upload"
-              style={{ display: "none", visibility: "none" }}
-              type="file"
-              name="image"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
           </div>
 
           <div className="form-elements">
