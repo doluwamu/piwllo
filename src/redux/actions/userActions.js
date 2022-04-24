@@ -67,7 +67,8 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
 };
 
 export const editUserProfile =
-  (name, email, password, confirmPassword) => async (dispatch, getState) => {
+  (name, email, image = "", password, confirmPassword) =>
+  async (dispatch, getState) => {
     try {
       dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
 
@@ -84,7 +85,7 @@ export const editUserProfile =
 
       const { data } = await axios.put(
         "/api/v1/users/user/profile/edit",
-        { name, email, password, confirmPassword },
+        { name, email, image: image && image, password, confirmPassword },
         config
       );
       // debugger;
@@ -94,6 +95,8 @@ export const editUserProfile =
       });
 
       localStorage.setItem("userDetails", JSON.stringify(data));
+
+      // dispatch(loginUser(email, password))
     } catch (error) {
       if (
         error &&

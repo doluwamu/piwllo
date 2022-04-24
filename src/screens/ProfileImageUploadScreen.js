@@ -1,39 +1,81 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AsideBar from "../components/AsideBar";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 import { ThemeContext } from "../context/ThemeContext";
-// import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { uploadImage } from "../redux/actions/uploadActions";
+import {
+  connectionError,
+  connectionErrorMessage,
+} from "../redux/actions/errors.global";
+import Spinner from "../components/shared/Spinner";
 // import { fetchUserProfile } from "../redux/actions/userActions";
 // import Alert from "../components/Alert";
 // import Spinner from "../components/shared/Spinner";
 
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const fileReader = useMemo(() => new FileReader(), []);
 
   const [imageBase64, setImageBase64] = useState("");
   const [selectedImg, setSelectedImg] = useState("");
+  const [imageUploaded, setImageUploaded] = useState(false);
 
   const handleImageLoad = (e) => {
     setImageBase64(e.target.result);
   };
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetails } = userLogin;
+
   useEffect(() => {
+    if (!userDetails) navigate("/signin");
     fileReader.addEventListener("load", handleImageLoad);
-  }, [fileReader]);
+  }, [fileReader, userDetails, navigate]);
 
   let selectedImage = null;
-  const handleImageSelect = (e) => {
-    selectedImage = e.target.files[0];
-    setSelectedImg(selectedImage);
-    fileReader.readAsDataURL(selectedImage);
+  const handleImageSelect = async (e) => {
+    try {
+      selectedImage = e.target.files[0];
+      setSelectedImg(selectedImage);
+      setImageUploaded(false);
+      fileReader.readAsDataURL(selectedImage);
+
+      const { data } = await uploadImage(selectedImage);
+      setImageUploaded(true);
+      navigate(`/user/${userDetails._id}/profile/edit`, {
+        state: { image: data },
+      });
+    } catch (error) {
+      return error.response &&
+        error.response.data &&
+        error.response.data.message &&
+        error.response.data.message === connectionError
+        ? connectionErrorMessage
+        : error.response.data.message || error.message;
+    }
   };
 
-  const handleUploadImage = () => {
-    console.log(selectedImg);
-  };
+  // const handleUploadImage = async () => {
+  //   try {
+  //     const { data } = await uploadImage(selectedImg);
+  //     setImageUploaded(true);
+  //     navigate(`/user/${userDetails._id}/profile/edit`, {
+  //       state: { image: data },
+  //     });
+  //   } catch (error) {
+  //     return error &&
+  //       error.response &&
+  //       error.response.data &&
+  //       error.response.data.message &&
+  //       error.response.data.message === connectionError
+  //       ? connectionErrorMessage
+  //       : error.response.data.message || error.message;
+  //   }
+  // };
 
   return (
     <div className="image-upload-section main">
@@ -56,30 +98,33 @@ const ProfileViewScreen = () => {
         <form className="upload-image-section">
           <div className="image">
             <img
-              src={imageBase64 ? imageBase64 : "/images/avatar.jpg"}
+              src={
+                imageBase64
+                  ? imageBase64
+                  : userDetails
+                  ? userDetails.image.url
+                  : "/images/avatar.jpg"
+              }
               alt="img"
             />
           </div>
 
           <div className={`upload-button ${darkTheme ? "dark" : "light"}`}>
-            {imageBase64 && (
-              <button
-                type="button"
-                className="image-upload-btn"
-                onClick={handleUploadImage}
-              >
-                Upload Image
+            {!imageUploaded && selectedImg ? (
+              <button type="button" className="image-upload-btn">
+                <Spinner width="20px" height="20px" marginLeft="45%" />
               </button>
+            ) : (
+              <label className="image-select-btn">
+                <div>Select an Image</div>
+                <input
+                  accept={".jpg, .png, .jpeg"}
+                  type="file"
+                  name="image"
+                  onChange={handleImageSelect}
+                />
+              </label>
             )}
-            <label className="image-select-btn">
-              <div>Select an Image</div>
-              <input
-                accept={".jpg, .png, .jpeg"}
-                type="file"
-                name="image"
-                onChange={handleImageSelect}
-              />
-            </label>
           </div>
         </form>
         <br />

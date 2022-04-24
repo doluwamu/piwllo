@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Alert from "../components/Alert";
 import AsideBar from "../components/AsideBar";
 import Spinner from "../components/shared/Spinner";
@@ -14,9 +14,14 @@ import FormValidationErrors from "../errors/FormValidationErrors";
 import validator from "validator";
 import { UPDATE_USER_PROFILE_RESET } from "../redux/constants/userConstants";
 
+
 const ProfileEditScreen = () => {
   const params = useParams();
   const { userId } = params;
+
+  const location = useLocation();
+  const { image } = location.state || {};
+  console.log(image);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -68,7 +73,15 @@ const ProfileEditScreen = () => {
     }
     // Form submission validation ends
 
-    dispatch(editUserProfile(name, email, password, confirmPassword));
+    dispatch(
+      editUserProfile(
+        name,
+        email,
+        image && image._id,
+        password,
+        confirmPassword
+      )
+    );
   };
 
   return (
@@ -98,9 +111,17 @@ const ProfileEditScreen = () => {
           <div className="avatar">
             <label>
               <img
-                title={profileInfo ? profileInfo.image.url : "Profile Image"}
+                title={
+                  image
+                    ? image
+                    : profileInfo
+                    ? profileInfo.image.url
+                    : "Profile Image"
+                }
                 src={
-                  profileInfo && profileInfo.image.url
+                  image
+                    ? image.url
+                    : profileInfo && profileInfo.image.url
                     ? profileInfo.image.url
                     : "/images/avatar.jpg"
                 }
