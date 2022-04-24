@@ -37,7 +37,6 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get("/api/v1/users/user/profile", config);
-    // debugger;
 
     dispatch({
       type: GET_USER_PROFILE_SUCCESS,
@@ -88,7 +87,6 @@ export const editUserProfile =
         { name, email, image: image && image, password, confirmPassword },
         config
       );
-      // debugger;
 
       dispatch({
         type: UPDATE_USER_PROFILE_SUCCESS,
@@ -186,7 +184,6 @@ export const removeUser = (userId) => async (dispatch, getState) => {
       `/api/v1/users/user/${userId}/delete`,
       config
     );
-    // debugger;
 
     dispatch({
       type: DELETE_USER_SUCCESS,

@@ -14,14 +14,12 @@ import FormValidationErrors from "../errors/FormValidationErrors";
 import validator from "validator";
 import { UPDATE_USER_PROFILE_RESET } from "../redux/constants/userConstants";
 
-
 const ProfileEditScreen = () => {
   const params = useParams();
   const { userId } = params;
 
   const location = useLocation();
   const { image } = location.state || {};
-  console.log(image);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,9 +47,8 @@ const ProfileEditScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userDetails) {
-      navigate("/signin");
-    }
+    if (!userDetails) navigate("/signin");
+
     if (successUpdate) {
       dispatch({ type: UPDATE_USER_PROFILE_RESET });
       navigate(`/user/${userId}/profile`);

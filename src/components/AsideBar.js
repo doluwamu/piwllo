@@ -22,10 +22,11 @@ const AsideBar = () => {
   const { tasks } = listTasks;
 
   useEffect(() => {
+    if (!userDetails) navigate("/signin");
     if (tasks) {
       setTasksDuplicate(tasks);
     }
-  }, [tasks]);
+  }, [tasks, userDetails, navigate]);
 
   const openAside = () => {
     const aside = document.getElementById("aside-itms");
@@ -70,7 +71,9 @@ const AsideBar = () => {
                 userDetails && userDetails._id && userDetails._id
               }/profile`}
             >
-              {firstLetterOfEachWordToUpperCase(userDetails.name)}
+              {firstLetterOfEachWordToUpperCase(
+                userDetails && userDetails.name
+              )}
             </Link>
           </li>
 

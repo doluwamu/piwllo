@@ -27,9 +27,6 @@ const SigninScreen = () => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  // console.log(location);
-  // console.log(userDetails);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

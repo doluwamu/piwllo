@@ -48,9 +48,8 @@ const TasksSearchScreen = () => {
   const { updateSuccess } = updateTask;
 
   useEffect(() => {
-    if (!userDetails) {
-      navigate("/signin");
-    }
+    if (!userDetails) navigate("/signin");
+
     if (updateSuccess) {
       dispatch({
         type: GET_USER_TASKS_RESET,

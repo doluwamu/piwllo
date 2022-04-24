@@ -40,7 +40,6 @@ export const createReview = (review) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.post("/api/v1/reviews", { review }, config);
-    // debugger;
 
     dispatch({
       type: ADD_REVIEW_SUCCESS,
@@ -100,7 +99,6 @@ export const fetchReviews =
         payload: data,
       });
     } catch (error) {
-      // debugger;
       if (
         error &&
         error.response &&
@@ -189,7 +187,6 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
       `/api/v1/reviews/${reviewId}/like`,
       config
     );
-    // debugger;
 
     dispatch({
       type: LIKE_REVIEW_SUCCESS,
@@ -197,7 +194,6 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
       reviewId: data.reviewId,
     });
   } catch (error) {
-    // debugger;
     if (
       error &&
       error.response &&
