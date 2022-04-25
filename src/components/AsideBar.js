@@ -50,6 +50,7 @@ const AsideBar = () => {
     if (keyword.length < 1) return;
 
     dispatch(listUserTasks(keyword.length > 0 && keyword));
+    closeAside();
     if (tasksDuplicate && tasksDuplicate.length > 0) {
       navigate(`/task/search/${keyword}`);
       setKeyword("");
@@ -104,13 +105,13 @@ const AsideBar = () => {
               <li>
                 <Link to={`/`}>All</Link>{" "}
               </li>
-              <li>
+              <li onClick={closeAside}>
                 <Link to={"/tasks/important"}>Important</Link>{" "}
               </li>
-              <li>
+              <li onClick={closeAside}>
                 <Link to={"/tasks/very-important"}>Very important</Link>
               </li>
-              <li>
+              <li onClick={closeAside}>
                 <Link to={"/tasks/priority"}>Priority</Link>
               </li>
             </div>

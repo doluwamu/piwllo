@@ -138,6 +138,23 @@ const TaskManagerScreen = () => {
             <Alert message={deleteTaskError} isError={true} />
           )}
 
+          <div className={`task-ranks-section ${darkTheme ? "dark" : "light"}`}>
+            <Link to={"/tasks/important"} className="important-task rank">
+              Important
+            </Link>
+
+            <Link
+              to={"/tasks/very-important"}
+              className="very-important-task rank"
+            >
+              Very-important
+            </Link>
+
+            <Link to={"/tasks/priority"} className="priority-task rank">
+              Priority
+            </Link>
+          </div>
+
           <div className="add-task">
             <div className="task-input">
               <input

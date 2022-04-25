@@ -45,6 +45,7 @@ const ProfileViewScreen = () => {
       selectedImage = e.target.files[0];
       setSelectedImg(selectedImage);
       setImageUploaded(false);
+      setError("");
       fileReader.readAsDataURL(selectedImage);
 
       const { data } = await uploadImage(selectedImage);
@@ -108,7 +109,7 @@ const ProfileViewScreen = () => {
           </div>
 
           <div className={`upload-button ${darkTheme ? "dark" : "light"}`}>
-            {!imageUploaded && selectedImg && !error ? (
+            {!imageUploaded && selectedImg && (!error || error.length < 1) ? (
               <button type="button" className="image-upload-btn">
                 <Spinner width="20px" height="20px" marginLeft="45%" />
               </button>
