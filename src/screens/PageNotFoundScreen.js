@@ -25,7 +25,7 @@ const PageNotFoundScreen = () => {
             Oooops, this page you're looking for does not exist :(
           </h2>
 
-          <Link to='/'>Home</Link>
+          <Link to='/' className={`go-home-PNF ${darkTheme ? 'dark' : 'light'}`}>Go home</Link>
         </div>
       </div>
     </div>

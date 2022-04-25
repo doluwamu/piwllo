@@ -121,3 +121,17 @@ textarea {
 .display-none {
   display: none !important;
 }
+
+.go-home-PNF {
+  padding: 5px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-left: 35%;
+
+  &.dark {
+    border: 1px solid var(--light-bg);
+  }
+  &.light {
+    border: 1px solid var(--dark-bg);
+  }
+}
