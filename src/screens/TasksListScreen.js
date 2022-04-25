@@ -56,6 +56,8 @@ const TasksListScreen = () => {
     setTaskDetails(detail);
   };
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="task-manager-section main">
       {/* Aside bar */}
@@ -69,6 +71,11 @@ const TasksListScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>
@@ -98,7 +105,7 @@ const TasksListScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(wordBreak(t.task, 40))}
+                        {firstLetterToUpperCase(wordBreak(t.task, 20))}
                       </td>
                       <td
                         className="priority"
@@ -148,9 +155,8 @@ const TasksListScreen = () => {
                 <p style={{ textAlign: "center" }}>No tasks found</p>
               )
             )}
-
           </div>
-            <TasksPaginate page={page} pages={pages} isAdmin={true} />
+          <TasksPaginate page={page} pages={pages} isAdmin={true} />
           <br />
         </div>
       </div>

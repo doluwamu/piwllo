@@ -11,6 +11,7 @@ import {
   GET_TASK_BY_RANK_REQUEST,
   GET_TASK_BY_RANK_SUCCESS,
   GET_TASK_BY_RANK_FAIL,
+  GET_TASK_BY_RANK_RESET,
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAIL,
@@ -106,6 +107,8 @@ export const getTaskByRank = (state = {}, action) => {
       };
     case GET_TASK_BY_RANK_FAIL:
       return { loading: false, getTasksError: action.payload };
+    case GET_TASK_BY_RANK_RESET:
+      return {};
     default:
       return state;
   }

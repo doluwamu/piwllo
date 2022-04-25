@@ -103,6 +103,8 @@ const TaskManagerScreen = () => {
     setTaskDetails(detail);
   };
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="task-manager-section main">
       {/* Aside bar */}
@@ -116,6 +118,11 @@ const TaskManagerScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>
@@ -190,7 +197,7 @@ const TaskManagerScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(wordBreak(t.task))}
+                        {firstLetterToUpperCase(wordBreak(t.task, 30))}
                       </td>
                       <td
                         className="priority"

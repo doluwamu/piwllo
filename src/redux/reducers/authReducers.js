@@ -15,7 +15,7 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
-  RESET_PASSWORD_RESET
+  RESET_PASSWORD_RESET,
 } from "../constants/authConstants";
 
 export const userRegistration = (state = {}, action) => {

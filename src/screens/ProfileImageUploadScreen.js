@@ -8,11 +8,12 @@ import { uploadImage } from "../redux/actions/uploadActions";
 import {
   connectionError,
   connectionErrorMessage,
+  cloudinaryError,
+  cloudinaryErrorMessage,
+  serverErrors,
 } from "../redux/actions/errors.global";
 import Spinner from "../components/shared/Spinner";
-// import { fetchUserProfile } from "../redux/actions/userActions";
-// import Alert from "../components/Alert";
-// import Spinner from "../components/shared/Spinner";
+import Alert from "../components/Alert";
 
 const ProfileViewScreen = () => {
   const { darkTheme } = useContext(ThemeContext);
@@ -23,6 +24,8 @@ const ProfileViewScreen = () => {
   const [imageBase64, setImageBase64] = useState("");
   const [selectedImg, setSelectedImg] = useState("");
   const [imageUploaded, setImageUploaded] = useState(false);
+
+  const [error, setError] = useState("");
 
   const handleImageLoad = (e) => {
     setImageBase64(e.target.result);
@@ -54,28 +57,16 @@ const ProfileViewScreen = () => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
-        ? connectionErrorMessage
-        : error.response.data.message || error.message;
+        ? setError(connectionErrorMessage)
+        : error.response.data.message.includes(cloudinaryError)
+        ? setError(cloudinaryErrorMessage)
+        : error.message && error.message === serverErrors
+        ? setError(connectionErrorMessage)
+        : setError(error.response.data.message) || setError(error.message);
     }
   };
 
-  // const handleUploadImage = async () => {
-  //   try {
-  //     const { data } = await uploadImage(selectedImg);
-  //     setImageUploaded(true);
-  //     navigate(`/user/${userDetails._id}/profile/edit`, {
-  //       state: { image: data },
-  //     });
-  //   } catch (error) {
-  //     return error &&
-  //       error.response &&
-  //       error.response.data &&
-  //       error.response.data.message &&
-  //       error.response.data.message === connectionError
-  //       ? connectionErrorMessage
-  //       : error.response.data.message || error.message;
-  //   }
-  // };
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
 
   return (
     <div className="image-upload-section main">
@@ -90,10 +81,17 @@ const ProfileViewScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>
         </div>
+
+        {error && error.length > 0 && <Alert message={error} isError={true} />}
 
         <form className="upload-image-section">
           <div className="image">
@@ -110,7 +108,7 @@ const ProfileViewScreen = () => {
           </div>
 
           <div className={`upload-button ${darkTheme ? "dark" : "light"}`}>
-            {!imageUploaded && selectedImg ? (
+            {!imageUploaded && selectedImg && !error ? (
               <button type="button" className="image-upload-btn">
                 <Spinner width="20px" height="20px" marginLeft="45%" />
               </button>

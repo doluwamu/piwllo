@@ -16,8 +16,27 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
 } from "../constants/authConstants";
-import { GET_USER_TASKS_RESET } from "../constants/taskConstants";
-import { GET_USER_PROFILE_RESET } from "../constants/userConstants";
+import {
+  GET_USER_TASKS_RESET,
+  GET_ALL_TASKS_RESET,
+  GET_TASK_BY_ID_RESET,
+  UPDATE_TASK_RESET,
+  DELETE_TASK_RESET,
+  ADD_TASK_RESET,
+  GET_TASK_BY_RANK_RESET,
+} from "../constants/taskConstants";
+import {
+  GET_USER_PROFILE_RESET,
+  GET_USERS_RESET,
+  UPDATE_USER_PROFILE_RESET,
+  DELETE_USER_RESET,
+} from "../constants/userConstants";
+import {
+  ADD_REVIEW_RESET,
+  GET_REVIEWS_RESET,
+  DELETE_REVIEW_RESET,
+  LIKE_REVIEW_RESET,
+} from "../constants/reviewConstants";
 import { connectionError, connectionErrorMessage } from "./errors.global";
 
 export const registerUser =
@@ -85,6 +104,23 @@ export const loginUser = (email, password) => async (dispatch) => {
       payload: data,
     });
 
+    dispatch({ type: GET_USER_PROFILE_RESET });
+    dispatch({ type: GET_USERS_RESET });
+    dispatch({ type: UPDATE_USER_PROFILE_RESET });
+    dispatch({ type: DELETE_USER_RESET });
+
+    dispatch({ type: GET_TASK_BY_ID_RESET });
+    dispatch({ type: GET_ALL_TASKS_RESET });
+    dispatch({ type: GET_TASK_BY_RANK_RESET });
+    dispatch({ type: ADD_TASK_RESET });
+    dispatch({ type: DELETE_TASK_RESET });
+    dispatch({ type: UPDATE_TASK_RESET });
+
+    dispatch({ type: ADD_REVIEW_RESET });
+    dispatch({ type: GET_REVIEWS_RESET });
+    dispatch({ type: DELETE_REVIEW_RESET });
+    dispatch({ type: LIKE_REVIEW_RESET });
+
     localStorage.setItem("userDetails", JSON.stringify(data));
   } catch (error) {
     dispatch({
@@ -106,7 +142,6 @@ export const logoutUser = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_LOGIN_RESET });
   dispatch({ type: USER_REGISTERATION_RESET });
-  dispatch({ type: GET_USER_PROFILE_RESET });
   dispatch({ type: GET_USER_TASKS_RESET });
 };
 

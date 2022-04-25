@@ -17,6 +17,7 @@ import axios from "axios";
 import {
   connectionError,
   connectionErrorMessage,
+  serverErrors,
   jwtErrors,
 } from "./errors.global";
 
@@ -59,6 +60,8 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
@@ -113,6 +116,8 @@ export const editUserProfile =
           error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
+            : error.message && error.message === serverErrors
+            ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
     }
@@ -161,6 +166,8 @@ export const listAllUsers =
           error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
+            : error.message && error.message === serverErrors
+            ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
     }
@@ -206,6 +213,8 @@ export const removeUser = (userId) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });

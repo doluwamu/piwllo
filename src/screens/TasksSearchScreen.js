@@ -81,6 +81,8 @@ const TasksSearchScreen = () => {
     setTaskDetails(detail);
   };
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="task-manager-section main">
       {/* Aside bar */}
@@ -94,6 +96,11 @@ const TasksSearchScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>

@@ -81,6 +81,8 @@ const ProfileEditScreen = () => {
     );
   };
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="profile-edit-section main">
       {/* Aside bar */}
@@ -93,6 +95,11 @@ const ProfileEditScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>

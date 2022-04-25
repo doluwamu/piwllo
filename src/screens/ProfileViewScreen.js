@@ -27,6 +27,8 @@ const ProfileViewScreen = () => {
     dispatch(fetchUserProfile());
   }, [dispatch, userDetails, navigate]);
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="profile-view-section main">
       {/* Aside bar */}
@@ -40,6 +42,11 @@ const ProfileViewScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>

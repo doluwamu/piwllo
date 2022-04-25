@@ -21,6 +21,7 @@ import {
   connectionError,
   connectionErrorMessage,
   jwtErrors,
+  serverErrors,
 } from "./errors.global";
 
 // Action to add a review
@@ -64,6 +65,8 @@ export const createReview = (review) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
@@ -116,6 +119,8 @@ export const fetchReviews =
           error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
+            : error.message && error.message === serverErrors
+            ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
     }
@@ -162,6 +167,8 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
@@ -210,6 +217,8 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });

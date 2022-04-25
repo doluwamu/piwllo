@@ -28,6 +28,7 @@ import {
   connectionError,
   connectionErrorMessage,
   jwtErrors,
+  serverErrors,
 } from "./errors.global";
 
 // Action to get all tasks that belong to a user
@@ -76,6 +77,8 @@ export const listUserTasks =
           error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
+            : error.message && error.message === serverErrors
+            ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
     }
@@ -123,6 +126,8 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
         error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
   }
@@ -169,6 +174,8 @@ export const removeTask = (id) => async (dispatch, getState) => {
         error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
   }
@@ -214,6 +221,8 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
@@ -266,6 +275,8 @@ export const listTaskByRank =
           error.response.data.message &&
           error.response.data.message === connectionError
             ? connectionErrorMessage
+            : error.message && error.message === serverErrors
+            ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
     }
@@ -317,6 +328,8 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
         error.response.data.message &&
         error.response.data.message === connectionError
           ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
   }
@@ -365,6 +378,8 @@ export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
         error.response.data &&
         error.response.data.message &&
         error.response.data.message === connectionError
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });

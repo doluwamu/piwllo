@@ -60,6 +60,8 @@ const ReviewListScreen = () => {
     dispatch(removeReview(reviewId));
   };
 
+  const redirectToProfile = () => navigate(`/user/${userDetails._id}/profile`);
+
   return (
     <div className="add-review-section main">
       {/* Aside bar */}
@@ -72,6 +74,11 @@ const ReviewListScreen = () => {
       >
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
+          <img
+            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            alt="avatar"
+            onClick={redirectToProfile}
+          />
           <div className="theme-btn-container">
             <ThemeToggleButton />
           </div>
