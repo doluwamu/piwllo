@@ -1,7 +1,7 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import "../../pagination.css";
+import "./styles/_pagination.scss";
 
 const ReviewsPaginate = ({ page, pages }) => {
   return (

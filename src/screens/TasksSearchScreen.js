@@ -134,7 +134,7 @@ const TasksSearchScreen = () => {
                   <tbody key={t._id}>
                     <tr>
                       <td onClick={() => openTaskViewModal(t)}>
-                        {firstLetterToUpperCase(wordBreak(t.task))}
+                        {firstLetterToUpperCase(wordBreak(t.task, 30))}
                       </td>
                       <td
                         className="priority"

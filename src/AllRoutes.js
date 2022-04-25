@@ -13,7 +13,8 @@ import ProfileImageUploadScreen from "./screens/ProfileImageUploadScreen";
 import AddRewiewScreen from "./screens/AddRewiewScreen";
 import CreateTeamScreen from "./screens/CreateTeamScreen";
 import EditTaskScreen from "./screens/EditTaskScreen";
-import PageNotFoundScreen from "./screens/PageNotFound";
+import PageNotFoundScreen from "./screens/PageNotFoundScreen";
+import PageNotFoundAuthScreen from "./screens/PageNotFoundAuthScreen";
 import ReviewsListScreen from "./screens/ReviewsListScreen";
 import UsersListScreen from "./screens/UsersListScreen";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen";
@@ -90,7 +91,12 @@ const AllRoutes = () => {
           path={"/"}
           element={!userDetails ? <HomeScreen /> : <TaskManagerScreen />}
         />
-        <Route path="*" element={<PageNotFoundScreen />} />
+        <Route
+          path="*"
+          element={
+            userDetails ? <PageNotFoundAuthScreen /> : <PageNotFoundScreen />
+          }
+        />
 
         {/* others */}
       </Routes>
