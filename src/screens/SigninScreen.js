@@ -23,7 +23,7 @@ const SigninScreen = () => {
   const { loading, error, userDetails } = userLogin;
 
   const location = useLocation();
-  const { message } = location.state || "";
+  const { message, userEmail } = location.state || "";
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -34,7 +34,9 @@ const SigninScreen = () => {
     if (userDetails) {
       navigate(redirect);
     }
-  }, [userDetails, navigate, redirect]);
+
+    if (userEmail) setEmail(userEmail);
+  }, [userDetails, navigate, redirect, userEmail]);
 
   const handleSignIn = (e) => {
     e.preventDefault();

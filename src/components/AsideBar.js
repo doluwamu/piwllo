@@ -59,7 +59,11 @@ const AsideBar = () => {
 
   return (
     <aside className={`side-bar ${darkTheme ? "dark" : "light"}`}>
-      <h2>Piwllo</h2>
+      <h2>
+        <Link to="/" style={{ textDecoration: "none", color: "#ffe" }}>
+          Piwllo
+        </Link>
+      </h2>
       <ul className="aside-items" id="aside-itms">
         <div className="cancel-aside-icon" onClick={closeAside}>
           <i className="fa-solid fa-xmark"></i>

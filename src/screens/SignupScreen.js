@@ -136,6 +136,7 @@ const SignupScreen = () => {
             to="/signin"
             state={{
               message: "Your registration was successful. You can login",
+              userEmail: email
             }}
           />
         )}

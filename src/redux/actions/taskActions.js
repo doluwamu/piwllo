@@ -75,7 +75,7 @@ export const listUserTasks =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
             ? connectionErrorMessage
             : error.message && error.message === serverErrors
             ? connectionErrorMessage
@@ -124,7 +124,7 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -172,7 +172,7 @@ export const removeTask = (id) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -220,7 +220,7 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -273,7 +273,7 @@ export const listTaskByRank =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
             ? connectionErrorMessage
             : error.message && error.message === serverErrors
             ? connectionErrorMessage
@@ -326,7 +326,7 @@ export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -377,7 +377,7 @@ export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage

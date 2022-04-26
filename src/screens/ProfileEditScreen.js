@@ -96,7 +96,11 @@ const ProfileEditScreen = () => {
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
           <img
-            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            src={
+              userDetails && userDetails.image
+                ? userDetails.image.url
+                : "/images/avatar.jpg"
+            }
             alt="avatar"
             onClick={redirectToProfile}
           />
@@ -115,17 +119,11 @@ const ProfileEditScreen = () => {
           <div className="avatar">
             <label>
               <img
-                title={
-                  image
-                    ? image
-                    : profileInfo
-                    ? profileInfo.image.url
-                    : "Profile Image"
-                }
+                title={"Profile Image"}
                 src={
                   image
                     ? image.url
-                    : profileInfo && profileInfo.image.url
+                    : profileInfo && profileInfo.image
                     ? profileInfo.image.url
                     : "/images/avatar.jpg"
                 }

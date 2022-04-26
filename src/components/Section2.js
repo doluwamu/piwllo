@@ -31,7 +31,7 @@ const Section2 = ({ darkTheme }) => {
                 <a href={"#get-started"}>
                   <b>get started</b>
                 </a>{" "}
-                section and start enjoying the benefits of piwllo with me.
+                section and start enjoying the benefits of piwllo.
               </p>
             </div>
           </div>

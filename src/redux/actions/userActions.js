@@ -59,7 +59,7 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -114,7 +114,7 @@ export const editUserProfile =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
             ? connectionErrorMessage
             : error.message && error.message === serverErrors
             ? connectionErrorMessage
@@ -164,7 +164,7 @@ export const listAllUsers =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
             ? connectionErrorMessage
             : error.message && error.message === serverErrors
             ? connectionErrorMessage
@@ -212,7 +212,7 @@ export const removeUser = (userId) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage

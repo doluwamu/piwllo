@@ -119,7 +119,11 @@ const TaskManagerScreen = () => {
         {/* Theme tuggle button */}
         <div className="theme-btn-section">
           <img
-            src={userDetails ? userDetails.image.url : "/images/avatar.jpg"}
+            src={
+              userDetails && userDetails.image
+                ? userDetails.image.url
+                : "/images/avatar.jpg"
+            }
             alt="avatar"
             onClick={redirectToProfile}
           />

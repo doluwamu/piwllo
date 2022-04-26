@@ -37,7 +37,11 @@ import {
   DELETE_REVIEW_RESET,
   LIKE_REVIEW_RESET,
 } from "../constants/reviewConstants";
-import { connectionError, connectionErrorMessage } from "./errors.global";
+import {
+  connectionError,
+  connectionErrorMessage,
+  serverErrors,
+} from "./errors.global";
 
 export const registerUser =
   (name, email, password, confirmPassword) => async (dispatch) => {
@@ -74,7 +78,9 @@ export const registerUser =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
+            ? connectionErrorMessage
+            : error.message && error.message === serverErrors
             ? connectionErrorMessage
             : error.response.data.message || error.message,
       });
@@ -175,7 +181,9 @@ export const emailVerify = (email) => async (dispatch) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
           ? connectionErrorMessage
           : error.response.data.message || error.message,
     });
@@ -213,7 +221,9 @@ export const passwordReset =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
+            ? connectionErrorMessage
+            : error.message && error.message === serverErrors
             ? connectionErrorMessage
             : error.response.data.message || error.message,
       });

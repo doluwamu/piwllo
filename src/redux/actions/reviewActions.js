@@ -64,7 +64,7 @@ export const createReview = (review) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -117,7 +117,7 @@ export const fetchReviews =
           error.response &&
           error.response.data &&
           error.response.data.message &&
-          error.response.data.message === connectionError
+          error.response.data.message.includes(connectionError)
             ? connectionErrorMessage
             : error.message && error.message === serverErrors
             ? connectionErrorMessage
@@ -166,7 +166,7 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
@@ -216,7 +216,7 @@ export const reviewLike = (reviewId) => async (dispatch, getState) => {
         error.response &&
         error.response.data &&
         error.response.data.message &&
-        error.response.data.message === connectionError
+        error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
