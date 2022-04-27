@@ -58,17 +58,18 @@ export const registerUser =
         type: USER_REGISTERATION_REQUEST,
       });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
 
-      const { data } = await piwlloInstance.post(
-        "/api/v1/auth/signup",
-        { name, email, password, confirmPassword },
-        config
-      );
+      const { data } = await piwlloInstance.post("/api/v1/auth/signup", {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
 
       dispatch({
         type: USER_REGISTERATION_SUCCESS,
@@ -101,17 +102,16 @@ export const loginUser = (email, password) => async (dispatch) => {
       type: USER_LOGIN_REQUEST,
     });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
-    const { data } = await piwlloInstance.post(
-      "/api/v1/auth/signin",
-      { email, password },
-      config
-    );
+    const { data } = await piwlloInstance.post("/api/v1/auth/signin", {
+      email,
+      password,
+    });
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -165,17 +165,15 @@ export const emailVerify = (email) => async (dispatch) => {
       type: VERIFY_EMAIL_REQUEST,
     });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
-    const { data } = await piwlloInstance.post(
-      "/api/v1/auth/verify-email",
-      { email },
-      config
-    );
+    const { data } = await piwlloInstance.post("/api/v1/auth/verify-email", {
+      email,
+    });
 
     dispatch({
       type: VERIFY_EMAIL_SUCCESS,
@@ -205,16 +203,15 @@ export const passwordReset =
         type: RESET_PASSWORD_REQUEST,
       });
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // };
 
       const { data } = await piwlloInstance.put(
         `/api/v1/auth/password-reset/${email}`,
-        { password, confirmPassword },
-        config
+        { password, confirmPassword }
       );
 
       dispatch({
