@@ -43,6 +43,14 @@ import {
   serverErrors,
 } from "./errors.global";
 
+const piwlloInstance = axios.create({
+  baseURL: "https://piwllo-server.herokuapp.com/",
+  timeout: 1000,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export const registerUser =
   (name, email, password, confirmPassword) => async (dispatch) => {
     try {
@@ -56,7 +64,7 @@ export const registerUser =
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await piwlloInstance.post(
         "/api/v1/auth/signup",
         { name, email, password, confirmPassword },
         config
@@ -99,7 +107,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await piwlloInstance.post(
       "/api/v1/auth/signin",
       { email, password },
       config
@@ -163,7 +171,7 @@ export const emailVerify = (email) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
+    const { data } = await piwlloInstance.post(
       "/api/v1/auth/verify-email",
       { email },
       config
@@ -203,7 +211,7 @@ export const passwordReset =
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await piwlloInstance.put(
         `/api/v1/auth/password-reset/${email}`,
         { password, confirmPassword },
         config
