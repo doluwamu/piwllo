@@ -23,6 +23,7 @@ import {
   GET_ALL_TASKS_FAIL,
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
+import { piwlloUserGetInstance } from "./index";
 
 import {
   connectionError,
@@ -34,25 +35,24 @@ import {
 // Action to get all tasks that belong to a user
 export const listUserTasks =
   (keyword = "", pageNumber = 1) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       dispatch({
         type: GET_USER_TASKS_REQUEST,
       });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
+      // const {
+      //   userLogin: { userDetails },
+      // } = getState();
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userDetails.token}`,
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${userDetails.token}`,
+      //   },
+      // };
 
-      const { data } = await axios.get(
-        `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`,
-        config
+      const { data } = await piwlloUserGetInstance.get(
+        `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({
