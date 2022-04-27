@@ -57,6 +57,8 @@ const ReviewListScreen = () => {
   };
 
   const handleDeleteReview = (reviewId) => {
+    const confirm = window.confirm("Do you want to delete this review?");
+    if (!confirm) return;
     dispatch(removeReview(reviewId));
   };
 

@@ -71,6 +71,8 @@ const TasksSearchScreen = () => {
   ]);
 
   const handleDeleteTask = async (id) => {
+    const confirm = window.confirm("Do you want to delete this task?");
+    if (!confirm) return;
     dispatch(removeTask(id));
   };
 
