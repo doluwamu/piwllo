@@ -45,7 +45,6 @@ import {
 
 const piwlloInstance = axios.create({
   baseURL: "https://piwllo-server.herokuapp.com",
-  timeout: 1000,
   headers: {
     "Content-Type": "application/json",
   },

@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "https://piwllo-server.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
