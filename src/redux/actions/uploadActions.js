@@ -1,4 +1,4 @@
-import axios from "axios";
+import { piwlloUserPostAndPutInstance } from "./index";
 // import {
 //   connectionError,
 //   connectionErrorMessage,
@@ -9,5 +9,5 @@ export const uploadImage = async (image) => {
   const formData = new FormData();
   formData.append("image", image);
 
-  return await axios.post("/api/v1/upload", formData);
+  return await piwlloUserPostAndPutInstance.post("/api/v1/upload", formData);
 };
