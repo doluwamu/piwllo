@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   ADD_REVIEW_FAIL,
   ADD_REVIEW_REQUEST,
@@ -23,24 +22,18 @@ import {
   jwtErrors,
   serverErrors,
 } from "./errors.global";
+import {
+  piwlloUserGetAndDeleteInstance,
+  piwlloUserPostAndPutInstance,
+} from "./index";
 
 // Action to add a review
-export const createReview = (review) => async (dispatch, getState) => {
+export const createReview = (review) => async (dispatch) => {
   try {
     dispatch({ type: ADD_REVIEW_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.post("/api/v1/reviews", { review }, config);
+    const { data } = await piwlloUserPostAndPutInstance.post("/api/v1/reviews", { review }, );
 
     dispatch({
       type: ADD_REVIEW_SUCCESS,
@@ -76,25 +69,15 @@ export const createReview = (review) => async (dispatch, getState) => {
 // Action to fetch all reviews from  DB(Admin Only)
 export const fetchReviews =
   (pageNumber = 1) =>
-  async (dispatch, getState) => {
+  async (dispatch, ) => {
     try {
       dispatch({ type: GET_REVIEWS_RESET });
       dispatch({ type: GET_REVIEWS_REQUEST });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userDetails.token}`,
-        },
-      };
-
-      const { data } = await axios.get(
+      const { data } = await piwlloUserGetAndDeleteInstance.get(
         `/api/v1/reviews?pageNumber=${pageNumber}`,
-        config
+        
       );
 
       dispatch({
@@ -131,18 +114,8 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_REVIEW_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.delete(`/api/v1/reviews/${reviewId}`, config);
+    const { data } = await piwlloUserGetAndDeleteInstance.delete(`/api/v1/reviews/${reviewId}`, );
 
     dispatch({
       type: DELETE_REVIEW_SUCCESS,
@@ -175,24 +148,14 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
   }
 };
 
-export const reviewLike = (reviewId) => async (dispatch, getState) => {
+export const reviewLike = (reviewId) => async (dispatch, ) => {
   try {
     dispatch({ type: LIKE_REVIEW_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.put(
+    const { data } = await piwlloUserPostAndPutInstance.put(
       `/api/v1/reviews/${reviewId}/like`,
-      config
+      
     );
 
     dispatch({
