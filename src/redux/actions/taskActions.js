@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   GET_USER_TASKS_REQUEST,
   GET_USER_TASKS_SUCCESS,
@@ -23,7 +22,10 @@ import {
   GET_ALL_TASKS_FAIL,
 } from "../constants/taskConstants";
 import { logoutUser } from "./authActions";
-import { piwlloUserGetInstance } from "./index";
+import {
+  piwlloUserGetAndDeleteInstance,
+  piwlloUserPostAndPutInstance,
+} from "./index";
 
 import {
   connectionError,
@@ -51,7 +53,7 @@ export const listUserTasks =
       //   },
       // };
 
-      const { data } = await piwlloUserGetInstance.get(
+      const { data } = await piwlloUserGetAndDeleteInstance.get(
         `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
@@ -85,24 +87,16 @@ export const listUserTasks =
   };
 
 // Action for user to create task
-export const createTask = (task, rank) => async (dispatch, getState) => {
+export const createTask = (task, rank) => async (dispatch) => {
   try {
     dispatch({
       type: ADD_TASK_REQUEST,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.post("/api/v1/tasks", { task, rank }, config);
+    const { data } = await piwlloUserPostAndPutInstance.post("/api/v1/tasks", {
+      task,
+      rank,
+    });
 
     dispatch({
       type: ADD_TASK_SUCCESS,
@@ -134,23 +128,15 @@ export const createTask = (task, rank) => async (dispatch, getState) => {
 };
 
 // Action to remove task
-export const removeTask = (id) => async (dispatch, getState) => {
+export const removeTask = (id) => async (dispatch) => {
   try {
     dispatch({
       type: DELETE_TASK_REQUEST,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.delete(`/api/v1/tasks/task/${id}`, config);
+    const { data } = await piwlloUserGetAndDeleteInstance.delete(
+      `/api/v1/tasks/task/${id}`
+    );
 
     dispatch({
       type: DELETE_TASK_SUCCESS,
@@ -182,23 +168,15 @@ export const removeTask = (id) => async (dispatch, getState) => {
 };
 
 // Action to fetch task by provided id
-export const fetchTaskById = (taskId) => async (dispatch, getState) => {
+export const fetchTaskById = (taskId) => async (dispatch) => {
   try {
     dispatch({
       type: GET_TASK_BY_ID_REQUEST,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/v1/tasks/task/${taskId}`, config);
+    const { data } = await piwlloUserGetAndDeleteInstance.get(
+      `/api/v1/tasks/task/${taskId}`
+    );
 
     dispatch({
       type: GET_TASK_BY_ID_SUCCESS,
@@ -232,25 +210,14 @@ export const fetchTaskById = (taskId) => async (dispatch, getState) => {
 // Action to list tasks by rank of importance
 export const listTaskByRank =
   (rank, pageNumber = 1) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       dispatch({
         type: GET_TASK_BY_RANK_REQUEST,
       });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userDetails.token}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `/api/v1/tasks/${rank}?pageNumber=${pageNumber}`,
-        config
+      const { data } = await piwlloUserGetAndDeleteInstance.get(
+        `/api/v1/tasks/${rank}?pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -283,27 +250,15 @@ export const listTaskByRank =
   };
 
 // Action to edit task
-export const editTask = (task, rank, taskId) => async (dispatch, getState) => {
+export const editTask = (task, rank, taskId) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_TASK_RESET,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.put(
+    const { data } = await piwlloUserPostAndPutInstance.put(
       `/api/v1/tasks/task/${taskId}`,
-      { task, rank },
-      config
+      { task, rank }
     );
 
     dispatch({
@@ -342,19 +297,8 @@ export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
       type: GET_ALL_TASKS_REQUEST,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.get(
-      `/api/v1/tasks?pageNumber=${pageNumber}`,
-      config
+    const { data } = await piwlloUserGetAndDeleteInstance.get(
+      `/api/v1/tasks?pageNumber=${pageNumber}`
     );
 
     dispatch({
