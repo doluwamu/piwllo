@@ -109,7 +109,7 @@ const SignupScreen = () => {
     }
     // Form submission validation ends
 
-    dispatch(registerUser(name, email, password, confirmPassword));
+    dispatch(registerUser({name, email, password, confirmPassword}));
   };
 
   return (

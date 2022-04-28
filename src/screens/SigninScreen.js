@@ -62,7 +62,7 @@ const SigninScreen = () => {
       return;
     }
 
-    dispatch(loginUser(email, password));
+    dispatch(loginUser({ email, password }));
   };
 
   return (

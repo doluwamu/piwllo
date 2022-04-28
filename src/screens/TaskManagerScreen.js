@@ -85,7 +85,7 @@ const TaskManagerScreen = () => {
 
     e.preventDefault();
 
-    dispatch(createTask(task, rank));
+    dispatch(createTask({ task, rank }));
     setTask("");
     setRank("");
     setTaskRequiredError(false);

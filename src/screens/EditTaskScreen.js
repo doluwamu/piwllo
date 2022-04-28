@@ -68,7 +68,7 @@ const EditTaskScreen = () => {
 
   const handleEditTask = (e) => {
     e.preventDefault();
-    dispatch(editTask(task, rank, taskId));
+    dispatch(editTask({ task, rank }, taskId));
   };
 
   return (

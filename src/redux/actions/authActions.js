@@ -43,52 +43,46 @@ import {
 } from "./errors.global";
 import { piwlloAuthInstance } from "./index";
 
-export const registerUser =
-  (name, email, password, confirmPassword) => async (dispatch) => {
-    try {
-      dispatch({
-        type: USER_REGISTERATION_REQUEST,
-      });
+export const registerUser = (user) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTERATION_REQUEST,
+    });
 
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
-      const { data } = await piwlloAuthInstance.post("/api/v1/auth/signup", {
-        name,
-        email,
-        password,
-        confirmPassword,
-      });
+    const { data } = await piwlloAuthInstance.post("/api/v1/auth/signup", user);
 
-      dispatch({
-        type: USER_REGISTERATION_SUCCESS,
-        payload: data,
-      });
+    dispatch({
+      type: USER_REGISTERATION_SUCCESS,
+      payload: data,
+    });
 
-      dispatch({
-        type: USER_REGISTERATION_RESET,
-      });
-    } catch (error) {
-      dispatch({
-        type: USER_REGISTERATION_FAIL,
-        payload:
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message &&
-          error.response.data.message.includes(connectionError)
-            ? connectionErrorMessage
-            : error.message && error.message === serverErrors
-            ? connectionErrorMessage
-            : error.response.data.message || error.message,
-      });
-    }
-  };
+    dispatch({
+      type: USER_REGISTERATION_RESET,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTERATION_FAIL,
+      payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
+        error.response.data.message.includes(connectionError)
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
+          : error.response.data.message || error.message,
+    });
+  }
+};
 
-export const loginUser = (email, password) => async (dispatch) => {
+export const loginUser = (user) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -100,10 +94,7 @@ export const loginUser = (email, password) => async (dispatch) => {
     //   },
     // };
 
-    const { data } = await piwlloAuthInstance.post("/api/v1/auth/signin", {
-      email,
-      password,
-    });
+    const { data } = await piwlloAuthInstance.post("/api/v1/auth/signin", user);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -191,41 +182,40 @@ export const emailVerify = (email) => async (dispatch) => {
   }
 };
 
-export const passwordReset =
-  (email, password, confirmPassword) => async (dispatch) => {
-    try {
-      dispatch({
-        type: RESET_PASSWORD_REQUEST,
-      });
+export const passwordReset = (email, password) => async (dispatch) => {
+  try {
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    });
 
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
 
-      const { data } = await piwlloAuthInstance.put(
-        `/api/v1/auth/password-reset/${email}`,
-        { password, confirmPassword }
-      );
+    const { data } = await piwlloAuthInstance.put(
+      `/api/v1/auth/password-reset/${email}`,
+      password
+    );
 
-      dispatch({
-        type: RESET_PASSWORD_SUCCESS,
-        payload: data.message,
-      });
-    } catch (error) {
-      dispatch({
-        type: RESET_PASSWORD_FAIL,
-        payload:
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message &&
-          error.response.data.message.includes(connectionError)
-            ? connectionErrorMessage
-            : error.message && error.message === serverErrors
-            ? connectionErrorMessage
-            : error.response.data.message || error.message,
-      });
-    }
-  };
+    dispatch({
+      type: RESET_PASSWORD_SUCCESS,
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_FAIL,
+      payload:
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message &&
+        error.response.data.message.includes(connectionError)
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
+          : error.response.data.message || error.message,
+    });
+  }
+};

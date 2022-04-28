@@ -87,16 +87,16 @@ export const listUserTasks =
   };
 
 // Action for user to create task
-export const createTask = (task, rank) => async (dispatch) => {
+export const createTask = (task) => async (dispatch) => {
   try {
     dispatch({
       type: ADD_TASK_REQUEST,
     });
 
-    const { data } = await piwlloUserPostAndPutInstance.post("/api/v1/tasks", {
-      task,
-      rank,
-    });
+    const { data } = await piwlloUserPostAndPutInstance.post(
+      "/api/v1/tasks",
+      task
+    );
 
     dispatch({
       type: ADD_TASK_SUCCESS,
@@ -250,7 +250,7 @@ export const listTaskByRank =
   };
 
 // Action to edit task
-export const editTask = (task, rank, taskId) => async (dispatch) => {
+export const editTask = (task, taskId) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_TASK_RESET,
@@ -258,7 +258,7 @@ export const editTask = (task, rank, taskId) => async (dispatch) => {
 
     const { data } = await piwlloUserPostAndPutInstance.put(
       `/api/v1/tasks/task/${taskId}`,
-      { task, rank }
+      task
     );
 
     dispatch({

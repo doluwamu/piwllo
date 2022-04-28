@@ -77,7 +77,7 @@ const ResetPassswordScreen = () => {
       if (passwordMinLengthError) setPasswordMinLengthError(false);
       return;
     }
-    dispatch(passwordReset(email, password, confirmPassword));
+    dispatch(passwordReset(email, { password, confirmPassword }));
   };
 
   return (
