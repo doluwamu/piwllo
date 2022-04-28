@@ -33,6 +33,7 @@ const SigninScreen = () => {
   useEffect(() => {
     if (userDetails) {
       navigate(redirect);
+      return window.location.reload();
     }
 
     if (userEmail) setEmail(userEmail);
