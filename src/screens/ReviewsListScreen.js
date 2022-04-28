@@ -28,6 +28,7 @@ const ReviewListScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
+  console.log(userDetails);
 
   const getReviews = useSelector((state) => state.getReviews);
   const {

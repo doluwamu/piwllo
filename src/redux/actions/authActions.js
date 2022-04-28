@@ -101,6 +101,7 @@ export const loginUser = (user) => async (dispatch) => {
       payload: data,
     });
 
+    dispatch({ type: GET_USER_TASKS_RESET });
     dispatch({ type: GET_USER_PROFILE_RESET });
     dispatch({ type: GET_USERS_RESET });
     dispatch({ type: UPDATE_USER_PROFILE_RESET });
