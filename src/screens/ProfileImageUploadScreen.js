@@ -59,7 +59,8 @@ const ProfileViewScreen = () => {
         error.response.data.message &&
         error.response.data.message === connectionError
         ? setError(connectionErrorMessage)
-        : error.response.data.message.includes(cloudinaryError)
+        : typeof error.response.data.message === "string" &&
+          error.response.data.message.includes(cloudinaryError)
         ? setError(cloudinaryErrorMessage)
         : error.message && error.message === serverErrors
         ? setError(connectionErrorMessage)
