@@ -71,13 +71,13 @@ const ProfileEditScreen = () => {
     // Form submission validation ends
 
     dispatch(
-      editUserProfile(
+      editUserProfile({
         name,
         email,
-        image && image._id,
+        image: image ? image._id : "",
         password,
-        confirmPassword
-      )
+        confirmPassword,
+      })
     );
   };
 

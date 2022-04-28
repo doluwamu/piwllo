@@ -13,31 +13,26 @@ import {
   DELETE_USER_FAIL,
 } from "../constants/userConstants";
 import { logoutUser } from "./authActions";
-import axios from "axios";
 import {
   connectionError,
   connectionErrorMessage,
   serverErrors,
   jwtErrors,
 } from "./errors.global";
+import {
+  piwlloUserGetAndDeleteInstance,
+  piwlloUserPostAndPutInstance,
+} from "./index";
 
-export const fetchUserProfile = () => async (dispatch, getState) => {
+export const fetchUserProfile = () => async (dispatch) => {
   try {
     dispatch({
       type: GET_USER_PROFILE_REQUEST,
     });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.get("/api/v1/users/user/profile", config);
+    const { data } = await piwlloUserGetAndDeleteInstance.get(
+      "/api/v1/users/user/profile"
+    );
 
     dispatch({
       type: GET_USER_PROFILE_SUCCESS,
@@ -68,80 +63,55 @@ export const fetchUserProfile = () => async (dispatch, getState) => {
   }
 };
 
-export const editUserProfile =
-  (name, email, image = "", password, confirmPassword) =>
-  async (dispatch, getState) => {
-    try {
-      dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
+export const editUserProfile = (userProfile) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
+    const { data } = await piwlloUserPostAndPutInstance.put(
+      "/api/v1/users/user/profile/edit",
+      userProfile
+    );
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userDetails.token}`,
-        },
-      };
+    dispatch({
+      type: UPDATE_USER_PROFILE_SUCCESS,
+    });
 
-      const { data } = await axios.put(
-        "/api/v1/users/user/profile/edit",
-        { name, email, image: image && image, password, confirmPassword },
-        config
-      );
+    localStorage.setItem("userDetails", JSON.stringify(data));
 
-      dispatch({
-        type: UPDATE_USER_PROFILE_SUCCESS,
-      });
-
-      localStorage.setItem("userDetails", JSON.stringify(data));
-
-      // dispatch(loginUser(email, password))
-    } catch (error) {
-      if (
+    // dispatch(loginUser(email, password))
+  } catch (error) {
+    if (
+      error &&
+      error.response &&
+      error.response.data.message &&
+      error.response.data.message === jwtErrors
+    ) {
+      dispatch(logoutUser());
+    }
+    dispatch({
+      type: UPDATE_USER_PROFILE_FAIL,
+      payload:
         error &&
         error.response &&
+        error.response.data &&
         error.response.data.message &&
-        error.response.data.message === jwtErrors
-      ) {
-        dispatch(logoutUser());
-      }
-      dispatch({
-        type: UPDATE_USER_PROFILE_FAIL,
-        payload:
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message &&
-          error.response.data.message.includes(connectionError)
-            ? connectionErrorMessage
-            : error.message && error.message === serverErrors
-            ? connectionErrorMessage
-            : error.response.data.message || error.message,
-      });
-    }
-  };
+        error.response.data.message.includes(connectionError)
+          ? connectionErrorMessage
+          : error.message && error.message === serverErrors
+          ? connectionErrorMessage
+          : error.response.data.message || error.message,
+    });
+  }
+};
 
 export const listAllUsers =
   (pageNumber = 1) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       dispatch({ type: GET_USERS_REQUEST });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userDetails.token}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `/api/v1/users?pageNumber=${pageNumber}`,
-        config
+      const { data } = await piwlloUserGetAndDeleteInstance.get(
+        `/api/v1/users?pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -173,23 +143,12 @@ export const listAllUsers =
     }
   };
 
-export const removeUser = (userId) => async (dispatch, getState) => {
+export const removeUser = (userId) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
 
-    const {
-      userLogin: { userDetails },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userDetails.token}`,
-      },
-    };
-
-    const { data } = await axios.delete(
-      `/api/v1/users/user/${userId}/delete`,
-      config
+    const { data } = await piwlloUserGetAndDeleteInstance.delete(
+      `/api/v1/users/user/${userId}/delete`
     );
 
     dispatch({
