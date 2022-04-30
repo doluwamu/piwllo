@@ -26,6 +26,7 @@ import {
   piwlloUserGetAndDeleteInstance,
   piwlloUserPostAndPutInstance,
 } from "./index";
+import jwt from "jsonwebtoken";
 
 import {
   connectionError,
@@ -33,25 +34,28 @@ import {
   jwtErrors,
   serverErrors,
 } from "./errors.global";
+import moment from "moment";
 
 // Action to get all tasks that belong to a user
 export const listUserTasks =
   (keyword = "", pageNumber = 1) =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     try {
       dispatch({
         type: GET_USER_TASKS_REQUEST,
       });
 
-      // const {
-      //   userLogin: { userDetails },
-      // } = getState();
+      const {
+        userLogin: { userDetails },
+      } = getState();
 
-      // const config = {
-      //   headers: {
-      //     Authorization: `Bearer ${userDetails.token}`,
-      //   },
-      // };
+      const decodedToken = jwt.decode(userDetails.token);
+
+      const jwtExpTime = moment.unix(decodedToken.exp);
+
+      if (decodedToken && moment().isAfter(jwtExpTime)) {
+        return dispatch(logoutUser());
+      }
 
       const { data } = await piwlloUserGetAndDeleteInstance.get(
         `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`
