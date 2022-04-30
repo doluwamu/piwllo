@@ -15,4 +15,5 @@ export const cloudinaryErrorMessage =
 export const connectionErrorMessage =
   "Ooops, Something went wrong with your connection :(";
 
-export const jwtErrors = "jwt expired" || "jwt malformed";
+export const jwtErrors =
+  "jwt expired" || "jwt malformed" || "Something went very wrong";
