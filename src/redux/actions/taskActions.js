@@ -62,6 +62,7 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
+      debugger;
       if (
         error &&
         error.response &&
@@ -70,16 +71,18 @@ export const listUserTasks =
       ) {
         dispatch(logoutUser());
       }
-      console.log(error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message &&
-        error.response.data.message.includes(connectionError)
+      console.log(
+        error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message &&
+          error.response.data.message.includes(connectionError)
           ? connectionErrorMessage
           : error.message && error.message === serverErrors
           ? connectionErrorMessage
-          : error.response.data.message || error.message,)
-          
+          : error.response.data.message || error.message
+      );
+
       dispatch({
         type: GET_USER_TASKS_FAIL,
         payload:
