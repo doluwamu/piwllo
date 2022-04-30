@@ -70,6 +70,10 @@ export const listUserTasks =
       ) {
         dispatch(logoutUser());
       }
+      console.log(error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message)
       dispatch({
         type: GET_USER_TASKS_FAIL,
         payload:
