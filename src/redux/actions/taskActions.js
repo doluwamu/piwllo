@@ -53,8 +53,10 @@ export const listUserTasks =
 
       const jwtExpTime = moment.unix(decodedToken.exp);
 
+      console.log(jwtExpTime);
       if (decodedToken && moment().isAfter(jwtExpTime)) {
-        return dispatch(logoutUser());
+        dispatch(logoutUser());
+        return;
       }
 
       const { data } = await piwlloUserGetAndDeleteInstance.get(
