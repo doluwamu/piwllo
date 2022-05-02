@@ -45,19 +45,15 @@ export const listUserTasks =
         type: GET_USER_TASKS_REQUEST,
       });
 
-      const {
-        userLogin: { userDetails },
-      } = getState();
+      // const decodedToken = jwt.decode(userDetails.token);
 
-      const decodedToken = jwt.decode(userDetails.token);
+      // const jwtExpTime = moment.unix(decodedToken.exp);
 
-      const jwtExpTime = moment.unix(decodedToken.exp);
-
-      console.log(jwtExpTime);
-      if (decodedToken && moment().isAfter(jwtExpTime)) {
-        dispatch(logoutUser());
-        return;
-      }
+      // console.log(jwtExpTime);
+      // if (decodedToken && moment().isAfter(jwtExpTime)) {
+      //   dispatch(logoutUser());
+      //   return;
+      // }
 
       const { data } = await piwlloUserGetAndDeleteInstance.get(
         `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`
@@ -68,6 +64,20 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
+      const {
+        userLogin: { userDetails },
+      } = getState();
+
+      const decodedToken = jwt.decode(userDetails.token);
+
+      const jwtExpTime = moment.unix(decodedToken.exp);
+
+      console.log(userDetails.token);
+      console.log(jwtExpTime);
+      if (decodedToken && moment().isAfter(jwtExpTime)) {
+        dispatch(logoutUser());
+        return;
+      }
       if (
         error &&
         error.response &&
