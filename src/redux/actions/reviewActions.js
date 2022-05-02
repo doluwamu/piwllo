@@ -32,8 +32,10 @@ export const createReview = (review) => async (dispatch) => {
   try {
     dispatch({ type: ADD_REVIEW_REQUEST });
 
-
-    const { data } = await piwlloUserPostAndPutInstance.post("/api/v1/reviews", { review }, );
+    const { data } = await piwlloUserPostAndPutInstance.post(
+      "/api/v1/reviews",
+      { review }
+    );
 
     dispatch({
       type: ADD_REVIEW_SUCCESS,
@@ -43,10 +45,12 @@ export const createReview = (review) => async (dispatch) => {
     setTimeout(() => dispatch({ type: ADD_REVIEW_RESET }), 5000);
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -69,15 +73,13 @@ export const createReview = (review) => async (dispatch) => {
 // Action to fetch all reviews from  DB(Admin Only)
 export const fetchReviews =
   (pageNumber = 1) =>
-  async (dispatch, ) => {
+  async (dispatch) => {
     try {
       dispatch({ type: GET_REVIEWS_RESET });
       dispatch({ type: GET_REVIEWS_REQUEST });
 
-
       const { data } = await piwlloUserGetAndDeleteInstance.get(
-        `/api/v1/reviews?pageNumber=${pageNumber}`,
-        
+        `/api/v1/reviews?pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -86,10 +88,12 @@ export const fetchReviews =
       });
     } catch (error) {
       if (
-        error &&
-        error.response &&
-        error.response.data.message &&
-        error.response.data.message === jwtErrors
+        (error &&
+          error.response &&
+          error.response.data.message &&
+          error.response.data.message === jwtErrors) ||
+        error.response === 500 ||
+        error.response.status === 500
       ) {
         dispatch(logoutUser());
       }
@@ -114,8 +118,9 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_REVIEW_REQUEST });
 
-
-    const { data } = await piwlloUserGetAndDeleteInstance.delete(`/api/v1/reviews/${reviewId}`, );
+    const { data } = await piwlloUserGetAndDeleteInstance.delete(
+      `/api/v1/reviews/${reviewId}`
+    );
 
     dispatch({
       type: DELETE_REVIEW_SUCCESS,
@@ -125,10 +130,12 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
     dispatch({ type: DELETE_REVIEW_RESET });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -148,14 +155,12 @@ export const removeReview = (reviewId) => async (dispatch, getState) => {
   }
 };
 
-export const reviewLike = (reviewId) => async (dispatch, ) => {
+export const reviewLike = (reviewId) => async (dispatch) => {
   try {
     dispatch({ type: LIKE_REVIEW_REQUEST });
 
-
     const { data } = await piwlloUserPostAndPutInstance.put(
-      `/api/v1/reviews/${reviewId}/like`,
-      
+      `/api/v1/reviews/${reviewId}/like`
     );
 
     dispatch({
@@ -165,10 +170,12 @@ export const reviewLike = (reviewId) => async (dispatch, ) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }

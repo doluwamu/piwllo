@@ -45,16 +45,6 @@ export const listUserTasks =
         type: GET_USER_TASKS_REQUEST,
       });
 
-      // const decodedToken = jwt.decode(userDetails.token);
-
-      // const jwtExpTime = moment.unix(decodedToken.exp);
-
-      // console.log(jwtExpTime);
-      // if (decodedToken && moment().isAfter(jwtExpTime)) {
-      //   dispatch(logoutUser());
-      //   return;
-      // }
-
       const { data } = await piwlloUserGetAndDeleteInstance.get(
         `/api/v1/tasks/auser?keyword=${keyword}&pageNumber=${pageNumber}`
       );
@@ -64,20 +54,14 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
-      if (error && error.response) {
-        console.log(error.response);
-        console.log(error.response.data);
-        console.log(error.response.status);
-      }
-
       if (
         (error &&
           error.response &&
           error.response.data.message &&
           error.response.data.message === jwtErrors) ||
-        error.response === 500 || error.response.status === 500
+        error.response === 500 ||
+        error.response.status === 500
       ) {
-        console.log("hey");
         dispatch(logoutUser());
       }
 
@@ -115,10 +99,12 @@ export const createTask = (task) => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -155,10 +141,12 @@ export const removeTask = (id) => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -195,10 +183,12 @@ export const fetchTaskById = (taskId) => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -237,10 +227,12 @@ export const listTaskByRank =
       });
     } catch (error) {
       if (
-        error &&
-        error.response &&
-        error.response.data.message &&
-        error.response.data.message === jwtErrors
+        (error &&
+          error.response &&
+          error.response.data.message &&
+          error.response.data.message === jwtErrors) ||
+        error.response === 500 ||
+        error.response.status === 500
       ) {
         dispatch(logoutUser());
       }
@@ -278,10 +270,12 @@ export const editTask = (task, taskId) => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -318,10 +312,12 @@ export const listAllTasks = (pageNumber) => async (dispatch, getState) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }

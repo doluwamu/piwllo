@@ -40,10 +40,12 @@ export const fetchUserProfile = () => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -81,10 +83,12 @@ export const editUserProfile = (userProfile) => async (dispatch) => {
     // dispatch(loginUser(email, password))
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
@@ -120,10 +124,12 @@ export const listAllUsers =
       });
     } catch (error) {
       if (
-        error &&
-        error.response &&
-        error.response.data.message &&
-        error.response.data.message === jwtErrors
+        (error &&
+          error.response &&
+          error.response.data.message &&
+          error.response.data.message === jwtErrors) ||
+        error.response === 500 ||
+        error.response.status === 500
       ) {
         dispatch(logoutUser());
       }
@@ -157,10 +163,12 @@ export const removeUser = (userId) => async (dispatch) => {
     });
   } catch (error) {
     if (
-      error &&
-      error.response &&
-      error.response.data.message &&
-      error.response.data.message === jwtErrors
+      (error &&
+        error.response &&
+        error.response.data.message &&
+        error.response.data.message === jwtErrors) ||
+      error.response === 500 ||
+      error.response.status === 500
     ) {
       dispatch(logoutUser());
     }
