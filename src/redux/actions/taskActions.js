@@ -67,6 +67,7 @@ export const listUserTasks =
       if (error && error.response) {
         console.log(error.response);
         console.log(error.response.data);
+        console.log(error.response.status);
       }
 
       if (
@@ -74,7 +75,7 @@ export const listUserTasks =
           error.response &&
           error.response.data.message &&
           error.response.data.message === jwtErrors) ||
-        error.response === 500
+        error.response === 500 || error.response.status === 500
       ) {
         console.log("hey");
         dispatch(logoutUser());
