@@ -26,7 +26,7 @@ import {
   piwlloUserGetAndDeleteInstance,
   piwlloUserPostAndPutInstance,
 } from "./index";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 
 import {
   connectionError,
@@ -34,12 +34,12 @@ import {
   jwtErrors,
   serverErrors,
 } from "./errors.global";
-import moment from "moment";
+// import moment from "moment";
 
 // Action to get all tasks that belong to a user
 export const listUserTasks =
   (keyword = "", pageNumber = 1) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       dispatch({
         type: GET_USER_TASKS_REQUEST,
@@ -64,20 +64,8 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
-      const {
-        userLogin: { userDetails },
-      } = getState();
+      if (error && error.status) console.log(error.status);
 
-      const decodedToken = jwt.decode(userDetails.token);
-
-      const jwtExpTime = moment.unix(decodedToken.exp);
-
-      console.log(userDetails.token);
-      console.log(jwtExpTime);
-      if (decodedToken && moment().isAfter(jwtExpTime)) {
-        dispatch(logoutUser());
-        return;
-      }
       if (
         error &&
         error.response &&
