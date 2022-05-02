@@ -64,7 +64,10 @@ export const listUserTasks =
         payload: data,
       });
     } catch (error) {
-      if (error && error.status) console.log(error.status);
+      if (error) {
+        console.log(error.status);
+        console.log(error);
+      }
 
       if (
         error &&
