@@ -70,11 +70,13 @@ export const listUserTasks =
       }
 
       if (
-        error &&
-        error.response &&
-        error.response.data.message &&
-        error.response.data.message === jwtErrors
+        (error &&
+          error.response &&
+          error.response.data.message &&
+          error.response.data.message === jwtErrors) ||
+        error.response === 500
       ) {
+        console.log("hey");
         dispatch(logoutUser());
       }
 
