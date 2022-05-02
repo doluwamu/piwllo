@@ -66,7 +66,7 @@ export const listUserTasks =
     } catch (error) {
       if (error) {
         console.log(error.status);
-        console.log(error);
+        console.log(error.message);
       }
 
       if (
