@@ -32,7 +32,7 @@ const SigninScreen = () => {
 
   useEffect(() => {
     if (userDetails) {
-      window.location.reload();
+      // window.location.reload();
       navigate(redirect);
       return window.location.reload();
     }
