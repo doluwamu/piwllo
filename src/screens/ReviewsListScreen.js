@@ -28,7 +28,6 @@ const ReviewListScreen = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetails } = userLogin;
-  console.log(userDetails);
 
   const getReviews = useSelector((state) => state.getReviews);
   const {
@@ -154,7 +153,7 @@ const ReviewListScreen = () => {
                     </label>
                     <div className="review-topic">
                       {moment(review.createdt).format(
-                        "dddd, MMMM Do YYYY, h:mm a"
+                        "dddd, MMMM Do YYYY, h:mm a",
                       )}
                     </div>
                   </div>
